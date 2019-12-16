@@ -1,0 +1,196 @@
+/*页面完全加载后再显示*/
+[v-cloak] {display: none !important;}
+/*布局设置*/
+.p-0, .pt-0, .py-0 {padding-top: 0px !important;}
+.p-0, .pr-0, .px-0 {padding-right: 0px !important;}
+.p-0, .pb-0, .py-0 {padding-bottom: 0px !important;}
+.p-0, .pl-0, .px-0 {padding-left: 0px !important;}
+
+.p-01, .pt-01, .py-01 {padding-top: 1px !important;}
+.p-01, .pr-01, .px-01 {padding-right: 1px !important;}
+.p-01, .pb-01, .py-01 {padding-bottom: 1px !important;}
+.p-01, .pl-01, .px-01 {padding-left: 1px !important;}
+
+.p-05, .pt-05, .py-05 {padding-top: 5px !important;}
+.p-05, .pr-05, .px-05 {padding-right: 5px !important;}
+.p-05, .pb-05, .py-05 {padding-bottom: 5px !important;}
+.p-05, .pl-05, .px-05 {padding-left: 5px !important;}
+
+.p-1, .pt-1, .py-1 {padding-top: 10px !important;}
+.p-1, .pr-1, .px-1 {padding-right: 10px !important;}
+.p-1, .pb-1, .py-1 {padding-bottom: 10px !important;}
+.p-1, .pl-1, .px-1 {padding-left: 10px !important;}
+
+.p-2, .pt-2, .py-2 {padding-top: 20px !important;}
+.p-2, .pr-2, .px-2 {padding-right: 20px !important;}
+.p-2, .pb-2, .py-2 {padding-bottom: 20px !important;}
+.p-2, .pl-2, .px-2 {padding-left: 20px !important;}
+
+.p-3, .pt-3, .py-3 {padding-top: 30px !important;}
+.p-3, .pr-3, .px-3 {padding-right: 30px !important;}
+.p-3, .pb-3, .py-3 {padding-bottom: 30px !important;}
+.p-3, .pl-3, .px-3 {padding-left: 30px !important;}
+
+.p-4, .pt-4, .py-4 {padding-top: 40px !important;}
+.p-4, .pr-4, .px-4 {padding-right: 40px !important;}
+.p-4, .pb-4, .py-4 {padding-bottom: 40px !important;}
+.p-4, .pl-4, .px-4 {padding-left: 40px !important;}
+
+.m-0, .mt-0, .my-0 {margin-top: 0px !important;}
+.m-0, .mr-0, .mx-0 {margin-right: 0px !important;}
+.m-0, .mb-0, .my-0 {margin-bottom: 0px !important;}
+.m-0, .ml-0, .mx-0 {margin-left: 0px !important;}
+
+.m-01, .mt-01, .my-01 {margin-top: 1px !important;}
+.m-01, .mr-01, .mx-01 {margin-right: 1px !important;}
+.m-01, .mb-01, .my-01 {margin-bottom: 1px !important;}
+.m-01, .ml-01, .mx-01 {margin-left: 1px !important;}
+
+.m-05, .mt-05, .my-05 {margin-top: 5px !important;}
+.m-05, .mr-05, .mx-05 {margin-right: 5px !important;}
+.m-05, .mb-05, .my-05 {margin-bottom: 5px !important;}
+.m-05, .ml-05, .mx-05 {margin-left: 5px !important;}
+
+.m-1, .mt-1, .my-1 {margin-top: 10px !important;}
+.m-1, .mr-1, .mx-1 {margin-right: 10px !important;}
+.m-1, .mb-1, .my-1 {margin-bottom: 10px !important;}
+.m-1, .ml-1, .mx-1 {margin-left: 10px !important;}
+
+.m-2, .mt-2, .my-2 {margin-top: 20px !important;}
+.m-2, .mr-2, .mx-2 {margin-right: 20px !important;}
+.m-2, .mb-2, .my-2 {margin-bottom: 20px !important;}
+.m-2, .ml-2, .mx-2 {margin-left: 20px !important;}
+
+.m-3, .mt-3, .my-3 {margin-top: 30px !important;}
+.m-3, .mr-3, .mx-3 {margin-right: 30px !important;}
+.m-3, .mb-3, .my-3 {margin-bottom: 30px !important;}
+.m-3, .ml-3, .mx-3 {margin-left: 30px !important;}
+
+.m-4, .mt-4, .my-4 {margin-top: 40px !important;}
+.m-4, .mr-4, .mx-4 {margin-right: 40px !important;}
+.m-4, .mb-4, .my-4 {margin-bottom: 40px !important;}
+.m-4, .ml-4, .mx-4 {margin-left: 40px !important;}
+/*长度*/
+.wh-1 {width: 10px !important;}
+.wh-2 {width: 20px !important;}
+.wh-3 {width: 30px !important;}
+.wh-4 {width: 40px !important;}
+.wh-5 {width: 50px !important;}
+.wh-6 {width: 60px !important;}
+.wh-7 {width: 70px !important;}
+.wh-8 {width: 80px !important;}
+.wh-9 {width: 90px !important;}
+.wh-10 {width: 100px !important;}
+.wh-12 {width: 120px !important;}
+.wh-13 {width: 130px !important;}
+.wh-15 {width: 150px !important;}
+.wh-16 {width: 160px !important;}
+.wh-18 {width: 180px !important;}
+.wh-20 {width: 200px !important;}
+.wh-25 {width: 250px !important;}
+.wh-30 {width: 300px !important;}
+/*高度*/
+.w-100 {width: 100% !important;}
+.w-90 {width: 90% !important;}
+.w-80 {width: 80% !important;}
+.w-70 {width: 70% !important;}
+.w-60 {width: 60% !important;}
+.w-50 {width: 50% !important;}
+.w-40 {width: 40% !important;}
+.w-30 {width: 30% !important;}
+.w-20 {width: 20% !important;}
+.w-10 {width: 10% !important;}
+.w-0 {width: 0% !important;}
+.h-100 {height: 100% !important;}
+.h-90 {height: 90% !important;}
+.h-80 {height: 80% !important;}
+.h-70 {height: 70% !important;}
+.h-60 {height: 60% !important;}
+.h-50 {height: 50% !important;}
+.h-40 {height: 40% !important;}
+.h-30 {height: 30% !important;}
+.h-20 {height: 20% !important;}
+.h-10 {height: 10% !important;}
+.h-0 {height: 0% !important;}
+.disable-b {display: block !important;}
+.disable-n {display: none !important;}
+.border-r-0 {border-radius: 0px !important;}
+.border-r-1 {border-radius: 5px !important;}
+/*布局设置*/
+.display-in {display: inline !important;}
+.display-bl {display: block !important;}
+.float-l{float: left !important;}
+.float-r{float: right !important;}
+/*字体设置*/
+.text-oneline {white-space:nowrap !important;overflow:hidden !important;text-overflow:ellipsis !important;}
+.text-center {text-align: center !important;}
+.color-black {color:#000000 !important;}
+.color-success {color:#00a65a !important;}
+.color-danger {color:#dd4b39 !important;}
+.color-warning {color:#d8d524 !important;}
+.color-light {color:#f7f8f4 !important;}
+/*字体大小*/
+.font-size-10 {font-size: 10px !important; }
+.font-size-11 {font-size: 11px !important; }
+.font-size-12 {font-size: 12px !important; }
+.font-size-13 {font-size: 13px !important; }
+.font-size-14 {font-size: 14px !important; }
+.font-size-15 {font-size: 15px !important; }
+.font-size-16 {font-size: 16px !important; }
+.font-size-17 {font-size: 17px !important; }
+.font-size-18 {font-size: 18px !important; }
+.font-size-19 {font-size: 19px !important; }
+.font-size-20 {font-size: 20px !important; }
+.font-size-21 {font-size: 21px !important; }
+.font-size-22 {font-size: 22px !important; }
+.font-size-23 {font-size: 23px !important; }
+.font-size-24 {font-size: 24px !important; }
+.font-size-25 {font-size: 25px !important; }
+.font-size-26 {font-size: 26px !important; }
+.font-size-27 {font-size: 27px !important; }
+.font-size-28 {font-size: 28px !important; }
+.font-size-29 {font-size: 29px !important; }
+.font-size-30 {font-size: 30px !important; }
+
+.line-height-10 {line-height: 10px !important;}
+.line-height-15 {line-height: 15px !important;}
+.line-height-20 {line-height: 20px !important;}
+.line-height-25 {line-height: 25px !important;}
+.line-height-30 {line-height: 30px !important;}
+.line-height-35 {line-height: 35px !important;}
+.line-height-40 {line-height: 40px !important;}
+/*背景设置*/
+.mbg-warning {background-color: 	#FFCD00 !important;}
+.mbg-danger {background-color: 	#E4002B !important;}
+.mbg-success {background-color: 	#43B02A !important;}
+.mbg-blue {background-color: 	#64CCC9 !important;}
+.mbg-blue1 {background-color: 	#3fb2f5 !important;}
+.mbg-primary {background-color: 	#0082BA !important;}
+.mbg-light {background-color: 	#64CCC9 !important;}
+.mbg-gray {background-color: 	#DCDCDC !important;}
+.hover-light:hover {background-color: #DCDCDC !important;}
+.hover-gray:hover {background-color: rgb(238, 240, 239) !important;}
+
+
+/* 选中按钮 */
+.mbtn-check {
+    outline: none; 
+    font-weight: 100;
+    border-radius: 5px; 
+    width: 20px; 
+    height: 20px; 
+    border: none; 
+    line-height: 20px; 
+    padding-left: -5px; 
+    padding-top: 0; 
+    padding-bottom: 3px; 
+    cursor: inherit;
+    -webkit-text-stroke: 0.1px #3fb2f5;
+}
+.mbtn-check>i {
+    margin-left: -2px;
+    font-weight: 100;
+    color: white;
+}
+
+

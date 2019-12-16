@@ -1,0 +1,1849 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>省人防办项目管理系统-项目总览</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="plugins/dist/css/AdminLTE.min.css">
+
+    <link rel="stylesheet" href="plugins/dist/css/skins/skin-blue.min.css">
+    <!-- Vue.js / ajax -->
+    <script src="plugins/vue/vue.min.js"></script>
+    <script src="plugins/axios/axios.min.js"></script>
+
+    <!-- 弹出框插件 toastr.css -->
+    <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+
+    <link rel="stylesheet" href="css/commer.css">
+
+    <style>
+        .myli :hover {
+            background-color: #ecf0f5;
+        }
+    </style>
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper" id="app" v-cloak>
+
+        <!-- 顶部导航栏 -->
+        <n-nav-top :user="user" :news="systemNews" v-on:cancellation="cancellation"></n-nav-top>
+
+        <!-- 左侧导航栏 -->
+        <n-nav-left :user="user" :page="pagePosition" :rol="userRol"></n-nav-left>
+
+        <!-- 修改密码模态框 -->
+        <n-nav-pwdmodel :user="user" :model="pwdModel" v-on:updatepwd="updatePwd"></n-nav-pwdmodel>
+
+        <!-- 右侧内容栏 -->
+        <div class="content-wrapper">
+            <!-- 内容栏标题导航 -->
+            <n-page-nav :page="pagePosition"></n-page-nav>
+
+            <!-- 右侧内容界面 -->
+            <section class="content" id="page_list" v-if="contentTagle">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <div class="row">
+                                    <div class="col-md-1 col-xs-3 pr-0" style="padding-top: 6px;">
+                                        <h4 class="box-title">记录列表</h4>
+                                    </div>
+                                    <!-- 添加 刷新 导入 导出-->
+                                    <div class="col-md-3 col-xs-5 pr-0">
+                                        <div class="row">
+                                            <div class="col-md-2 col-xs-0 p-0">
+                                            </div>
+                                            <div class="col-md-10 col-xs-12 p-0">
+                                                <div class="btn-group">
+                                                    <a href="javaScript:void(0);" @click="excelExport()"
+                                                        title="导出Excel表格"><button class="btn btn-default btn-sm"><i
+                                                                class="fa fa-arrow-circle-down"></i></button></a>
+                                                    <a href="javaScript:void(0);" title="选择过滤条件" data-toggle="modal"
+                                                        data-target="#modelChange"><button
+                                                            class="btn btn-default btn-sm ml-1"><i
+                                                                class="fa fa-reorder"></i></button></a>
+                                                    <a href="javaScript:void(0);" @click="refresh()" title="刷新"><button
+                                                            class="btn btn-default btn-sm"><i
+                                                                class="fa fa-refresh"></i></button></a>
+                                                    <a href="javaScript:void(0);" title="选择显示" data-toggle="modal"
+                                                        data-target="#modelShow"><button
+                                                            class="btn btn-default btn-sm"><i
+                                                                class="fa  fa-eye"></i></button></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <!-- 搜索 -->
+                                    <div class="col-md-2 col-xs-4">
+                                        <div class="box-tools pull-right">
+                                            <div class="input-group">
+                                                <input type="text" v-model="beanSearch"
+                                                    class="form-control input-sm pull-right" placeholder="Search">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-sm btn-default"
+                                                        @click="beanPosition_change()"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 列表分页 -->
+                                    <div class="col-md-6 col-xs-12 p-0">
+                                        <div class="row p-0">
+                                            <div class="col-md-10 col-xs-10 p-0">
+                                                <div class="box-tools pull-right">
+                                                    <ul class="pagination pagination-sm no-margin ">
+                                                        <li><span>{{limitData.page}} / {{pages}}</span>
+                                                        </li>
+                                                        <li><a href="javaScript:void(0);"
+                                                                @click="limit_page('first')">首页</a></li>
+                                                        <li><a href="javaScript:void(0);"
+                                                                @click="limit_page('pre')">&laquo;</a></li>
+                                                        <li v-if="(limitData.page - 4) > 0 && limitData.page >= pages">
+                                                            <a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page - 4)">{{limitData.page - 4}}</a>
+                                                        </li>
+                                                        <li
+                                                            v-if="(limitData.page - 3) > 0 && limitData.page >= pages - 1">
+                                                            <a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page - 3)">{{limitData.page - 3}}</a>
+                                                        </li>
+                                                        <li v-if="limitData.page-2 > 0"><a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page - 2)">{{limitData.page - 2}}</a>
+                                                        </li>
+                                                        <li v-if="limitData.page-1 > 0"><a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page - 1)">{{limitData.page - 1}}</a>
+                                                        </li>
+                                                        <li class="active"><a
+                                                                href="javaScript:void(0);">{{limitData.page}}</a></li>
+                                                        <li v-if="(limitData.page + 1) <= pages "> <a
+                                                                href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page + 1)">{{limitData.page + 1}}</a>
+                                                        </li>
+                                                        <li v-if="(limitData.page + 2) <= pages "><a
+                                                                href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page + 2)">{{limitData.page + 2}}</a>
+                                                        </li>
+                                                        <li v-if="(limitData.page + 3) <= pages && limitData.page <= 2">
+                                                            <a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page+3)">{{limitData.page + 3}}</a>
+                                                        </li>
+                                                        <li v-if="(limitData.page + 4) <= pages && limitData.page <= 1">
+                                                            <a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page+4)">{{limitData.page + 4}}</a>
+                                                        </li>
+                                                        <li><a href="javaScript:void(0);"
+                                                                @click="limit_page('next')">&raquo;</a></li>
+                                                        <li><a href="javaScript:void(0);"
+                                                                @click="limit_page('last')">末页</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 p-0">
+                                                <div class="row">
+                                                    <div class="col-md-5 col-xs-5 pr-0 ">
+                                                        <input type="text" v-model="limitData.page_go"
+                                                            class="form-control input-sm" style="width: 100%;"
+                                                            placeholder="Go">
+                                                    </div>
+                                                    <div class="col-md-4 col-xs-4 p-0 m-0">
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-sm btn-default"
+                                                                @click="limit_page(limitData.page_go)"><i
+                                                                    class="fa fa-sign-in"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <!-- 数据列表 -->
+                            <div class="table-responsive no-padding">
+                                <table class="table text-oneline overtable" style="overflow-x: scroll; width: 100%;">
+                                    <tr class="p-0 m-0 myli">
+                                        <th v-if="modalShow.shows.p_id == '1'">
+                                            <div class="wh-4">ID</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.p_name == '1'">
+                                            <div class="wh-20">项目名称</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.p_tagle == '1'">
+                                            <div class="wh-9">项目状态</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.position == '1'">
+                                            <div class="wh-15">归属处室</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.document == '1'">
+                                            <div class="wh-9">资料序号</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.declare_money == '1'">
+                                            <div class="wh-7">申报金额</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.warehousing_time == '1'">
+                                            <div class="wh-15">入库时间</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.warehousing_fileName == '1'">
+                                            <div class="wh-20">入库文件</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.examine_money == '1'">
+                                            <div class="wh-7">审核金额</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.approval_time == '1'">
+                                            <div class="wh-15">立项时间</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.approval_fileName == '1'">
+                                            <div class="wh-20">立项资料</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.overall_type == '1'">
+                                            <div class="wh-9">统筹类型</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.contractor == '1'">
+                                            <div class="wh-15">供应商</div>
+                                        </th>
+                                        <th v-if="modalShow.shows.bid_money == '1'">
+                                            <div class="wh-15">中标金额</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.bid_time == '1'">
+                                            <div class="wh-9">中标时间</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.bid_fileName == '1'">
+                                            <div class="wh-20">中标资料</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.acceBefore_opinion == '1'">
+                                            <div class="wh-10">验收初步意见</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.acceBefore_time == '1'">
+                                            <div class="wh-20">预验收时间</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.acceBefore_fileName == '1'">
+                                            <div class="wh-20">预验收文档</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.is_acceBefore == '1'">
+                                            <div class="wh-10">是否同意验收</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.acce_time == '1'">
+                                            <div class="wh-20">验收时间</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.acce_user_opinion == '1'">
+                                            <div class="wh-20">用户方意见</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.acce_build_opinion == '1'">
+                                            <div class="wh-20">建设方意见</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.acce_organ_opinion == '1'">
+                                            <div class="wh-20">组织方意见</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.acce_fileName == '1'">
+                                            <div class="wh-20">验收报告文档</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.acce_result == '1'">
+                                            <div class="wh-10">验收结论</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.payable_money == '1'">
+                                            <div class="wh-10">应付款</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.payment_money == '1'">
+                                            <div class="wh-10">已付款</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.progress == '1'">
+                                            <div class="wh-20">付款进度</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.payment_agreement == '1'">
+                                            <div class="wh-20">付款约定信息</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.supplementary_Payment == '1'">
+                                            <div class="wh-20">补进付款信息</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.payment_fileName == '1'">
+                                            <div class="wh-20">付款附件</div>
+                                        </th>
+
+                                        <th v-if="modalShow.shows.planning_type == '1'">
+                                            <div class="wh-10">项目付款状态</div>
+                                        </th>
+
+                                        <th>
+                                            <div class="wh-9">操作</div>
+                                        </th>
+                                    </tr>
+
+                                    <tr class="myli" v-for="(item, index) in limitData.list">
+                                        <td v-if="modalShow.shows.p_id == '1'">
+                                            <div class="wh-4">
+                                                <span>{{item.p_id}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.p_name == '1'">
+                                            <div class="text-oneline wh-20"><a href="javascript:;" :title="item.p_name"
+                                                    @click="contentChange(item)"><span>{{item.p_name}}</span></a>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.p_tagle == '1'">
+                                            <div class="wh-9"><span>{{item.p_tagle}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.position == '1'">
+                                            <div class="wh-15 text-oneline"><span>{{item.position}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.document == '1'">
+                                            <div class="wh-9"><span>{{item.document}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.declare_money == '1'">
+                                            <div class="wh-7 text-oneline"><span style="color: green;">{{item.declare_money}} <i
+                                                        class="fa fa-cny"></i></span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.warehousing_time == '1'">
+                                            <div class="wh-15 text-oneline"><span>{{item.warehousing_time}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.warehousing_fileName == '1'">
+                                            <div class="wh-20 text-oneline"> <a
+                                                    :href="'api/v2/db/open?fileurl='+item.warehousing_fileUrl"
+                                                    target="_blank" title="点击查看文件"><span><i class="fa fa-paperclip"></i>
+                                                        &nbsp;
+                                                        {{item.warehousing_fileName}}</span></a>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.examine_money == '1'">
+                                            <div class="wh-7 text-oneline"><span style="color: #E4002B;">{{item.examine_money}} <i
+                                                        class="fa fa-cny"></i></span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.approval_time == '1'">
+                                            <div class="wh-15 text-oneline"><span>{{item.approval_time}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.approval_fileName == '1'">
+                                            <div class="wh-20 text-oneline"><a
+                                                    :href="'api/v2/db/open?fileurl='+item.approval_fileUrl"
+                                                    target="_blank" title="点击查看文件"><span><i class="fa fa-paperclip"></i>
+                                                        &nbsp;
+                                                        {{item.approval_fileName}}</span></a>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.overall_type == '1'">
+                                            <div class="wh-9 text-oneline"><span>{{item.overall_type}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.contractor == '1'">
+                                            <div class="wh-15 text-oneline"><span>{{item.contractor}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.bid_money == '1'">
+                                            <div class="wh-10 text-oneline"><span>{{item.bid_money}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.bid_time == '1'">
+                                            <div class="wh-20  text-oneline"><span>{{item.bid_time}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.bid_fileName == '1'">
+                                            <div class="wh-20 text-oneline"><a
+                                                    :href="'api/v2/db/open?fileurl='+item.bid_fileUrl" target="_blank"
+                                                    title="点击查看文件"><span><i class="fa fa-paperclip"></i> &nbsp;
+                                                        {{item.bid_fileName}}</span></a>
+                                            </div>
+
+                                        </td>
+                                        <td v-if="modalShow.shows.acceBefore_opinion == '1'">
+                                            <div class="wh-20 text-oneline"><span>{{item.acceBefore_opinion}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.acceBefore_time == '1'">
+                                            <div class="wh-20 text-oneline"><span>{{item.acceBefore_time}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.acceBefore_fileName == '1'">
+
+                                            <div class="wh-20 text-oneline"><a
+                                                    :href="'api/v2/db/open?fileurl='+item.acceBefore_fileName"
+                                                    target="_blank" title="点击查看文件"><span><i class="fa fa-paperclip"></i>
+                                                        &nbsp;
+                                                        {{item.acceBefore_fileName}}</span></a>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.is_acceBefore == '1'">
+                                            <div class="wh-10"><span>{{item.is_acceBefore}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.acce_time == '1'">
+                                            <div class="wh-20 text-oneline"><span>{{item.acce_time}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.acce_user_opinion == '1'">
+                                            <div class="wh-20 text-oneline"><span>{{item.acce_user_opinion}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.acce_build_opinion == '1'">
+                                            <div class="wh-20 text-oneline"><span>{{item.acce_build_opinion}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.acce_organ_opinion == '1'">
+                                            <div class="wh-20 text-oneline"><span>{{item.acce_organ_opinion}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.acce_fileName == '1'">
+
+                                            <div class="wh-20 text-oneline"><a
+                                                    :href="'api/v2/db/open?fileurl='+item.acce_fileName" target="_blank"
+                                                    title="点击查看文件"><span><i class="fa fa-paperclip"></i> &nbsp;
+                                                        {{item.acce_fileName}}</span></a>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.acce_result == '1'">
+                                            <div class="wh-10 text-oneline"><span>{{item.acce_result}}</span>
+                                            </div>
+                                        </td>
+
+                                        <td v-if="modalShow.shows.payable_money == '1'">
+                                            <div class="wh-10 text-oneline"><span>{{item.payable_money}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.payment_money == '1'">
+                                            <div class="wh-10 text-oneline"><span>{{item.payment_money}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.progress == '1'">
+                                            <div class="wh-20">
+                                                <div class="progress p-0 m-0">
+                                                    <div class="progress-bar progress-bar-aqua" role="progressbar"
+                                                        aria-valuemin="0" aria-valuemax="100"
+                                                        :style="'width: '+item.progress+'%;'">
+                                                        <span>{{item.progress}}%</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.payment_agreement == '1'">
+                                            <div class="wh-20 text-oneline"><span>{{item.payment_agreement}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.supplementary_Payment == '1'">
+                                            <div class="wh-20 text-oneline"><span>{{item.supplementary_Payment}}</span>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.payment_fileName == '1'">
+
+                                            <div class="wh-20 text-oneline"><a
+                                                    :href="'api/v2/db/open?fileurl='+item.payment_fileName"
+                                                    target="_blank" title="点击查看文件"><span><i class="fa fa-paperclip"></i>
+                                                        &nbsp;
+                                                        {{item.payment_fileName}}</span></a>
+                                            </div>
+                                        </td>
+                                        <td v-if="modalShow.shows.planning_type == '1'">
+                                            <div class="wh-10 text-oneline"><span>{{item.planning_type}}</span>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="tools wh-9">
+                                                <a href="javascript:;" title="修改" data-toggle="modal"
+                                                    data-target="#modelUpdate" @click="update(item)">
+                                                    <i class="fa fa-edit" style="margin-right: 5px;"></i>
+                                                </a>
+                                                <a href="javascript:;" title="删除" @click="deleteProject(item.p_id)"> <i
+                                                        class="fa fa-trash-o" style="margin-right: 5px;"></i> </a>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </table>
+
+                            </div>
+                            <div class="row m-0">
+                                <div class="col-md-12 p-0 m-0 text-center">
+                                    <span>
+                                        显示第<code>{{page_first}}</code>到第<code>{{page_last}}</code>条记录，
+                                        总共<code>{{limitData.nums}}</code>条记录 每页显示
+                                        <input type="text" v-model="limitData.line" style="width: 30px;"
+                                            @blur="beanPosition_change()"> 条记录
+                                    </span>
+                                </div>
+                            </div>
+                            <!-- 修改模态框 -->
+                            <!-- <div class="modal fade" id="modelUpdate" tabindex="-1" role="dialog"
+                                aria-labelledby="modelUpdateTit" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modelUpdateTit">修改记录信息 <i
+                                                    class="fa fa-edit"></i></h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group ">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">项目名称</span>
+                                                            <input type="text" class="form-control"
+                                                                v-model="modalUpdate.p_name" placeholder="请填写该字段"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">归属处室</span>
+                                                            <select class="form-control" v-model="modalUpdate.position">
+                                                                <option selected="selected" value="0">---归属处室---
+                                                                </option>
+                                                                <option v-for="p in positionList" :value="p.value">
+                                                                    {{p.value}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">统筹类型</span>
+                                                            <select class="form-control"
+                                                                v-model="modalUpdate.overall_type">
+                                                                <option selected="selected" value="0">---选择统筹类型---
+                                                                </option>
+                                                                <option v-for="p in overall_typeList" :value="p.value">
+                                                                    {{p.value}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">审核金额</span>
+                                                            <input type="text" v-model="modalUpdate.examine_money"
+                                                                class="form-control" placeholder="请填写该字段" required>
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-cny"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">立项时间</span>
+                                                            <input type="date" v-model="modalUpdate.approval_time"
+                                                                class="form-control" />
+                                                            <span class="input-group-addon">
+                                                                <i class="fa fa-calendar"></i>
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">取消</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                @click="updateSubmit()">提交</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> -->
+                            <!-- 修改项目模态框 -->
+                            <div class="modal fade" id="modelUpdate" tabindex="-1" role="dialog"
+                                aria-labelledby="modelUpdateTit" aria-hidden="true">
+                                <div class="modal-dialog" role="document" style="width: 85%;">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modelUpdateTit">修改项目 <i class="fa fa-edit"></i>
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!-- 一 -->
+                                            <div class="row">
+
+                                                <div class="col-md-4 p-0">
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">项目名称</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.p_name"
+                                                                        placeholder="请填写该字段">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">项目状态</span>
+                                                                    <select class="form-control"
+                                                                        v-model="modalUpdate.p_tagle">
+                                                                        <option selected="selected" value="0">---项目状态---
+                                                                        </option>
+                                                                        <option v-for="p in p_tagleList"
+                                                                            :value="p.value">
+                                                                            {{p.value}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">归属处室</span>
+                                                                    <select class="form-control"
+                                                                        v-model="modalUpdate.position">
+                                                                        <option selected="selected" value="0">---归属处室---
+                                                                        </option>
+                                                                        <option v-for="item in positionList"
+                                                                            :value="item.value">
+                                                                            {{item.value}}</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">申报金额</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.declare_money"
+                                                                        placeholder="请填写该字段">
+                                                                    <span class="input-group-addon"><i
+                                                                            class="fa fa-cny"></i></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">入库时间</span>
+                                                                    <input type="date"
+                                                                        v-model="modalUpdate.warehousing_time"
+                                                                        class="form-control" />
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">入库资料路径</span>
+                                                                    <input type="date"
+                                                                        v-model="modalUpdate.warehousing_time"
+                                                                        class="form-control" />
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group"
+                                                                    v-show="fileUpdateList.warehousing">
+                                                                    <span class="input-group-addon">入库资料</span>
+                                                                    <input type="file" name="file"
+                                                                        id="upload_warehousing"
+                                                                        @change="fileUpload('upload_warehousing')"
+                                                                        class="form-control">
+                                                                    <span class="input-group-addon"><a
+                                                                            @click="fileUpdateTagle('warehousing')"
+                                                                            class="btn p-0 px-1 m-0 mbg-gray">取消</a></span>
+                                                                </div>
+                                                                <div class="input-group"
+                                                                v-show="!fileUpdateList.warehousing">
+                                                                    <span class="input-group-addon">入库资料</span>
+                                                                    <input type="text"
+                                                                        v-model="modalUpdate.warehousing_fileName"
+                                                                        class="form-control" disabled />
+                                                                    <span class="input-group-addon"><a href="###"
+                                                                            @click="fileUpdateTagle('warehousing')"
+                                                                            title="点击重新上传文件"><i
+                                                                                class="fa fa-file"></i></a></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">审核金额</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.examine_money"
+                                                                        placeholder="请填写该字段">
+                                                                    <span class="input-group-addon"><i
+                                                                            class="fa fa-cny"></i></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">立项时间</span>
+                                                                    <input type="date"
+                                                                        v-model="modalUpdate.approval_time"
+                                                                        class="form-control" />
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group" v-show="fileUpdateList.approval">
+                                                                    <span class="input-group-addon">立项资料</span>
+                                                                    <input type="file" name="file" id="upload_approval"
+                                                                        @change="fileUpload('upload_approval')"
+                                                                        class="form-control">
+                                                                    <span class="input-group-addon"><a
+                                                                            @click="fileUpdateTagle('approval')"
+                                                                            class="btn p-0 px-1 m-0 mbg-gray">取消</a></span>
+                                                                </div>
+                                                                <div class="input-group"
+                                                                v-show="!fileUpdateList.approval">
+                                                                    <span class="input-group-addon">立项资料</span>
+                                                                    <input type="text"
+                                                                        v-model="modalUpdate.approval_fileName"
+                                                                        class="form-control" disabled />
+                                                                    <span class="input-group-addon"><a href="###"
+                                                                            @click="fileUpdateTagle('approval')"
+                                                                            title="点击重新上传文件"><i
+                                                                                class="fa fa-file"></i></a></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">统筹类型</span>
+                                                                    <select class="form-control"
+                                                                        v-model="modalUpdate.overall_type">
+                                                                        <option selected="selected" value="0">---统筹类型---
+                                                                        </option>
+                                                                        <option v-for="p in overall_typeList"
+                                                                            :value="p.value">
+                                                                            {{p.value}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">供应商</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.contractor"
+                                                                        placeholder="请填写该字段">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-md-4 p-0">
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">中标金额</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.bid_money"
+                                                                        placeholder="请填写该字段">
+                                                                    <span class="input-group-addon"><i
+                                                                            class="fa fa-cny"></i></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">中标时间</span>
+                                                                    <input type="date" v-model="modalUpdate.bid_time"
+                                                                        class="form-control" />
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group" v-show="fileUpdateList.bid">
+                                                                    <span class="input-group-addon">中标资料</span>
+                                                                    <input type="file" name="file" id="upload_bid"
+                                                                        @change="fileUpload('upload_bid')"
+                                                                        class="form-control">
+                                                                    <span class="input-group-addon"><a
+                                                                            @click="fileUpdateTagle('bid')"
+                                                                            class="btn p-0 px-1 m-0 mbg-gray">取消</a></span>
+                                                                </div>
+                                                                <div class="input-group" v-show="!fileUpdateList.bid">
+                                                                    <span class="input-group-addon">中标资料</span>
+                                                                    <input type="text"
+                                                                        v-model="modalUpdate.bid_fileName"
+                                                                        class="form-control" disabled />
+                                                                    <span class="input-group-addon"><a href="###"
+                                                                            @click="fileUpdateTagle('bid')"
+                                                                            title="点击重新上传文件"><i
+                                                                                class="fa fa-file"></i></a></span>
+                                                                </div>
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">验收初步意见</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.acceBefore_opinion"
+                                                                        placeholder="请填写该字段">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">预验收时间</span>
+                                                                    <input type="date"
+                                                                        v-model="modalUpdate.acceBefore_time"
+                                                                        class="form-control" />
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group"
+                                                                v-show="fileUpdateList.acceBefore">
+                                                                    <span class="input-group-addon">预验收资料</span>
+                                                                    <input type="file" name="file"
+                                                                        id="upload_acceBefore"
+                                                                        @change="fileUpload('upload_acceBefore')"
+                                                                        class="form-control">
+                                                                    <span class="input-group-addon"><a
+                                                                            @click="fileUpdateTagle('acceBefore')"
+                                                                            class="btn p-0 px-1 m-0 mbg-gray">取消</a></span>
+                                                                </div>
+                                                                <div class="input-group"
+                                                                v-show="!fileUpdateList.acceBefore">
+                                                                    <span class="input-group-addon">预验收资料</span>
+                                                                    <input type="text"
+                                                                        v-model="modalUpdate.acceBefore_fileName"
+                                                                        class="form-control" disabled />
+                                                                    <span class="input-group-addon"><a href="###"
+                                                                            @click="fileUpdateTagle('acceBefore')"
+                                                                            title="点击重新上传文件"><i
+                                                                                class="fa fa-file"></i></a></span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">是否同意验收</span>
+                                                                    <select class="form-control"
+                                                                        v-model="modalUpdate.is_acceBefore">
+                                                                        <option selected="selected" value="0">不同意
+                                                                        </option>
+                                                                        <option value="1">同意</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">验收时间</span>
+                                                                    <input type="date" v-model="modalUpdate.acce_time"
+                                                                        class="form-control" />
+                                                                    <span class="input-group-addon">
+                                                                        <i class="fa fa-calendar"></i>
+                                                                    </span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">用户方意见</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.acce_user_opinion"
+                                                                        placeholder="请填写该字段">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">建设方意见</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.acce_build_opinion"
+                                                                        placeholder="请填写该字段">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">组织方意见</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.acce_organ_opinion"
+                                                                        placeholder="请填写该字段">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+
+                                                <div class="col-md-4 p-0">
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                
+                                                                <div class="input-group"
+                                                                v-show="fileUpdateList.acce">
+                                                                    <span class="input-group-addon">验收报告资料</span>
+                                                                    <input type="file" name="file"
+                                                                        id="upload_acce"
+                                                                        @change="fileUpload('upload_acce')"
+                                                                        class="form-control">
+                                                                    <span class="input-group-addon"><a
+                                                                            @click="fileUpdateTagle('acce')"
+                                                                            class="btn p-0 px-1 m-0 mbg-gray">取消</a></span>
+                                                                </div>
+                                                                <div class="input-group"
+                                                                v-show="!fileUpdateList.acce">
+                                                                    <span class="input-group-addon">验收报告资料</span>
+                                                                    <input type="text"
+                                                                        v-model="modalUpdate.acce_fileName"
+                                                                        class="form-control" disabled />
+                                                                    <span class="input-group-addon"><a href="###"
+                                                                            @click="fileUpdateTagle('acce')"
+                                                                            title="点击重新上传文件"><i
+                                                                                class="fa fa-file"></i></a></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">验收结论</span>
+                                                                    <select class="form-control"
+                                                                        v-model="modalUpdate.acce_result">
+                                                                        <option selected="selected" value="0">不通过验收
+                                                                        </option>
+                                                                        <option value="1">通过验收</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">应付款</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.payable_money"
+                                                                        placeholder="请填写该字段">
+                                                                    <span class="input-group-addon"><i
+                                                                            class="fa fa-cny"></i></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">已付款</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.payment_money"
+                                                                        placeholder="请填写该字段">
+                                                                    <span class="input-group-addon"><i
+                                                                            class="fa fa-cny"></i></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">项目付款状态</span>
+                                                                    <select class="form-control"
+                                                                        v-model="modalUpdate.planning_type">
+                                                                        <option selected="selected" value="">
+                                                                            ---项目付款状态---</option>
+                                                                        <option value="未付款">未付款</option>
+                                                                        <option value="已付部分款">已付部分款</option>
+                                                                        <option value="已付全款">已付全款</option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">付款进度</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.progress"
+                                                                        placeholder="请填写该字段">
+                                                                    <span class="input-group-addon">%</span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">付款约定信息</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.payment_agreement"
+                                                                        placeholder="请填写该字段">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">补进付款信息</span>
+                                                                    <input type="text" class="form-control"
+                                                                        v-model="modalUpdate.supplementary_Payment"
+                                                                        placeholder="请填写该字段">
+
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group ">
+                                                        <div class="row">
+                                                            <div class="col-md-1"></div>
+                                                            <div class="col-md-10">
+                                                                <div class="input-group"
+                                                                v-show="fileUpdateList.payment">
+                                                                    <span class="input-group-addon">付款约定附件</span>
+                                                                    <input type="file" name="file"
+                                                                        id="upload_payment"
+                                                                        @change="fileUpload('upload_payment')"
+                                                                        class="form-control">
+                                                                    <span class="input-group-addon"><a
+                                                                            @click="fileUpdateTagle('payment')"
+                                                                            class="btn p-0 px-1 m-0 mbg-gray">取消</a></span>
+                                                                </div>
+                                                                <div class="input-group"
+                                                                v-show="!fileUpdateList.payment">
+                                                                    <span class="input-group-addon">付款约定附件</span>
+                                                                    <input type="text"
+                                                                        v-model="modalUpdate.payment_fileName"
+                                                                        class="form-control" disabled />
+                                                                    <span class="input-group-addon"><a href="###"
+                                                                            @click="fileUpdateTagle('payment')"
+                                                                            title="点击重新上传文件"><i
+                                                                                class="fa fa-file"></i></a></span>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-md-1"></div>
+                                                        </div>
+                                                    </div>
+
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">取消</button>
+                                            <button type="button" class="btn btn-primary" @click="updateSubmit()"
+                                                data-dismiss="modal">提交</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 过滤模态框 -->
+                            <div class="modal fade" id="modelChange" tabindex="-1" role="dialog"
+                                aria-labelledby="modelChangeTit" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modelChangeTit">过滤条件选择 <i
+                                                    class="fa fa-reorder"></i>
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group mt-1">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">项目状态</span>
+                                                            <select class="form-control" @change="beanPosition_change()"
+                                                                v-model="beanChange.p_tagle">
+                                                                <option selected="selected" value="0">---项目状态---
+                                                                </option>
+                                                                <option v-for="p in p_tagleList" :value="p.value">
+                                                                    {{p.value}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-1">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">归属处室</span>
+                                                            <select class="form-control" @change="beanPosition_change()"
+                                                                v-model="beanChange.position">
+                                                                <option selected="selected" value="0">---归属处室---
+                                                                </option>
+                                                                <option v-for="p in positionList" :value="p.key">
+                                                                    {{p.value}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-1">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">年份</span>
+                                                            <select class="form-control" @change="beanPosition_change()"
+                                                                v-model="beanChange.warehousing_time">
+                                                                <option selected="selected" value="0">---选择年份---
+                                                                </option>
+                                                                <option value="2019">2019年</option>
+                                                                <option value="2018">2018年</option>
+                                                                <option value="2017">2017年</option>
+                                                                <option value="2016">2016年</option>
+                                                                <option value="2015">2015年</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group mt-1">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">统筹类型</span>
+                                                            <select class="form-control" @change="beanPosition_change()"
+                                                                v-model="beanChange.overall_type">
+                                                                <option selected="selected" value="0">---统筹类型---
+                                                                </option>
+                                                                <option v-for="p in overall_typeList" :value="p.key">
+                                                                    {{p.value}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <!-- 列表显示模态框 -->
+                            <div class="modal fade" id="modelShow" tabindex="-1" role="dialog"
+                                aria-labelledby="modelShowTit" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modelShowTit">列表选择显示 <i class="fa fa-eye"></i>
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!--  -->
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.p_id == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('p_id', '0')"> ID </button>
+                                                                <button v-if="modalShow.shows.p_id == '0'"
+                                                                    class="btn btn-default btn-block"
+                                                                    @click="change_shows('p_id', '1')"> ID </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.p_name == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('p_name', '0')"> 项目名称 </button>
+                                                                <button v-if="modalShow.shows.p_name == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('p_name', '1')"> 项目名称 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.p_tagle == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('p_tagle', '0')"> 项目状态
+                                                                </button>
+                                                                <button v-if="modalShow.shows.p_tagle == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('p_tagle', '1')"> 项目状态
+                                                                </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.position == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('position', '0')">
+                                                                    归属处室 </button>
+                                                                <button v-if="modalShow.shows.position == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('position', '1')">
+                                                                    归属处室 </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <!-- 入库列表 -->
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="row">
+
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.declare_money == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('declare_money', '0')">
+                                                                    申报金额
+                                                                </button>
+                                                                <button v-if="modalShow.shows.declare_money == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('declare_money', '1')">
+                                                                    申报金额 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.warehousing_time == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('warehousing_time', '0')">
+                                                                    入库时间
+                                                                </button>
+                                                                <button v-if="modalShow.shows.warehousing_time == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('warehousing_time', '1')">
+                                                                    入库时间 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button
+                                                                    v-if="modalShow.shows.warehousing_fileName == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('warehousing_fileName', '0')">
+                                                                    入库文件
+                                                                </button>
+                                                                <button
+                                                                    v-if="modalShow.shows.warehousing_fileName == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('warehousing_fileName', '1')">
+                                                                    入库文件 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.examine_money == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('examine_money', '0')">
+                                                                    审核金额 </button>
+                                                                <button v-if="modalShow.shows.examine_money == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('examine_money', '1')">
+                                                                    审核金额 </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <!-- 立项列表 -->
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="row">
+
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.approval_time == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('approval_time', '0')">
+                                                                    立项时间
+                                                                </button>
+                                                                <button v-if="modalShow.shows.approval_time == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('approval_time', '1')">
+                                                                    立项时间 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.approval_fileName == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('approval_fileName', '0')">
+                                                                    立项资料
+                                                                </button>
+                                                                <button v-if="modalShow.shows.approval_fileName == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('approval_fileName', '1')">
+                                                                    立项资料 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.overall_type == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('overall_type', '0')">
+                                                                    统筹类型
+                                                                </button>
+                                                                <button v-if="modalShow.shows.overall_type == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('overall_type', '1')">
+                                                                    统筹类型 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.contractor == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('contractor', '0')">
+                                                                    供应商
+                                                                </button>
+                                                                <button v-if="modalShow.shows.contractor == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('contractor', '1')">
+                                                                    供应商 </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <!-- 督办列表 -->
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.bid_money == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('bid_money', '0')">
+                                                                    中标金额 </button>
+                                                                <button v-if="modalShow.shows.bid_money == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('bid_money', '1')">
+                                                                    中标金额 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.bid_time == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('bid_time', '0')">
+                                                                    中标时间
+                                                                </button>
+                                                                <button v-if="modalShow.shows.bid_time == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('bid_time', '1')">
+                                                                    中标时间 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.bid_fileName == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('bid_fileName', '0')">
+                                                                    中标资料
+                                                                </button>
+                                                                <button v-if="modalShow.shows.bid_fileName == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('bid_fileName', '1')">
+                                                                    中标资料 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.acceBefore_opinion == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('acceBefore_opinion', '0')">
+                                                                    验收初步意见
+                                                                </button>
+                                                                <button v-if="modalShow.shows.acceBefore_opinion == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('acceBefore_opinion', '1')">
+                                                                    验收初步意见 </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.acceBefore_time == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('acceBefore_time', '0')">
+                                                                    预验收时间 </button>
+                                                                <button v-if="modalShow.shows.acceBefore_time == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('acceBefore_time', '1')">
+                                                                    预验收时间 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button
+                                                                    v-if="modalShow.shows.acceBefore_fileName == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('acceBefore_fileName', '0')">
+                                                                    预验收文档
+                                                                </button>
+                                                                <button
+                                                                    v-if="modalShow.shows.acceBefore_fileName == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('acceBefore_fileName', '1')">
+                                                                    预验收文档 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.is_acceBefore == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('is_acceBefore', '0')">
+                                                                    是否同意验收
+                                                                </button>
+                                                                <button v-if="modalShow.shows.is_acceBefore == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('is_acceBefore', '1')">
+                                                                    是否同意验收 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.acce_time == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('acce_time', '0')">
+                                                                    验收时间
+                                                                </button>
+                                                                <button v-if="modalShow.shows.acce_time == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('acce_time', '1')">
+                                                                    验收时间 </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.acce_user_opinion == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('acce_user_opinion', '0')">
+                                                                    用户方意见 </button>
+                                                                <button v-if="modalShow.shows.acce_user_opinion == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('acce_user_opinion', '1')">
+                                                                    用户方意见 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.acce_build_opinion == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('acce_build_opinion', '0')">
+                                                                    建设方意见
+                                                                </button>
+                                                                <button v-if="modalShow.shows.acce_build_opinion == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('acce_build_opinion', '1')">
+                                                                    建设方意见 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.acce_organ_opinion == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('acce_organ_opinion', '0')">
+                                                                    组织方意见
+                                                                </button>
+                                                                <button v-if="modalShow.shows.acce_organ_opinion == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('acce_organ_opinion', '1')">
+                                                                    组织方意见 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.acce_fileName == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('acce_fileName', '0')">
+                                                                    验收报告文档
+                                                                </button>
+                                                                <button v-if="modalShow.shows.acce_fileName == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('acce_fileName', '1')">
+                                                                    验收报告文档 </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.acce_result == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('acce_result', '0')">
+                                                                    验收结论 </button>
+                                                                <button v-if="modalShow.shows.acce_result == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('acce_result', '1')">
+                                                                    验收结论 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.payable_money == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('payable_money', '0')">
+                                                                    应付款
+                                                                </button>
+                                                                <button v-if="modalShow.shows.payable_money == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('payable_money', '1')">
+                                                                    应付款 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.payment_money == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('payment_money', '0')">
+                                                                    已付款
+                                                                </button>
+                                                                <button v-if="modalShow.shows.payment_money == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('payment_money', '1')">
+                                                                    已付款 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.progress == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('progress', '0')">
+                                                                    付款进度
+                                                                </button>
+                                                                <button v-if="modalShow.shows.progress == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('progress', '1')">
+                                                                    付款进度 </button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.payment_agreement == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('payment_agreement', '0')">
+                                                                    付款约定信息 </button>
+                                                                <button v-if="modalShow.shows.payment_agreement == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('payment_agreement', '1')">
+                                                                    付款约定信息 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button
+                                                                    v-if="modalShow.shows.supplementary_Payment == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('supplementary_Payment', '0')">
+                                                                    补进付款信息 </button>
+                                                                <button
+                                                                    v-if="modalShow.shows.supplementary_Payment == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('supplementary_Payment', '1')">
+                                                                    补进付款信息 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.payment_fileName == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('payment_fileName', '0')">
+                                                                    付款附件 </button>
+                                                                <button v-if="modalShow.shows.payment_fileName == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('payment_fileName', '1')">
+                                                                    付款附件 </button>
+                                                            </div>
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.planning_type == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('planning_type', '0')">
+                                                                    项目付款状态 </button>
+                                                                <button v-if="modalShow.shows.planning_type == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('planning_type', '1')">
+                                                                    项目付款状态 </button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="row">
+                                                            <div class="col-md-3">
+                                                                <button v-if="modalShow.shows.document == '1'"
+                                                                    class="btn btn-info btn-block "
+                                                                    @click="change_shows('document', '0')">
+                                                                    资料序号 </button>
+                                                                <button v-if="modalShow.shows.document == '0'"
+                                                                    class="btn btn-default btn-block "
+                                                                    @click="change_shows('document', '1')">
+                                                                    资料序号 </button>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-secondary"
+                                                data-dismiss="modal">取消</button>
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                @click="ShowSubmit()">提交</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+            </section>
+            <!-- 右侧内容界面-记录列表 -->
+            <section class="content" v-if="!contentTagle">
+
+                <n-content-project v-on:return="contentReturn" :list="listHT" :project="projectContent"
+                    :modelht="moldeHt" v-on:projectht="projectHt" v-on:removeht="removeHt" :listdata="listData">
+                </n-content-project>
+
+            </section>
+
+        </div>
+
+        <!-- 回到顶部 -->
+        <n-nav-gotop></n-nav-gotop>
+
+        <!-- 底部导航栏 -->
+        <n-nav-footer></n-nav-footer>
+
+
+    </div>
+
+    <!-- REQUIRED JS SCRIPTS -->
+
+    <!-- jQuery 2.1.4 -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- Chart.js -->
+    <script src="plugins/chartjs/Chart.min.js"></script>
+    <!-- FastClick -->
+    <!-- <script src="plugins/fastclick/fastclick.min.js"></script> -->
+
+    <!-- 界面动态显示隐藏 -->
+    <script src="plugins/dist/js/app.min.js"></script>
+    <!-- 弹出框插件 toastr.min.js -->
+    <script src="plugins/toastr/toastr.min.js"></script>
+
+    <!-- 加载Vue公共模块以及页面模块 -->
+    <script src="js/vue/commer/vue_commer.js"></script>
+    <script src="js/vue/overview/project.js"></script>
+
+    <script src="js/commer.js"></script>
+</body>
+
+</html>
