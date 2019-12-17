@@ -7,12 +7,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import io.swagger.annotations.Api;
+
 /**
  * home控制器
  * @author Charlene
  *
  */
-
+@Api(value = "home控制器",description ="home控制器")
 @Controller
 public class HomeController {
 	

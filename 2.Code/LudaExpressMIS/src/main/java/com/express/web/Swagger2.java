@@ -45,7 +45,7 @@ public class Swagger2 {
 	 */
 	private ApiInfo apiInfo() {
 		return new ApiInfoBuilder()
-				.title("KaoQingMIS-Swagger2构建RESTful APIs")
+				.title("MIS-Swagger2构建restful APIs")
 				.description("更多请关注 -link")
 				.termsOfServiceUrl("")
 				.version("2.0.2")
