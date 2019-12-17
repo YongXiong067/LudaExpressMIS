@@ -15,7 +15,7 @@ new Vue({
             username: '',
             sex: '',
             phone: '',
-            img_src: '',
+            img_src: 'images/img.jpg',
             last_logintime: '',
             rol: {
                 id: '',
@@ -47,16 +47,16 @@ new Vue({
         pagePosition: {
             parent_id: 1,
             id: 12,
-            title: '项目入库',
+            title: '用户管理',
             text: '',
             position: [
                 {
-                    name: '立项',
+                    name: '账号',
                     img: 'fa fa-edit',
                     url: 'javaScript:void(0);'
                 },
                 {
-                    name: '项目入库',
+                    name: '用户管理',
                     img: '',
                     url: 'projectWarehousing.html'
                 }
@@ -154,7 +154,7 @@ new Vue({
         //正常验证
         inputText: function (value) {
             if (value != '') {
-                
+
             } else {
                 toastr.warning("内容不能为空!");
             }
@@ -648,11 +648,11 @@ new Vue({
          * 添加数据提交
          */
         addSubmit: function () {
-            if(this.modalAdd.warehousing_time == '' || this.modalAdd.p_name == ''|| this.modalAdd.declare_money == '' || this.modalAdd.position == 0){
+            if (this.modalAdd.warehousing_time == '' || this.modalAdd.p_name == '' || this.modalAdd.declare_money == '' || this.modalAdd.position == 0) {
                 toastr.warning('请填写完整的信息！');
                 return false;
             }
-            
+
             var name = '';
             //判断文件是否非空
             if ($('#uploadFile')[0].files[0] != null) {
@@ -665,7 +665,7 @@ new Vue({
             axios.post(this.apiurl + 'api/v2/project/warehousing/save', this.modalAdd)
                 .then(
                     (res) => {
-                        if(res.data){
+                        if (res.data) {
                             toastr.success('添加成功！');
                             this.modalAdd = {          //添加模态框
                                 p_name: '',
@@ -677,9 +677,9 @@ new Vue({
                                 document: '',
                                 p_tagle: '项目入库'
                             },
-                            this.numsByPosition();
+                                this.numsByPosition();
                             this.listlimit();
-                        }else{
+                        } else {
                             toastr.danger('添加失败！');
                         }
                     }
@@ -687,7 +687,7 @@ new Vue({
                 .catch(
                     (error) => {
                         console.log(error);
-                        
+
                     }
                 );
         },
@@ -740,27 +740,27 @@ new Vue({
          * @param {} id 
          */
         deleteProject: function (id) {
-        	if (confirm("是否确定删除？")) {
-            axios.get(this.apiurl + 'api/v2/project/delete',
-                {
-                    params: {
-                        p_id: id,
-                    }
-                })
-                .then(
-                    (res) => {
-                        toastr.success('删除成功！');
-                        this.numsByPosition();
-                        this.listlimit();
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                        toastr.danger('删除失败！');
-                    }
-                );
-        	}
+            if (confirm("是否确定删除？")) {
+                axios.get(this.apiurl + 'api/v2/project/delete',
+                    {
+                        params: {
+                            p_id: id,
+                        }
+                    })
+                    .then(
+                        (res) => {
+                            toastr.success('删除成功！');
+                            this.numsByPosition();
+                            this.listlimit();
+                        }
+                    )
+                    .catch(
+                        (error) => {
+                            console.log(error);
+                            toastr.danger('删除失败！');
+                        }
+                    );
+            }
         },
 
         /**
@@ -845,13 +845,16 @@ new Vue({
         //- api请求 -
         //-------------
         //HTTP GET 请求-获得当前登录用户信息
-        axios.get(this.apiurl + 'api/v2/user/getLogin')
+        axios.get(this.apiurl + 'api/user/getUser')
             .then(
                 (res) => {
-                    if (res.data.id == 0) {
+                    if (res.data.userId == 0) {
                         window.location.href = "login.html";
                     } else {
-                        this.user = res.data;
+                        this.user.id = res.data.userId;
+                        this.user.userid = res.data.userName;
+                        this.user.username = res.data.userName;
+
                     }
                 }
             )
@@ -883,15 +886,9 @@ new Vue({
         /**
          * 获得分页详细列表
          */
-        axios.post(this.apiurl + 'api/v2/project/getListByLimit',
+        axios.post(this.apiurl + 'api/user/getAllUser',
             {
-                state: '1',
-                p_tagle: this.ProjectTagle,
-                page_no: this.limitData.page,
-                page_line: this.limitData.line,
-                position: this.beanChange.beanPosition,
-                warehousing_time: this.beanChange.beanYear,
-                search: this.beanSearch
+                
             })
             .then(
                 (res) => {
