@@ -33,17 +33,22 @@ public interface SysUserMapper {
 	 * @param p_tagle
 	 * @return
 	 */
-	@Select("select "+ param +" from sys_user order by userId desc")
+	@Select("<script>"
+			+ "select "+ param +" from sys_user "	
+			+ "where 1=1 "
+			+"<if test= 'userName != null'> and userName like %#{search}% </if>"
+			+"<if test= 'phone != null'> or phone like %#{search}% </if>"
+			+"</script>")
 	@Results(id="SysUserMap",
 	value={
-		@Result(id=true,property="id",column="id"),
+		@Result(id=true,property="userId",column="userId"),
 		@Result(property="userName",column="userName"),
 		@Result(property="password",column="password"),
 		@Result(property="phone",column="phone"),
-		@Result(property="rolu",column="rolu"),
+		@Result(property="rolu",column="rolu")
 		}
 	)
-	List<SysUser> listByAll();
+	List<SysUser> listByAll(@Param("search") String search);
 	
 	/**
 	 * 根据账号密码获取到用户信息
@@ -52,29 +57,35 @@ public interface SysUserMapper {
 	 */
 	@Select("select "+ param +" from sys_user where userName = #{userName} and password = #{password}")
 	SysUser getSysUserInfo(@Param("userName") String userName,@Param("password") String password);
-
+	/**
+	 * 根据账号密码获取到用户信息
+	 * @param p_id
+	 * @return
+	 */
+	@Select("select "+ param +" from sys_user where userName = #{userName}")
+	SysUser validateName(@Param("userName") String userName);
 	/**
 	 * 根据ID获取到用户信息
 	 * @param p_id
 	 * @return
 	 */
 	@Select("select "+ param +" from sys_user where userId = #{userId}")
-	SysUser getLogin(@Param("userId") String userId);
+	SysUser getLogin(@Param("userId") long userId);
 
 	/**
 	 * 插入记录
 	 * @param logModel
 	 */
 	@Insert("insert into sys_user(userName, password, phone, rolu) value(#{userName}, #{password}, #{phone}, #{rolu})")
-	void insertLog(SysUser userModel);
+	void insertUser(SysUser userModel);
 	
 	/**
-	 * 批量删除用户
+	 * 删除用户
 	 * @param ids
 	 * @return
 	 */
-	@Delete("DELETE from sys_user where userId in #{ids}")
-	boolean deleteUserById(long[] ids);
+	@Delete("DELETE from sys_user where userId = #{userId}")
+	boolean deleteById(long userId);
 	
 	/**
 	 * 修改用户信息
