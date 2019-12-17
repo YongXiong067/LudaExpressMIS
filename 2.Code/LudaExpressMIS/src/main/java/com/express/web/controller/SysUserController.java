@@ -16,13 +16,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.express.web.model.SysUser;
 import com.express.web.service.SysUserService;
 
+import io.swagger.annotations.Api;
+
 
 /**
  * 用户控制器
  * @author Charlene
  *
  */
-
+@Api(value = "用户控制器",description ="用户控制器")
 @Controller
 @RequestMapping("/api/user")
 public class SysUserController {

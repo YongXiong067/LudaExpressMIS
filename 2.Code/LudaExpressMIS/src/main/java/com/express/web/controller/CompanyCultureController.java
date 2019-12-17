@@ -15,12 +15,17 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.express.web.model.CompanyCulture;
 import com.express.web.service.CompanyCultureService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+
 /**
  * 企业文化管理控制器
  * @author Administrator
  *
  */
 @Controller
+@Api(value = "企业文化控制器",description ="企业文化控制器")
 @RequestMapping("/api/company")
 public class CompanyCultureController {
 	@Autowired
@@ -28,15 +33,17 @@ public class CompanyCultureController {
 	@Autowired
 	HttpServletRequest request;
 
+	@ApiOperation(value = "getCulture", notes = "查询出企业文化列表")
 	@PostMapping("/getCulture")
 	@ResponseBody
-	public List<CompanyCulture> getCulture(@RequestParam String search){
+	public List<CompanyCulture> getCulture(@ApiParam(value = "查询参数，可根据标题或者内容自动匹配" ,required=false )@RequestParam String search){
 		return cultureService.listByAll(search);
 	}
 
+	@ApiOperation(value = "insertCulture", notes = "添加企业文化")
 	@PostMapping("/insertCulture")
 	@ResponseBody
-	public boolean insertCulture(@RequestBody CompanyCulture culture){
+	public boolean insertCulture(@ApiParam(value = "企业文化实体类" ,required=true )@RequestBody CompanyCulture culture){
 		boolean bool = false;
 		try {
 			cultureService.insert(culture);
@@ -47,9 +54,10 @@ public class CompanyCultureController {
 		return bool;
 	}
 
+	@ApiOperation(value = "updateCulture", notes = "修改企业文化")
 	@PostMapping("/updateCulture")
 	@ResponseBody
-	public boolean updateCulture(@RequestBody CompanyCulture culture){
+	public boolean updateCulture(@ApiParam(value = "根据企业文化的id修改企业文化内容" ,required=true )@RequestBody CompanyCulture culture){
 		boolean bool = false;
 		try {
 			cultureService.update(culture);
@@ -60,9 +68,10 @@ public class CompanyCultureController {
 		return bool;
 	}
 
+	@ApiOperation(value = "deleteCulture", notes = "删除企业文化")
 	@PostMapping("/deleteCulture")
 	@ResponseBody
-	public boolean deleteCulture(@RequestParam long id) {
+	public boolean deleteCulture(@ApiParam(value = "根据企业文化的id删除企业文化内容" ,required=true )@RequestParam long id) {
 		boolean bool = false;
 		try {
 			cultureService.delete(id);
