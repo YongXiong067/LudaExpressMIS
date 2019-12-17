@@ -2,6 +2,11 @@ package com.express.web.model.order_model;
 
 import java.util.Date;
 
+/**
+ * @Author: YIHUI HE
+ * @Date: 2019/12/17
+ * @Description: 订单表
+ */
 public class orders {
     private Long orderid;
 
