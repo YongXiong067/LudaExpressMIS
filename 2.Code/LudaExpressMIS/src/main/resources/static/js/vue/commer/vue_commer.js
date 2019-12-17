@@ -72,7 +72,7 @@ Vue.component('n-nav-top', {
 		<a href="index.html" class="logo">
 			<!-- mini logo for sidebar mini 50x50 pixels -->
 			<span class="logo-mini"><i class="fa fa-envelope-o"></i></span>
-			<span class="logo-lg">省人防办项目管理系统</span>
+			<span class="logo-lg">路达快递管理系统</span>
 		</a>
 
 		<!-- 顶部导航 -->
@@ -544,10 +544,10 @@ Vue.component('n-nav-footer', {
 	<footer class="main-footer">
 		<!-- To the right -->
 		<div class="pull-right hidden-xs" >
-			版权所有 © 2015-2019 <a href="http://www.hnjzt.net/" target="block">湖南金字塔信息科技有限公司</a>
+			版权所有 © 2019-2019 <a href="http://www.hnjzt.net/" target="block">XXXX有限公司</a>
 		</div>
 		<!-- Default to the left -->
-		<span>湖南省人防办</span>
+		<span></span>
 	</footer>
 
 		`,

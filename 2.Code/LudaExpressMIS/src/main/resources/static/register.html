@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>登录</title>
+    <title>注册</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -36,54 +36,60 @@
 <body>
 
     <div class="container" id="app" v-cloak>
-        <div class="row">
-            <div class="col-md-12 col-xs-12">
-                <div id="title-desktop" class="hidden">路达快递管理系统</div>
+    	<div class="row">
+            <div class="col-md-12" style="height:80%">
+                <div id="title-desktop" class="hidden">用户注册</div>
                 <canvas id="spring-text" style="width: 100%;"></canvas>
             </div>
         </div>
-
         <div class="row" style="margin-top: 400px;">
-
             <div class="col-md-3"></div>
-            <div class="col-md-6">
+            <div class="col-md-8">
                 <div class="row">
-                    <div class="col-md-1"></div>
-                    <div class="col-md-10">
-                        <form action="" name="myform" method="post" style="opacity: 0.8;">
+                    <div class="col-md-2" style="color: white;margin-top: 7px;">
+                    	<span style="float:right;" class="require"><b style="color:red;">*</b>账号：</span></div>
+                    <div class="col-md-6">
                             <div class="form-group has-feedback">
                                 <input type="text" id="userName" class="form-control" placeholder="账号">
-                                <span class="glyphicon glyphicon-user form-control-feedback"></span>
                             </div>
-                            <div class="form-group has-feedback">
-                                <input type="password" id="userPwd" class="form-control" placeholder="密码">
-                                <span class="glyphicon glyphicon-lock form-control-feedback"></span>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-8">
-                                    <div class="checkbox icheck">
-                                        <label>
-                                            <input type="checkbox"> <span style="color: white;">记住密码</span>
-                                        </label>
-                                        <label>
-                                            <a href="register.html" id="regist"><span style="color: white;">注册账号</span></a>
-                                        </label>
-                                    </div>
-                                </div>
-                                <div class="col-xs-4">
-                                    <button type="button" onclick="mySumbit();"
-                                        class="btn btn-primary btn-block btn-flat">登录</button>
-                                </div><!-- /.col -->
-                            </div>
-                        </form>
                     </div>
                 </div>
+                <div class="row">
+                    <div class="col-md-2" style="color: white;margin-top: 7px;">
+                    	<span style="float:right;"><b style="color:red;">*</b>密码：</span></div>
+                    <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <input type="password" id="password" class="form-control" placeholder="密码">
+                            </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-2" style="color: white;margin-top: 7px;">
+						<span style="float:right;">手机号码：</span></div>
+                    <div class="col-md-6">
+                            <div class="form-group has-feedback">
+                                <input type="text" id="phone" class="form-control" placeholder="手机号">
+                            </div>
+                    </div>
+                </div>
+                <div class="row" style="padding-top:50px;">
+                <div class="col-md-2" style="color: white;"></div>
+	                <div class="col-xs-3">
+	                       <button type="button" id="cancel"
+	                        class="btn btn-primary btn-block btn-flat">取消</button>
+	               </div>
+	                <div class="col-xs-3">
+	                    <button type="button" id="register"
+	                        class="btn btn-primary btn-block btn-flat">注册</button>
+	                </div><!-- /.col -->
+               </div>
+                
+                            
 
             </div>
         </div>
         <div class="row" style=" text-align: center; ">
             <div class="col-md-3">
-
             </div>
             <div class="col-md-6" style="position: absolute; bottom: 40px; left: 25%;">
                 <footer>
@@ -111,43 +117,42 @@
     <script src="js/login/login.js"></script>
 
     <script>
-        var isLogin = false; //是否正在登录标志位，防止重复提交登录请求
-        var apiurl = "";
-        function isEmpty(strings) {
-            return strings.replace(/(^\s*)|(\s*$)/g, "").length == 0;
-        }
-		$("#regist").click(function(){
-			
-		});
-        //登录
-        function mySumbit() {
-            var username = $("#userName").val();
-            var userpwd = $("#userPwd").val();
-
-            // 用户名为空
-            if (isEmpty(username)) {
+    var apiurl = "";
+    	$("#cancel").click(function(){
+    		//返回上一页
+    		window.history.back();
+    	});
+    	$("#register").click(function(){
+    		var userName = $("#userName").val();
+    		var password = $("#password").val();
+    		var phone = $("#phone").val();
+    		// 用户名为空
+            if (userName == "") {
                 toastr.error("账号不能为空！");
                 return;
             }
             // 密码为空
-            if (isEmpty(userpwd)) {
+            if (password == "") {
                 toastr.error('密码不能为空！');
                 return;
             }
+            if(phone.length != 11){
+            	 toastr.error('手机格式不正确！');
+                 return;
+            }
             $.ajax({
-                url: apiurl + "/api/user/login",
+                url: apiurl + "/api/user/register",
                 type: "post",
                 contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({ userName: username, password: userpwd }),
+                data: JSON.stringify({ userName: userName, password: password,phone: phone }),
                 success: function (data) {
-                    isLogin = false;
                     if (data == 11) {
-                        toastr.success("正在登录......");
+                        toastr.success("注册成功......");
                         //动态懒加载js文件，提高页面加载速度
                         //setTimeout("loadJS('js/login/circleMagic.min.js', function () {$('.header').circleMagic({elem: '.header',radius: 30,densety: .6,color: 'rgba(255,255,255, .4)',clearOffset: .3});})", 1);
-                        setTimeout("{window.location.href='welcome.html'}", 1500);
+                        setTimeout("{window.location.href='login.html'}", 1500);
                     }else{
-                        toastr.error("用户名或密码错误！");
+                        toastr.error("用户名已存在，请重新创建！");
                     }
                 },
                 error: function () {
@@ -155,18 +160,7 @@
                     toastr.error("用户名或密码错误！");
                 }
             });
-        }
-        $(function () {
-            // 绑定回车键登录
-            $(document).keydown(function (e) {
-                if (e.keyCode === 13) {
-                    mySumbit();
-                }
-            });
-
-
-        });
-
+    	});
         //动态加载
         function loadJS(url, callback) {
             var script = document.createElement('script'),
