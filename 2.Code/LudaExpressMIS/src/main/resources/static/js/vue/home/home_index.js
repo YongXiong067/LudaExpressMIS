@@ -14,11 +14,10 @@ new Vue({
             username: '',
             sex: '',
             phone: '',
-            img_src: '',
+            img_src: 'images/img.jpg',
             last_logintime: '',
             rol: {
-                id: '',
-                name: ''
+                
             }
         },
 
@@ -73,6 +72,7 @@ new Vue({
         htTagle: false,
     },
     methods: {
+        
         /**
          * 注销登录
          */
@@ -128,6 +128,27 @@ new Vue({
         }
 
 
+    },
+    mounted() {
+
+        axios.get(this.apiurl + 'api/user/getUser')
+            .then(
+                (res) => {
+                    if (res.data.userId == 0) {
+                        window.location.href = "login.html";
+                    } else {
+                        this.user.id = res.data.userId;
+                        this.user.userid = res.data.userName;
+                        this.user.username = res.data.userName;
+                        if(res.data.rolu == '0'){
+
+                        }
+                    }
+                }
+            )
+            .catch(
+                (error) => { console.log(error); }
+            );
     },
     computed: {
 

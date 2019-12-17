@@ -27,13 +27,13 @@ public class CompanyCultureController {
 	CompanyCultureService cultureService;
 	@Autowired
 	HttpServletRequest request;
-	
+
 	@PostMapping("/getCulture")
 	@ResponseBody
 	public List<CompanyCulture> getCulture(@RequestParam String search){
 		return cultureService.listByAll(search);
 	}
-	
+
 	@PostMapping("/insertCulture")
 	@ResponseBody
 	public boolean insertCulture(@RequestBody CompanyCulture culture){
@@ -46,6 +46,7 @@ public class CompanyCultureController {
 		}
 		return bool;
 	}
+
 	@PostMapping("/updateCulture")
 	@ResponseBody
 	public boolean updateCulture(@RequestBody CompanyCulture culture){
@@ -58,6 +59,7 @@ public class CompanyCultureController {
 		}
 		return bool;
 	}
+
 	@PostMapping("/deleteCulture")
 	@ResponseBody
 	public boolean deleteCulture(@RequestParam long id) {

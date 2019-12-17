@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -25,11 +26,12 @@ import com.express.web.service.SysUserService;
 @Controller
 @RequestMapping("/api/user")
 public class SysUserController {
-	
+
 	@Autowired
 	SysUserService service;
 	@Autowired
 	HttpServletRequest request;
+	
 	
 
 	/**
@@ -129,5 +131,18 @@ public class SysUserController {
 			bool = false;
 		}
 		return bool;
+	}
+	
+	/**
+	 * 查询所有用户或根据条件模糊匹配查询用户
+	 * @return
+	 */
+	@GetMapping("/getUser")
+	@ResponseBody
+	public SysUser getUser(){
+		HttpSession session = request.getSession(true);
+		SysUser user = service.getLogin((long) session.getAttribute("userId"));
+		System.out.println(user.toString());
+		return user;
 	}
 }
