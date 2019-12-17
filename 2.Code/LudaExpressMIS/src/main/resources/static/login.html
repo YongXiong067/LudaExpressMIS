@@ -38,7 +38,7 @@
     <div class="container" id="app" v-cloak>
         <div class="row">
             <div class="col-md-12 col-xs-12">
-                <div id="title-desktop" class="hidden">省人防办项目管理系统</div>
+                <div id="title-desktop" class="hidden">路达快递管理系统</div>
                 <canvas id="spring-text" style="width: 100%;"></canvas>
             </div>
         </div>
@@ -65,8 +65,11 @@
                                         <label>
                                             <input type="checkbox"> <span style="color: white;">记住密码</span>
                                         </label>
+                                        <label>
+                                            <a id="regist"><span style="color: white;">注册账号</span></a>
+                                        </label>
                                     </div>
-                                </div><!-- /.col -->
+                                </div>
                                 <div class="col-xs-4">
                                     <button type="button" onclick="mySumbit();"
                                         class="btn btn-primary btn-block btn-flat">登录</button>
@@ -84,8 +87,8 @@
             </div>
             <div class="col-md-6" style="position: absolute; bottom: 40px; left: 25%;">
                 <footer>
-                    <span style="color:slategrey;">版权所有 © 2015-2019 </span> <a href="http://www.hnjzt.net/"
-                        target="block">湖南金字塔信息科技有限公司</a>
+                    <span style="color:slategrey;">版权所有 © 2015-2019 </span> <a href="http://www.baidu.com/"
+                        target="block">XXXX有限公司</a>
                 </footer>
             </div>
         </div>
@@ -113,7 +116,9 @@
         function isEmpty(strings) {
             return strings.replace(/(^\s*)|(\s*$)/g, "").length == 0;
         }
-
+		$("#regist").click(function(){
+			
+		});
         //登录
         function mySumbit() {
             var username = $("#userName").val();
@@ -129,29 +134,17 @@
                 toastr.error('密码不能为空！');
                 return;
             }
-
             $.ajax({
-                url: apiurl + "api/v2/user/getLogin",
+                url: apiurl + "/api/user/login",
                 type: "post",
-                contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({ user_name: username, password: userpwd }),
+                data: { userName: username, password: userpwd },
                 success: function (data) {
                     isLogin = false;
                     if (data == 11) {
                         toastr.success("正在登录......");
                         //动态懒加载js文件，提高页面加载速度
-                        setTimeout("loadJS('js/login/circleMagic.min.js', function () {$('.header').circleMagic({elem: '.header',radius: 30,densety: .6,color: 'rgba(255,255,255, .4)',clearOffset: .3});})", 1);
+                        //setTimeout("loadJS('js/login/circleMagic.min.js', function () {$('.header').circleMagic({elem: '.header',radius: 30,densety: .6,color: 'rgba(255,255,255, .4)',clearOffset: .3});})", 1);
                         setTimeout("{window.location.href='welcome.html'}", 1500);
-                    }else if(data == 10){
-                        toastr.success("正在登录......");
-                        setTimeout("{window.location.href='welcome.html'}", 200);
-                    }else if(data == 21){
-                        toastr.success("正在登录......");
-                        setTimeout("loadJS('js/login/circleMagic.min.js', function () {$('.header').circleMagic({elem: '.header',radius: 30,densety: .6,color: 'rgba(255,255,255, .4)',clearOffset: .3});})", 1);
-                        setTimeout("{window.location.href='index.html'}", 1000);
-                    }else if(data == 20){
-                        toastr.success("正在登录......");
-                        setTimeout("{window.location.href='index.html'}", 200);
                     }else{
                         toastr.error("用户名或密码错误！");
                     }
@@ -162,19 +155,6 @@
                 }
             });
         }
-        axios.get(this.apiurl + 'api/v2/user/getLogin')
-            .then(
-                (res) => {
-                    if (res.data.id != 0) {
-                        window.location.href = "index.html";
-                    } else {
-                        this.user = res.data;
-                    }
-                }
-            )
-            .catch(
-                (error) => { console.log(error); }
-            );
         $(function () {
             // 绑定回车键登录
             $(document).keydown(function (e) {
@@ -208,15 +188,6 @@
             script.src = url;
             document.getElementsByTagName('head')[0].appendChild(script);
         }
-
-        
-        function recordIp() {
-            //服务器端记录ip
-            axios.get(this.apiurl + 'api/v2/user/recordIp');
-        }
-
-         setTimeout("recordIp()", 2000);
-
     </script>
 </body>
 
