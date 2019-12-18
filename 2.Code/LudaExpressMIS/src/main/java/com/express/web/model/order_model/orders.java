@@ -11,7 +11,9 @@ public class orders {
     private Long orderid;
 
     private Long dotid;
-
+    
+    private Long userid;
+    
     private String sendtel;
 
     private String sendaddr;
@@ -42,7 +44,23 @@ public class orders {
         this.orderid = orderid;
     }
 
-    public Long getDotid() {
+    @Override
+	public String toString() {
+		return "orders [orderid=" + orderid + ", dotid=" + dotid + ", userid=" + userid + ", sendtel=" + sendtel
+				+ ", sendaddr=" + sendaddr + ", orderdate=" + orderdate + ", receivetel=" + receivetel
+				+ ", receiveaddr=" + receiveaddr + ", ordernum=" + ordernum + ", weight=" + weight + ", money=" + money
+				+ ", state=" + state + ", currentuser=" + currentuser + ", content=" + content + "]";
+	}
+
+	public Long getUserid() {
+		return userid;
+	}
+
+	public void setUserid(Long userid) {
+		this.userid = userid;
+	}
+
+	public Long getDotid() {
         return dotid;
     }
 
