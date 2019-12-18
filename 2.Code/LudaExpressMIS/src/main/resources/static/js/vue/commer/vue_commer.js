@@ -88,39 +88,9 @@ Vue.component('n-nav-top', {
 
 					<li class="dropdown messages-menu">
 
-						<!-- 消息提示图标按钮 
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-envelope-o"></i>
-							<span class="label label-success">4</span>
-						</a>-->
-
-						<!-- 消息提示下拉框界面 -->
-						<ul class="dropdown-menu">
-							<li class="header text-center" style="background-color: #B0E0E6;"><b>消息管理</b></li>
-							<li>
-								<ul class="menu">
-									<li v-for="(item, index) in news">
-										<a :href="'timeLine.html#'+item.id">
-											<div class="pull-left">
-												<img :src="item.user.img" class="img-circle" alt="User Image">
-											</div>
-											<h4>
-												{{item.user.realName}}
-												<small><i class="fa fa-clock-o"></i> {{item.time}}</small>
-											</h4>
-											<p>{{item.title}}</p>
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li class="footer"><a href="#">查看全部消息</a></li>
-						</ul>
-					</li>
-
-					
 
 					<!-- 系统管理 -->
-					<li class="dropdown tasks-menu ">
+					<!-- <li class="dropdown tasks-menu ">
 						<a href="###" class="dropdown-toggle" data-toggle="dropdown">
 							<i class="fa fa-gear"></i>
 						</a>
@@ -168,7 +138,7 @@ Vue.component('n-nav-top', {
 							</li>
 							
 						</ul>
-					</li>
+					</li> -->
 
 					<!-- 个人中心 -->
 					<li class="dropdown user user-menu">

@@ -10,7 +10,7 @@ new Vue({
         user: {
             id: '',
             userid: '',
-            username: '李莹娜',
+            username: 'images/img.jpg',
             sex: '',
             phone: '',
             img_src: '',
@@ -25,181 +25,7 @@ new Vue({
          * 账号权限资料
          */
         userRol: {
-            id: 1,
-            list: [
-                {
-                    id: 1,
-                    parent_id: '',
-                    name: '立项',
-                    icon_cls: 'fa fa-edit',
-                    left: 0,
-                    url: '',
-                    li: [
-                        {
-                            id: 11,
-                            parent_id: 1,
-                            name: '项目入库',
-                            icon_cls: '',
-                            left: 1,
-                            url: 'projectWarehousing.html',
-                        },
-                        {
-                            id: 12,
-                            parent_id: 1,
-                            name: '项目立项',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        },
-                        {
-                            id: 13,
-                            parent_id: 1,
-                            name: '指标登录',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        }
-                    ]
-                },
-                {
-                    id: 2,
-                    parent_id: '',
-                    name: '建设',
-                    icon_cls: 'fa fa-windows',
-                    left: 0,
-                    url: '',
-                    li: [
-                        {
-                            id: 21,
-                            parent_id: 2,
-                            name: '项目招标',
-                            icon_cls: '',
-                            left: 1,
-                            url: 'buildTendering.html',
-                        },
-                        {
-                            id: 22,
-                            parent_id: 2,
-                            name: '签订合同',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        },
-                        {
-                            id: 23,
-                            parent_id: 2,
-                            name: '项目督办',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        }
-                    ]
-                },
-                {
-                    id: 3,
-                    parent_id: '',
-                    name: '验收',
-                    icon_cls: 'fa fa-suitcase',
-                    left: 0,
-                    url: '',
-                    li: [
-                        {
-                            id: 31,
-                            parent_id: 3,
-                            name: '预验收',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        },
-                        {
-                            id: 32,
-                            parent_id: 3,
-                            name: '验收',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        }
-                    ]
-                },
-                {
-                    id: 4,
-                    parent_id: '',
-                    name: '付款',
-                    icon_cls: 'fa fa-cny',
-                    left: 0,
-                    url: '',
-                    li: [
-                        {
-                            id: 41,
-                            parent_id: 4,
-                            name: '付款进度',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        }
-                    ]
-                },
-                {
-                    id: 5,
-                    parent_id: '',
-                    name: '总览',
-                    icon_cls: 'fa fa-bar-chart-o',
-                    left: 0,
-                    url: '',
-                    li: [
-                        {
-                            id: 51,
-                            parent_id: 5,
-                            name: '项目总览',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        },
-                        {
-                            id: 52,
-                            parent_id: 5,
-                            name: '付款总览',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        }
-                    ]
-                },
-                {
-                    id: 6,
-                    parent_id: '',
-                    name: '供应商',
-                    icon_cls: 'fa fa-clone',
-                    left: 0,
-                    url: '',
-                    li: [
-                        {
-                            id: 51,
-                            parent_id: 5,
-                            name: '供应商管理',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        },
-                        {
-                            id: 52,
-                            parent_id: 5,
-                            name: '供应商申请记录',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        },
-                        {
-                            id: 53,
-                            parent_id: 5,
-                            name: '供应商账号分配',
-                            icon_cls: '',
-                            left: 1,
-                            url: '',
-                        }
-                    ]
-                }
-            ]
+
         },
 
         /**
@@ -212,36 +38,7 @@ new Vue({
         },
 
         systemNews: [
-            {
-                id: '2019-07-03-1',
-                title: '项目验收提醒！',
-                user: {
-                    id: '8',
-                    userName: 'zwl',
-                    realName: '周伟林',
-                    sex: '男',
-                    phone: '15574361955',
-                    img: 'images/img.jpg',
-                    lastLoginTime: '2019-06-03 14:52:24'
-                },
-                text: '省厅等保项目可以验收了，8月1号审核！',
-                time: '2019-07-03 17:54:11'
-            },
-            {
-                id: '2019-07-03-2',
-                title: '合同付款提醒！',
-                user: {
-                    id: '8',
-                    userName: 'zwl',
-                    realName: '周伟林',
-                    sex: '男',
-                    phone: '15574361955',
-                    img: 'images/img.jpg',
-                    lastLoginTime: '2019-06-03 14:52:24'
-                },
-                text: '合同付款合同付款合同付款合同付款合同付款！',
-                time: '2019-07-03 17:54:11'
-            },
+
         ],
 
         /**
@@ -277,27 +74,29 @@ new Vue({
         //- api请求 -
         //-------------
         //HTTP GET 请求-获得当前登录用户信息
-        axios.get(this.apiurl + 'api/v2/user/getLogin')
+        axios.get(this.apiurl + 'api/user/getUser')
             .then(
                 (res) => {
-                    this.user = res.data;
+                    this.user.id = res.data.userId;
+                    this.user.userid = res.data.userName;
+                    this.user.username = res.data.userName;
                 }
             )
             .catch(
                 (error) => { console.log(error); }
             );
         var username;
-        
+
         $.ajax({
-            url: this.apiurl + 'api/v2/user/getLogin',
+            url: this.apiurl + 'api/user/getUser',
             async: false,
             type: "GET",
             dataType: "json",
             success: function (res) {
-                username = res.username;
+                username = res.userName;
             }
         });
-        
+
 
         var S = {
             init: function () {

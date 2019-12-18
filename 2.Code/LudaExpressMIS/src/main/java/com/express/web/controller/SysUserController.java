@@ -136,7 +136,7 @@ public class SysUserController {
 	}
 	
 	/**
-	 * 查询所有用户或根据条件模糊匹配查询用户
+	 * 获取单个用户
 	 * @return
 	 */
 	@GetMapping("/getUser")
@@ -144,7 +144,6 @@ public class SysUserController {
 	public SysUser getUser(){
 		HttpSession session = request.getSession(true);
 		SysUser user = service.getLogin((long) session.getAttribute("userId"));
-		System.out.println(user.toString());
 		return user;
 	}
 }

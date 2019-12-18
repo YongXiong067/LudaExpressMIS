@@ -140,9 +140,7 @@ new Vue({
                         this.user.id = res.data.userId;
                         this.user.userid = res.data.userName;
                         this.user.username = res.data.userName;
-                        if(res.data.rolu == '0'){
-
-                        }
+                        
                     }
                 }
             )

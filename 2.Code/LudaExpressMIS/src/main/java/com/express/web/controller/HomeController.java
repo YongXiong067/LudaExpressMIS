@@ -35,15 +35,6 @@ public class HomeController {
 		
 	}
 	
-//	/**
-//	 * 首页
-//	 */
-//	@GetMapping("/index.html")
-//	public String home() {
-//		
-//		return "index.html";
-//	}
-	
 	/**
 	 * 首页
 	 */
