@@ -213,7 +213,7 @@ Vue.component('n-nav-left', {
 								name: '网点管理',
 								icon_cls: '',
 								left: 1,
-								url: 'buildSupervise.html',
+								url: 'userAccount.html',
 							}
 						]
 					},

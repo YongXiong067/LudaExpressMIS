@@ -57,10 +57,10 @@
                     <div class="col-md-3">
                         <div class="box box-solid">
                             <div class="box-header with-border">
-                                <h4 class="box-title font-size-15">账号列表</h4>
+                                <h4 class="box-title font-size-15">总公司</h4>
                                 <div class="box-tools">
                                     <button class="btn btn-box-tool font-size-12" data-toggle="modal"
-                                        data-target="#modelAdd">添加账号</button>
+                                        data-target="#modelAdd">添加分公司</button>
                                     <button class="btn btn-box-tool px-1" data-widget="collapse"><i
                                             class="fa fa-minus"></i></button>
                                 </div>
@@ -68,11 +68,10 @@
                             <div class="box-body table-responsive no-padding">
                                 <ul class="todo-list">
 
-                                    <li v-for="(item, index) in listUser.account" class="p-0 m-0">
-                                        <div class="row m-0 p-1 mbg-gray" v-if="item.id == accountChange.id">
+                                    <li v-for="(item, index) in listUser.oneList" class="p-0 m-0">
+                                        <div class="row m-0 p-1 mbg-gray" v-if="item.dotId == accountChange.dotId">
                                             <div class="col-md-8 p-0">
-                                                <a href="javascript:;" @click="setAccount(item)" :title="item.userid"
-                                                    class="color-black">
+                                                <a href="javascript:;" @click="setAccount(item)" class="color-black">
                                                     <div class="row">
                                                         <div class="col-md-1 p-0">
                                                         </div>
@@ -80,7 +79,7 @@
                                                             <i class="fa fa-circle-o text-red"></i>
                                                         </div>
                                                         <div class="col-md-9 p-0 text-oneline">
-                                                            <span>{{item.username}}</span>
+                                                            <span>{{item.dotName}}</span>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -91,7 +90,7 @@
                                                         @click="update(item)">
                                                         <i class="fa fa-edit mr-05"></i>
                                                     </a>
-                                                    <a href="javascript:;" @click="deleteSup(item.id)" title="删除">
+                                                    <a href="javascript:;" @click="deleteSup(item.dotId)" title="删除">
                                                         <i class="fa fa-trash-o mr-05"></i>
                                                     </a>
                                                 </div>
@@ -107,7 +106,7 @@
                                                             <i class="fa fa-circle-o text-light-blue"></i>
                                                         </div>
                                                         <div class="col-md-9 p-0 text-oneline">
-                                                            <span>{{item.username}}</span>
+                                                            <span>{{item.dotName}}</span>
                                                         </div>
                                                     </div>
                                                 </a>
@@ -118,7 +117,7 @@
                                                         @click="update(item)">
                                                         <i class="fa fa-edit mr-05"></i>
                                                     </a>
-                                                    <a href="javascript:;" @click="deleteUser(item.id)" title="删除">
+                                                    <a href="javascript:;" @click="deleteUser(item.dotId)" title="删除">
                                                         <i class="fa fa-trash-o mr-05"></i>
                                                     </a>
                                                 </div>
@@ -136,58 +135,46 @@
                             <div class="box-header with-border p-05">
                                 <button class="btn btn-box-tool font-size-12" @click="refreshRol()"><i
                                         class="fa fa-refresh"></i> 重置</button>
-                                <button class="btn btn-box-tool font-size-12" @click="updateSubmit()">保存权限</button>
+                                <button class="btn btn-box-tool font-size-12"data-toggle="modal"
+                                data-target="#modelAdd_"  @click="updateSubmit()">添加网点</button>
                                 <div class="box-tools">
                                     <button class="btn btn-box-tool px-1" data-widget="collapse"><i
                                             class="fa fa-minus"></i></button>
                                 </div>
                             </div>
                             <div class="box-body table-responsive no-padding p-0 m-0">
-                                <div class="row m-0 p-0" v-for="(item, index) in listUser.nav">
-                                    <div class="col-md-12 p-0 m-0">
-                                        <div class="box box-solid m-0 mb-01 p-0">
-                                            <div class="box-header hover-gray with-border p-05">
-                                                <button class="btn btn-box-tool font-size-12 px-1"
-                                                    data-widget="collapse"><i class="fa fa-minus"></i></button>
-                                                <a href="javascript:;" class="color-black hover-gray"
-                                                    @click="setRole(item.id)">
-
-                                                    <button class="mbg-blue1 mbtn-check" v-if="item.tagle == 1">
-                                                        <i class="fa fa-check color-light font-size-10"></i>
-                                                    </button>
-                                                    <button class="mbtn-check" v-else></button>
-                                                    <span
-                                                        class="box-title font-size-13 ml-05"><b>{{item.name}}</b></span>
+                                <ul class="todo-list">
+                                    <li v-for="(item, index) in listUser.twoList" class="p-0 m-0">
+                                        <div class="row m-0 p-1">
+                                            <div class="col-md-8 p-0">
+                                                <a href="javascript:;" @click="setAccount(item)" class="color-black">
+                                                    <div class="row">
+                                                        <div class="col-md-1 p-0">
+                                                        </div>
+                                                        <div class="col-md-2 pl-05">
+                                                            <i class="fa fa-circle-o text-red"></i>
+                                                        </div>
+                                                        <div class="col-md-9 p-0 text-oneline">
+                                                            <span>{{item.dotName}}</span>
+                                                        </div>
+                                                    </div>
                                                 </a>
-                                                <div class="box-tools">
-                                                    <button class="btn btn-box-tool"></button>
+                                            </div>
+                                            <div class="col-md-4 p-0">
+                                                <div class="tools">
+                                                    <a href="" title="修改" data-toggle="modal" data-target="#modelUpdate"
+                                                        @click="update(item)">
+                                                        <i class="fa fa-edit mr-05"></i>
+                                                    </a>
+                                                    <a href="javascript:;" @click="deleteSup(item.dotId)" title="删除">
+                                                        <i class="fa fa-trash-o mr-05"></i>
+                                                    </a>
                                                 </div>
                                             </div>
-                                            <div class="box-body m-0 p-0">
-                                                <ul class="todo-list font-size-14">
-                                                    <li class="hover-gray line-height-30 p-05"
-                                                        v-for="(li, index) in item.li">
-                                                        <div class="row p-0 m-0">
-                                                            <div class="col-md-1"></div>
-                                                            <div class="col-md-11">
-                                                                <a href="javascript:;" class="color-black hover-gray"
-                                                                    @click="setRole(li.id)">
-                                                                    <button class="mbg-blue1 mbtn-check"
-                                                                        v-if="li.tagle == 1">
-                                                                        <i class="fa fa-check color-light font-size-10"></i>
-                                                                    </button>
-                                                                    <button class="mbtn-check" v-else></button>
-                                                                    <span class="pl-05">{{li.name}}</span>
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </li>
-
-                                                </ul>
-                                            </div>
                                         </div>
-                                    </div>
-                                </div>
+                                    </li>
+                                </ul>
+                                
 
                             </div>
                         </div>
@@ -201,7 +188,7 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="modelAddTit">添加账号 <i class="fa fa-plus"></i>
+                                <h4 class="modal-title" id="modelAddTit">添加分公司 <i class="fa fa-plus"></i>
                                 </h4>
                             </div>
                             <div class="modal-body">
@@ -210,48 +197,49 @@
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
                                             <div class="input-group">
-                                                <span class="input-group-addon">账号<b class="color-danger">*</b></span>
-                                                <input type="text" class="form-control" v-model="modalAdd.userid"
-                                                    placeholder="6~12位字符">
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1"></div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group ">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">用户名<b class="color-danger">*</b></span>
-                                                <input type="text" class="form-control" v-model="modalAdd.username"
+                                                <span class="input-group-addon">分公司名称<b class="color-danger">*</b></span>
+                                                <input type="text" class="form-control" v-model="modalAdd.dotName"
                                                     placeholder="请填写该字段">
-
                                             </div>
                                         </div>
                                         <div class="col-md-1"></div>
                                     </div>
                                 </div>
-                                <div class="form-group ">
+
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                    @click="addSubmit()">提交</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 添加网点模态框 -->
+                <div class="modal fade" id="modelAdd_" tabindex="-1" role="dialog" aria-labelledby="modelAdd_Tit"
+                    aria-hidden="true">
+                    <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title" id="modelAdd_Tit">添加网点 <i class="fa fa-plus"></i>
+                                </h4>
+                            </div>
+                            <div class="modal-body">
+                                <div class="form-group">
                                     <div class="row">
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
                                             <div class="input-group">
-                                                <span class="input-group-addon">账号级别<b class="color-danger">*</b></span>
-                                                <select class="form-control" v-model="modalAdd.rol.id">
-                                                    <option selected="selected" value="0">---请选择级别---
-                                                    </option>
-                                                    <option value="1">网络管理员</option>
-                                                    <option value="2">账号管理员</option>
-                                                    <option value="3">日志审查员</option>
-                                                    <option value="4">管理员</option>
-                                                </select>
+                                                <span class="input-group-addon">网点名称<b class="color-danger">*</b></span>
+                                                <input type="text" class="form-control" v-model="modalAdd.dotName"
+                                                    placeholder="请填写该字段">
                                             </div>
                                         </div>
                                         <div class="col-md-1"></div>
                                     </div>
                                 </div>
+
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -268,11 +256,11 @@
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title" id="modelUpdateTit">修改账号 <i class="fa fa-edit"></i>
+                                <h4 class="modal-title" id="modelUpdateTit">修改分公司 <i class="fa fa-edit"></i>
                                     <button class="btn btn-box-tool font-size-12 float-r" @click="refreshPwd()"><i
-                                        class="fa fa-refresh"></i> 重置密码</button>
+                                            class="fa fa-refresh"></i> 重置密码</button>
                                 </h4>
-                                
+
                             </div>
                             <div class="modal-body">
                                 <div class="form-group">
@@ -280,43 +268,9 @@
                                         <div class="col-md-1"></div>
                                         <div class="col-md-10">
                                             <div class="input-group">
-                                                <span class="input-group-addon">账号</span>
-                                                <input type="text" class="form-control" v-model="modalUpdate.userid"
-                                                    disabled>
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1"></div>
-                                    </div>
-                                </div>
-
-                                <div class="form-group ">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">用户名<b class="color-danger">*</b></span>
-                                                <input type="text" class="form-control" v-model="modalUpdate.username"
-                                                    placeholder="请填写该字段">
-
-                                            </div>
-                                        </div>
-                                        <div class="col-md-1"></div>
-                                    </div>
-                                </div>
-                                <div class="form-group ">
-                                    <div class="row">
-                                        <div class="col-md-1"></div>
-                                        <div class="col-md-10">
-                                            <div class="input-group">
-                                                <span class="input-group-addon">账号级别<b class="color-danger">*</b></span>
-                                                <select class="form-control" v-model="modalUpdate.rol.id">
-                                                    <option selected="selected" value="0">---请选择级别---
-                                                    </option>
-                                                    <option value="1">网络管理员</option>
-                                                    <option value="2">账号管理员</option>
-                                                    <option value="3">日志审查员</option>
-                                                    <option value="4">管理员</option>
-                                                </select>
+                                                <span class="input-group-addon">分公司名称</span>
+                                                <input type="text" class="form-control" v-model="modalUpdate.dotName"
+                                                    >
                                             </div>
                                         </div>
                                         <div class="col-md-1"></div>
@@ -367,7 +321,7 @@
     <!-- 加载Vue公共模块 -->
     <script src="js/vue/commer/vue_commer.js"></script>
     <!-- 项目入库模块 -->
-    <script src="js/vue/supplier/User.js"></script>
+    <script src="js/vue/home/User.js"></script>
 
     <script src="js/commer.js"></script>
 </body>
