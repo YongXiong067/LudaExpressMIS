@@ -51,6 +51,7 @@ public class SysUserController {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("userId", sysUser.getUserId());
 			session.setAttribute("userName", sysUser.getUserName());
+			session.setAttribute("rolu", sysUser.getRolu());
 			return 11;
 		}
 		return -1;
