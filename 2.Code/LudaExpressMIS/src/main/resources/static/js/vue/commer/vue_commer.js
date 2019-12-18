@@ -1,3 +1,4 @@
+var rol = '';
 //自定义顶部导航栏
 Vue.component('n-nav-top', {
 	data: function () {
@@ -87,39 +88,9 @@ Vue.component('n-nav-top', {
 
 					<li class="dropdown messages-menu">
 
-						<!-- 消息提示图标按钮 
-						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-							<i class="fa fa-envelope-o"></i>
-							<span class="label label-success">4</span>
-						</a>-->
-
-						<!-- 消息提示下拉框界面 -->
-						<ul class="dropdown-menu">
-							<li class="header text-center" style="background-color: #B0E0E6;"><b>消息管理</b></li>
-							<li>
-								<ul class="menu">
-									<li v-for="(item, index) in news">
-										<a :href="'timeLine.html#'+item.id">
-											<div class="pull-left">
-												<img :src="item.user.img" class="img-circle" alt="User Image">
-											</div>
-											<h4>
-												{{item.user.realName}}
-												<small><i class="fa fa-clock-o"></i> {{item.time}}</small>
-											</h4>
-											<p>{{item.title}}</p>
-										</a>
-									</li>
-								</ul>
-							</li>
-							<li class="footer"><a href="#">查看全部消息</a></li>
-						</ul>
-					</li>
-
-					
 
 					<!-- 系统管理 -->
-					<li class="dropdown tasks-menu ">
+					<!-- <li class="dropdown tasks-menu ">
 						<a href="###" class="dropdown-toggle" data-toggle="dropdown">
 							<i class="fa fa-gear"></i>
 						</a>
@@ -167,7 +138,7 @@ Vue.component('n-nav-top', {
 							</li>
 							
 						</ul>
-					</li>
+					</li> -->
 
 					<!-- 个人中心 -->
 					<li class="dropdown user user-menu">
@@ -228,198 +199,128 @@ Vue.component('n-nav-left', {
 			rol: {
 				id: 1,
 				list: [
-					// {
-					// 	id: 1,
-					// 	parent_id: '',
-					// 	name: '立项',
-					// 	icon_cls: 'fa fa-edit',
-					// 	left: 0,
-					// 	url: '',
-					// 	li: [
-					// 		{
-					// 			id: 12,
-					// 			parent_id: 1,
-					// 			name: '项目入库',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'projectWarehousing.html',
-					// 		},
-					// 		{
-					// 			id: 11,
-					// 			parent_id: 1,
-					// 			name: '呈批件',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'projectSubmit.html',
-					// 		},
-
-					// 		{
-					// 			id: 13,
-					// 			parent_id: 1,
-					// 			name: '项目立项',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'projectApproval.html',
-					// 		},
-					// 		{
-					// 			id: 14,
-					// 			parent_id: 1,
-					// 			name: '指标登录',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'projectSign.html',
-					// 		}
-					// 	]
-					// },
-					// {
-					// 	id: 2,
-					// 	parent_id: '',
-					// 	name: '建设',
-					// 	icon_cls: 'fa fa-windows',
-					// 	left: 0,
-					// 	url: '',
-					// 	li: [
-					// 		{
-					// 			id: 21,
-					// 			parent_id: 2,
-					// 			name: '项目招标',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'buildTendering.html',
-					// 		},
-					// 		{
-					// 			id: 22,
-					// 			parent_id: 2,
-					// 			name: '签订合同',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'buildContract.html',
-					// 		},
-					// 		{
-					// 			id: 23,
-					// 			parent_id: 2,
-					// 			name: '项目督办',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'buildSupervise.html',
-					// 		}
-					// 	]
-					// },
-					// {
-					// 	id: 3,
-					// 	parent_id: '',
-					// 	name: '验收',
-					// 	icon_cls: 'fa fa-suitcase',
-					// 	left: 0,
-					// 	url: '',
-					// 	li: [
-					// 		{
-					// 			id: 31,
-					// 			parent_id: 3,
-					// 			name: '预验收',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'acceptanceBefore.html',
-					// 		},
-					// 		{
-					// 			id: 32,
-					// 			parent_id: 3,
-					// 			name: '验收',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'acceptance.html',
-					// 		}
-					// 	]
-					// },
-					// {
-					// 	id: 4,
-					// 	parent_id: '',
-					// 	name: '付款',
-					// 	icon_cls: 'fa fa-cny',
-					// 	left: 0,
-					// 	url: '',
-					// 	li: [
-					// 		{
-					// 			id: 41,
-					// 			parent_id: 4,
-					// 			name: '付款批次',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'payment.html',
-					// 		},
-					// 		{
-					// 			id: 42,
-					// 			parent_id: 4,
-					// 			name: '付款明细',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'paymentInfo.html',
-					// 		}
-					// 	]
-					// },
-					// {
-					// 	id: 5,
-					// 	parent_id: '',
-					// 	name: '总览',
-					// 	icon_cls: 'fa fa-bar-chart-o',
-					// 	left: 0,
-					// 	url: '',
-					// 	li: [
-					// 		{
-					// 			id: 51,
-					// 			parent_id: 5,
-					// 			name: '项目总览',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'projectOverview.html',
-					// 		},
-					// 		{
-					// 			id: 52,
-					// 			parent_id: 5,
-					// 			name: '付款总览',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'paymentOverview.html',
-					// 		}
-					// 	]
-					// },
-					// {
-					// 	id: 6,
-					// 	parent_id: '',
-					// 	name: '市州人防办',
-					// 	icon_cls: 'fa fa-clone',
-					// 	left: 0,
-					// 	url: '',
-					// 	li: [
-					// 		{
-					// 			id: 51,
-					// 			parent_id: 5,
-					// 			name: '市州人防办管理',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'supplierManage.html',
-					// 		},
-					// 		{
-					// 			id: 52,
-					// 			parent_id: 5,
-					// 			name: '市州人防办申请记录',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'supplierApply.html',
-					// 		},
-					// 		{
-					// 			id: 53,
-					// 			parent_id: 5,
-					// 			name: '市州人防办账号分配',
-					// 			icon_cls: '',
-					// 			left: 1,
-					// 			url: 'supplierAccount.html',
-					// 		}
-					// 	]
-					// }
+					{
+						id: 1,
+						parent_id: '',
+						name: '账号',
+						icon_cls: 'fa fa-edit',
+						left: 0,
+						url: '',
+						li: [
+							{
+								id: 12,
+								parent_id: 1,
+								name: '用户管理',
+								icon_cls: '',
+								left: 1,
+								url: 'projectWarehousing.html',
+							}
+						]
+					},
+					{
+						id: 2,
+						parent_id: '',
+						name: '公司',
+						icon_cls: 'fa fa-windows',
+						left: 0,
+						url: '',
+						li: [
+							{
+								id: 21,
+								parent_id: 2,
+								name: '企业文化管理',
+								icon_cls: '',
+								left: 1,
+								url: 'buildTendering.html',
+							},
+							{
+								id: 22,
+								parent_id: 2,
+								name: '公告管理',
+								icon_cls: '',
+								left: 1,
+								url: 'buildContract.html',
+							},
+							{
+								id: 23,
+								parent_id: 2,
+								name: '留言板管理',
+								icon_cls: '',
+								left: 1,
+								url: 'buildSupervise.html',
+							},
+							{
+								id: 24,
+								parent_id: 2,
+								name: '网点管理',
+								icon_cls: '',
+								left: 1,
+								url: 'buildSupervise.html',
+							}
+						]
+					},
+					{
+						id: 3,
+						parent_id: '',
+						name: '快递',
+						icon_cls: 'fa fa-suitcase',
+						left: 0,
+						url: '',
+						li: [
+							{
+								id: 31,
+								parent_id: 3,
+								name: '订单管理',
+								icon_cls: '',
+								left: 1,
+								url: 'acceptanceBefore.html',
+							},
+							{
+								id: 32,
+								parent_id: 3,
+								name: '预约寄件',
+								icon_cls: '',
+								left: 1,
+								url: 'acceptance.html',
+							},
+							{
+								id: 33,
+								parent_id: 3,
+								name: '揽件管理',
+								icon_cls: '',
+								left: 1,
+								url: 'acceptanceBefore.html',
+							},
+							{
+								id: 34,
+								parent_id: 3,
+								name: '仓储发货管理',
+								icon_cls: '',
+								left: 1,
+								url: 'acceptance.html',
+							}
+						]
+					},
+					{
+						id: 4,
+						parent_id: '',
+						name: '财务',
+						icon_cls: 'fa fa-cny',
+						left: 0,
+						url: '',
+						li: [
+							{
+								id: 41,
+								parent_id: 4,
+								name: '财务管理',
+								icon_cls: '',
+								left: 1,
+								url: 'payment.html',
+							}
+						]
+					}
 				]
 			},
-
 			user_rol: [
 				{
 					id: 1,
@@ -432,33 +333,237 @@ Vue.component('n-nav-left', {
 		}
 	},
 	mounted() {
-		//验证身份
-
-
-		axios.get('api/v2/nav/getListByUId')
+		axios.get('api/user/getUser')
 			.then(
 				(res) => {
-					this.rol.list = res.data;
-					console.log(res.data);
-					for (let i = 0; i < res.data.length; i++) {
-						axios.get('api/v2/nav/getListByNav',
-							{
-								params: {
-									id: this.rol.list[i].id,
-								}
-							})
-							.then(
-								(re) => {
-									this.rol.list[i].li = re.data;
-								}
-							)
+					if (res.data.userId == 0) {
+						window.location.href = "login.html";
+					} else {
+						if (res.data.rolu == '0') {
+							this.rol = {
+								id: 1,
+								list: [
+									{
+										id: 1,
+										parent_id: '',
+										name: '账号',
+										icon_cls: 'fa fa-edit',
+										left: 0,
+										url: '',
+										li: [
+											{
+												id: 12,
+												parent_id: 1,
+												name: '用户管理',
+												icon_cls: '',
+												left: 1,
+												url: 'projectWarehousing.html',
+											}
+										]
+									},
+									{
+										id: 2,
+										parent_id: '',
+										name: '公司',
+										icon_cls: 'fa fa-windows',
+										left: 0,
+										url: '',
+										li: [
+											{
+												id: 21,
+												parent_id: 2,
+												name: '企业文化管理',
+												icon_cls: '',
+												left: 1,
+												url: 'buildTendering.html',
+											},
+											{
+												id: 22,
+												parent_id: 2,
+												name: '公告管理',
+												icon_cls: '',
+												left: 1,
+												url: 'buildContract.html',
+											},
+											{
+												id: 23,
+												parent_id: 2,
+												name: '留言板管理',
+												icon_cls: '',
+												left: 1,
+												url: 'buildSupervise.html',
+											},
+											{
+												id: 24,
+												parent_id: 2,
+												name: '网点管理',
+												icon_cls: '',
+												left: 1,
+												url: 'buildSupervise.html',
+											}
+										]
+									},
+									{
+										id: 3,
+										parent_id: '',
+										name: '快递',
+										icon_cls: 'fa fa-suitcase',
+										left: 0,
+										url: '',
+										li: [
+											{
+												id: 31,
+												parent_id: 3,
+												name: '订单管理',
+												icon_cls: '',
+												left: 1,
+												url: 'acceptanceBefore.html',
+											},
+											{
+												id: 34,
+												parent_id: 3,
+												name: '仓储发货管理',
+												icon_cls: '',
+												left: 1,
+												url: 'acceptance.html',
+											}
+										]
+									},
+									{
+										id: 4,
+										parent_id: '',
+										name: '财务',
+										icon_cls: 'fa fa-cny',
+										left: 0,
+										url: '',
+										li: [
+											{
+												id: 41,
+												parent_id: 4,
+												name: '财务管理',
+												icon_cls: '',
+												left: 1,
+												url: 'payment.html',
+											}
+										]
+									}
+								]
+							}
+						} else if (res.data.rolu == '1') {
+							this.rol = {
+								id: 1,
+								list: [
+
+									{
+										id: 2,
+										parent_id: '',
+										name: '公司',
+										icon_cls: 'fa fa-windows',
+										left: 0,
+										url: '',
+										li: [
+											{
+												id: 21,
+												parent_id: 2,
+												name: '企业文化',
+												icon_cls: '',
+												left: 1,
+												url: 'buildTendering.html',
+											},
+											{
+												id: 22,
+												parent_id: 2,
+												name: '信息公告',
+												icon_cls: '',
+												left: 1,
+												url: 'buildContract.html',
+											},
+											{
+												id: 23,
+												parent_id: 2,
+												name: '留言板',
+												icon_cls: '',
+												left: 1,
+												url: 'buildSupervise.html',
+											}
+										]
+									},
+									{
+										id: 3,
+										parent_id: '',
+										name: '快递',
+										icon_cls: 'fa fa-suitcase',
+										left: 0,
+										url: '',
+										li: [
+											{
+												id: 31,
+												parent_id: 3,
+												name: '订单查询',
+												icon_cls: '',
+												left: 1,
+												url: 'acceptanceBefore.html',
+											},
+											{
+												id: 32,
+												parent_id: 3,
+												name: '预约寄件',
+												icon_cls: '',
+												left: 1,
+												url: 'acceptance.html',
+											}
+										]
+									}
+								]
+							}
+						} else {
+							this.rol = {
+								id: 1,
+								list: [
+									
+									{
+										id: 3,
+										parent_id: '',
+										name: '快递',
+										icon_cls: 'fa fa-suitcase',
+										left: 0,
+										url: '',
+										li: [
+											{
+												id: 31,
+												parent_id: 3,
+												name: '订单管理',
+												icon_cls: '',
+												left: 1,
+												url: 'acceptanceBefore.html',
+											},
+											{
+												id: 34,
+												parent_id: 3,
+												name: '仓储发货管理',
+												icon_cls: '',
+												left: 1,
+												url: 'acceptance.html',
+											},
+											{
+												id: 33,
+												parent_id: 3,
+												name: '揽件管理',
+												icon_cls: '',
+												left: 1,
+												url: 'acceptanceBefore.html',
+											}
+										]
+									}
+								]
+							}
+						}
 					}
-
-
 				}
 			)
-
-
+			.catch(
+				(error) => { console.log(error); }
+			);
 	},
 	props: ['user', 'page'],
 	template: `

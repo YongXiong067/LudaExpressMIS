@@ -7,6 +7,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,21 +16,24 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.express.web.model.SysUser;
 import com.express.web.service.SysUserService;
 
+import io.swagger.annotations.Api;
+
 
 /**
  * 用户控制器
  * @author Charlene
  *
  */
-
+@Api(value = "用户控制器",description ="用户控制器")
 @Controller
 @RequestMapping("/api/user")
 public class SysUserController {
-	
+
 	@Autowired
 	SysUserService service;
 	@Autowired
 	HttpServletRequest request;
+	
 	
 
 	/**
@@ -47,6 +51,7 @@ public class SysUserController {
 			HttpSession session = request.getSession(true);
 			session.setAttribute("userId", sysUser.getUserId());
 			session.setAttribute("userName", sysUser.getUserName());
+			session.setAttribute("rolu", sysUser.getRolu());
 			return 11;
 		}
 		return -1;
@@ -129,5 +134,17 @@ public class SysUserController {
 			bool = false;
 		}
 		return bool;
+	}
+	
+	/**
+	 * 获取单个用户
+	 * @return
+	 */
+	@GetMapping("/getUser")
+	@ResponseBody
+	public SysUser getUser(){
+		HttpSession session = request.getSession(true);
+		SysUser user = service.getLogin((long) session.getAttribute("userId"));
+		return user;
 	}
 }

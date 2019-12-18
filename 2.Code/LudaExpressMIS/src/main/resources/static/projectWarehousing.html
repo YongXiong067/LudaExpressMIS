@@ -70,21 +70,6 @@
                                                         data-target="#modelAdd"><button
                                                             class="btn btn-default btn-sm"><i
                                                             class="fa fa-plus"></i></button></a>
-                                                    <a href="javaScript:void(0);" title="关联呈批件" data-toggle="modal"
-                                                        data-target="#modelPro"><button class="btn btn-default btn-sm"
-                                                            style="padding: 5px 8px 5px 8px;"><i
-                                                                class="fa fa-exchange"></i></button></a>
-                                                    <a href="javaScript:void(0);" @click="excelExport()"
-                                                        title="导出Excel表格"><button class="btn btn-default btn-sm"><i
-                                                                class="fa fa-arrow-circle-down"></i></button></a>
-                                                    <a href="javaScript:void(0);" @click="refresh()" title="导入Excel表格"
-                                                        data-toggle="modal" data-target="#modelImport"><button
-                                                            class="btn btn-default btn-sm"><i
-                                                                class="fa fa-arrow-circle-up"></i></button></a>
-                                                    <a href="javaScript:void(0);" title="选择过滤条件" data-toggle="modal"
-                                                        data-target="#modelChange"><button
-                                                            class="btn btn-default btn-sm ml-1"><i
-                                                                class="fa fa-reorder"></i></button></a>
                                                     <a href="javaScript:void(0);" @click="refresh()" title="刷新"><button
                                                             class="btn btn-default btn-sm"><i
                                                                 class="fa fa-refresh"></i></button></a>
@@ -188,30 +173,24 @@
                                     <li>
                                         <div class="row p-0 m-0 text-center">
 
-                                            <div class="col-md-3 col-xs-6 p-0">
+                                            <div class="col-md-4 col-xs-6 p-0">
                                                 <div class="row">
                                                     <div class="col-md-1 ">
                                                         <span class="text">ID</span>
                                                     </div>
                                                     <div class="col-md-10 col-xs-2 p-0">
-                                                        <span class="text">项目名称</span>
+                                                        <span class="text">用户名</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1 col-xs-1 p-0">
-                                                <span class="text">归属处室</span>
+                                            <div class="col-md-2 col-xs-1 p-0">
+                                                <span class="text">密码</span>
+                                            </div>
+                                            <div class="col-md-3 col-xs-2 p-0">
+                                                <span class="text">电话</span>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0">
-                                                <span class="text">申报金额</span>
-                                            </div>
-                                            <div class="col-md-2 col-xs-2 p-0">
-                                                <span class="text">入库时间</span>
-                                            </div>
-                                            <div class="col-md-2 col-xs-3 p-0">
-                                                <span class="text">项目申报资料</span>
-                                            </div>
-                                            <div class="col-md-1 col-xs-1 p-0">
-                                                <span class="text">资料序号</span>
+                                                <span class="text">账号类别</span>
                                             </div>
                                             <div class="col-md-1 col-xs-1 p-0">
                                                 <span class="text">操作</span>
@@ -388,7 +367,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="modelAddTit">添加入库信息 <i class="fa fa-plus"></i>
+                                            <h4 class="modal-title" id="modelAddTit">添加账号信息 <i class="fa fa-plus"></i>
                                             </h4>
                                         </div>
                                         <div class="modal-body">
@@ -397,7 +376,7 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">项目名称<b class="color-danger">*</b></span>
+                                                            <span class="input-group-addon">用户名<b class="color-danger">*</b></span>
                                                             <input type="text" class="form-control"
                                                                 v-model="modalAdd.p_name" placeholder="请填写该字段" 
                                                                 @blur="inputText(modalAdd.p_name)">
@@ -411,7 +390,21 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">资料序号<b class="color-danger">*</b></span>
+                                                            <span class="input-group-addon">密码<b class="color-danger">*</b></span>
+                                                            <input type="text" class="form-control"
+                                                                v-model="modalAdd.document" placeholder="请填写该字段" 
+                                                                @blur="inputText(modalAdd.document)">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group ">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">电话<b class="color-danger">*</b></span>
                                                             <input type="text" class="form-control"
                                                                 v-model="modalAdd.document" placeholder="请填写该字段" 
                                                                 @blur="inputText(modalAdd.document)">
@@ -425,70 +418,19 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">归属处室<b class="color-danger">*</b></span>
+                                                            <span class="input-group-addon">账号类别<b class="color-danger">*</b></span>
                                                             <select class="form-control" v-model="modalAdd.position">
-                                                                <option selected="selected" value="0">---归属处室---
+                                                                <option selected="selected" value="0">---选择账号类别---
                                                                 </option>
-                                                                <option v-for="p in positionList" :value="p.key">
-                                                                    {{p.value}}
-                                                                </option>
+                                                                <option value="0">管理员</option>
+                                                                <option value="1">用户</option>
+                                                                <option value="2">快递员</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">申报金额<b class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.declare_money"
-                                                                class="form-control is-invalid" placeholder="只能填入数字" 
-                                                                @blur="inputNumber(modalAdd.declare_money)">
-                                                            <span class="input-group-addon">
-                                                                <i class="fa fa-cny"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">入库时间<b class="color-danger">*</b></span>
-                                                            <input type="date" v-model="modalAdd.warehousing_time"
-                                                                class="form-control" />
-                                                            <span class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i
-                                                                    class="fa fa-file"></i></span>
-                                                            <input type="file" name="file" id="uploadFile"
-                                                                @change="fileUpload('uploadFile')" class="form-control">
-                                                        </div>
-                                                        <div>
-                                                            <p>须知：上传文件大小不超过20MB; 下载模板：<a :href="'api/v2/db/dowlond?fileurl=File/model/项目入库模板.doc'" target="_blank" title="点击下载文件">项目入库模板.doc</a></p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                        </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">取消</button>
