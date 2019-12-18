@@ -213,7 +213,7 @@ Vue.component('n-nav-left', {
 								name: '用户管理',
 								icon_cls: '',
 								left: 1,
-								url: 'projectWarehousing.html',
+								url: 'user.html',
 							}
 						]
 					},
@@ -357,7 +357,7 @@ Vue.component('n-nav-left', {
 												name: '用户管理',
 												icon_cls: '',
 												left: 1,
-												url: 'projectWarehousing.html',
+												url: 'user.html',
 											}
 										]
 									},

@@ -215,12 +215,13 @@ new Vue({
             } else if (this.pwdModel.newpwd == '' || this.pwdModel.newpwd_ == '' || this.pwdModel.oldpwd == '') {
                 toastr.error('密码不能为空！');
             } else {
-                axios.get(this.apiurl + 'api/v2/user/updatePwd',
+            	console.log(this.pwdModel.newpwd);
+                axios.get(this.apiurl + 'api/user/updatePwd',
                     {
                         params: {
-                            id: this.user.id,
-                            username: this.user.userid,
-                            pwd: this.pwdModel.oldpwd,
+                            userId: this.user.userId,
+                            userName: this.user.userName,
+                            oldPwd: this.pwdModel.oldpwd,
                             newpwd: this.pwdModel.newpwd
                         }
                     })

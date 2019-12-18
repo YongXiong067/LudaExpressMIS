@@ -37,7 +37,7 @@ public interface SysUserService {
 	 */
 	void insertUser(SysUser user);
 	/**
-	 * 删除用户
+	 * 	修改用户
 	 * @param user
 	 */
 	void update(SysUser user);

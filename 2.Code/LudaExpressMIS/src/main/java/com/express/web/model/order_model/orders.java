@@ -24,7 +24,7 @@ public class orders {
 
     private String receiveaddr;
 
-    private Integer ordernum;
+    private String ordernum;
 
     private String weight;
 
@@ -108,15 +108,15 @@ public class orders {
         this.receiveaddr = receiveaddr == null ? null : receiveaddr.trim();
     }
 
-    public Integer getOrdernum() {
-        return ordernum;
-    }
+    public String getOrdernum() {
+		return ordernum;
+	}
 
-    public void setOrdernum(Integer ordernum) {
-        this.ordernum = ordernum;
-    }
+	public void setOrdernum(String ordernum) {
+		this.ordernum = ordernum;
+	}
 
-    public String getWeight() {
+	public String getWeight() {
         return weight;
     }
 

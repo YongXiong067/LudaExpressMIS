@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.express.web.model.SysUser;
@@ -64,7 +65,6 @@ public class SysUserController {
 	@ResponseBody
 	public int register(@RequestBody SysUser user) {
 		try {
-			System.out.println(user);
 			//验证
 			SysUser sysUser = service.validateName(user.getUserName());
 			if(sysUser != null) {
@@ -79,15 +79,38 @@ public class SysUserController {
 		}
 	}
 	/**
+	 *  管理员添加用户
+	 * @return
+	 */
+	@PostMapping("/insertUser")
+	@ResponseBody
+	public int insertUser(@RequestBody SysUser user) {
+		try {
+			//验证
+			SysUser sysUser = service.validateName(user.getUserName());
+			if(sysUser != null) {
+				return -1;
+			}else {
+				if(user.getRolu() == -1) {
+					user.setRolu(1);
+				}
+				service.insertUser(user);
+				return 11;
+			}
+		}catch(Exception e) {
+			return -1;
+		}
+	}
+	/**
 	 * 修改密码
 	 * @return
 	 */
-	@PostMapping("/updatePwd")
+	@GetMapping("/updatePwd")
 	@ResponseBody
 	public int updatePwd() {
 		try {
 			String oldPwd = request.getParameter("oldPwd");
-			String newPwd = request.getParameter("newPwd");
+			String newPwd = request.getParameter("newpwd");
 			HttpSession session = request.getSession(true);
 			String userName = (String) session.getAttribute("userName");
 			//验证
@@ -100,6 +123,25 @@ public class SysUserController {
 				user.setUserName(userName);
 				user.setUserId(sysUser.getUserId());
 				service.update(user);
+				return 1;
+			}else {
+				return -1;
+			}
+		}catch(Exception e) {
+			return -1;
+		}
+	}
+	/**
+	 * 	修改用户信息
+	 * @return
+	 */
+	@PostMapping("/update")
+	@ResponseBody
+	public int update(@RequestBody SysUser sysUser) {
+		try {
+			//验证
+			if(sysUser != null ) {
+				service.update(sysUser);
 				return 11;
 			}else {
 				return -1;
@@ -112,10 +154,10 @@ public class SysUserController {
 	 * 查询所有用户或根据条件模糊匹配查询用户
 	 * @return
 	 */
-	@PostMapping("/getAllUser")
+	@GetMapping("/getAllUser")
 	@ResponseBody
-	public List<SysUser> getAllUser(){
-		String search = request.getParameter("search");
+	public List<SysUser> getAllUser(@RequestParam String search){
+		System.out.println(search);
 		List<SysUser> userList = service.listByAll(search);
 		return userList;
 	}
@@ -123,7 +165,7 @@ public class SysUserController {
 	 * 删除用户信息
 	 * @return
 	 */
-	@PostMapping("/deleteUser")
+	@GetMapping("/deleteUser")
 	@ResponseBody
 	public boolean deleteUser() {
 		boolean bool = false;

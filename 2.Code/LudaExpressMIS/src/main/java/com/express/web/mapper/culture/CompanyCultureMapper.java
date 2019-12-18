@@ -35,8 +35,7 @@ public interface CompanyCultureMapper {
 	@Select("<script>"
 			+ "select "+ param +" from company_culture "	
 			+ "where 1=1 "
-			+"<if test= 'title != null'> and userName like %#{search}% </if>"
-			+"<if test= 'content != null'> or phone like %#{search}% </if>"
+			+"<if test= 'search != null'> and userName like concat('%',#{search},'%')  or phone like concat('%',#{search},'%') </if>"
 			+"</script>")
 	@Results(id="CompanyCultureMap",
 	value={
