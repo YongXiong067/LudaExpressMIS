@@ -357,7 +357,7 @@ Vue.component('n-nav-left', {
 												name: '网点管理',
 												icon_cls: '',
 												left: 1,
-												url: 'buildSupervise.html',
+												url: 'userAccount.html',
 											}
 										]
 									},
@@ -543,7 +543,7 @@ Vue.component('n-nav-left', {
 
 			<!-- 左侧导航栏目 -->
 			<ul class="sidebar-menu">
-				<li class="header">PROJECT-MIS</li>
+				<li class="header">EXPRESS-MIS</li>
 				<li class="active" v-if="page.title == 'HOME'">
 					<a href="index.html"><i class="fa fa-home"></i> <span>首页</span></a>
 				</li>

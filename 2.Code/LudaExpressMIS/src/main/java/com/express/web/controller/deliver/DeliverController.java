@@ -27,7 +27,7 @@ import io.swagger.annotations.ApiParam;
 @Controller
 @RequestMapping("/api/deliver")
 public class DeliverController {
-	@Autowired
+	@Autowired 
 	DeliverGoodsService deliverService;
 	@Autowired
 	HttpServletRequest request;
@@ -40,7 +40,7 @@ public class DeliverController {
 	@ApiOperation(value = "getCulture", notes = "查询出所有待发货列表")
 	@PostMapping("/getDeliver")
 	@ResponseBody
-	public List<orders> getDeliverList(@ApiParam(value = "可根据订单号进行查询，采用模糊匹配，如若查全部，请传空字符串" ,required=true )@RequestParam String ordernum){
+	public List<orders> getDeliverList(@ApiParam(value = "可根据订单号进行查询，采用模糊匹配，如若查全部，请传空字符串" ,required=true ) @RequestParam String ordernum){
 		System.out.println(ordernum);
 		return deliverService.getDeliverList(ordernum,1);
 	}

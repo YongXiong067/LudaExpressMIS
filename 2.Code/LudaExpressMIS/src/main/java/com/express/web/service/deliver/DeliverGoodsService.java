@@ -25,4 +25,5 @@ public interface DeliverGoodsService {
 	 * @return
 	 */
 	boolean updateOrderState(Long orderId,Integer state);
+	
 }

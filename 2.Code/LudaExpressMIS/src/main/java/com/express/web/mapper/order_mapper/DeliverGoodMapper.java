@@ -55,7 +55,13 @@ public interface DeliverGoodMapper {
 	)
 	List<orders> getDeliverList(@Param("ordernum") String ordernum,int state);
 	
-	
+	/**
+	 * 根据订单id查询出订单详细信息
+	 * @param orderId
+	 * @return
+	 */
+	@Select("select * from orders where orderId = #{orderId}")
+	orders getById(@Param("orderId") Long orderId);
 	/**
 	 * 	修改状态
 	 * @return
