@@ -90,7 +90,7 @@
                                                         @click="update(item)">
                                                         <i class="fa fa-edit mr-05"></i>
                                                     </a>
-                                                    <a href="javascript:;" @click="deleteSup(item.dotId)" title="删除">
+                                                    <a href="javascript:;" @click="deleteDot(item.dotId)" title="删除">
                                                         <i class="fa fa-trash-o mr-05"></i>
                                                     </a>
                                                 </div>
@@ -117,7 +117,7 @@
                                                         @click="update(item)">
                                                         <i class="fa fa-edit mr-05"></i>
                                                     </a>
-                                                    <a href="javascript:;" @click="deleteUser(item.dotId)" title="删除">
+                                                    <a href="javascript:;" @click="deleteDot(item.dotId)" title="删除">
                                                         <i class="fa fa-trash-o mr-05"></i>
                                                     </a>
                                                 </div>
@@ -133,10 +133,8 @@
                     <div class="col-md-9">
                         <div class="box box-solid p-0 m-0">
                             <div class="box-header with-border p-05">
-                                <button class="btn btn-box-tool font-size-12" @click="refreshRol()"><i
-                                        class="fa fa-refresh"></i> 重置</button>
                                 <button class="btn btn-box-tool font-size-12"data-toggle="modal"
-                                data-target="#modelAdd_"  @click="updateSubmit()">添加网点</button>
+                                data-target="#modelAdd_">添加网点</button>
                                 <div class="box-tools">
                                     <button class="btn btn-box-tool px-1" data-widget="collapse"><i
                                             class="fa fa-minus"></i></button>
@@ -147,7 +145,7 @@
                                     <li v-for="(item, index) in listUser.twoList" class="p-0 m-0">
                                         <div class="row m-0 p-1">
                                             <div class="col-md-8 p-0">
-                                                <a href="javascript:;" @click="setAccount(item)" class="color-black">
+                                                <a href="javascript:;" class="color-black">
                                                     <div class="row">
                                                         <div class="col-md-1 p-0">
                                                         </div>
@@ -166,7 +164,7 @@
                                                         @click="update(item)">
                                                         <i class="fa fa-edit mr-05"></i>
                                                     </a>
-                                                    <a href="javascript:;" @click="deleteSup(item.dotId)" title="删除">
+                                                    <a href="javascript:;" @click="deleteDot(item.dotId)" title="删除">
                                                         <i class="fa fa-trash-o mr-05"></i>
                                                     </a>
                                                 </div>
@@ -182,7 +180,7 @@
                     </div>
                 </div>
 
-                <!-- 添加账号模态框 -->
+                <!-- 添加模态框 -->
                 <div class="modal fade" id="modelAdd" tabindex="-1" role="dialog" aria-labelledby="modelAddTit"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
@@ -210,7 +208,7 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                    @click="addSubmit()">提交</button>
+                                    @click="addSubmit(1)">提交</button>
                             </div>
                         </div>
                     </div>
@@ -244,21 +242,20 @@
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                                 <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                    @click="addSubmit()">提交</button>
+                                    @click="addSubmit(2)">提交</button>
                             </div>
                         </div>
                     </div>
                 </div>
 
-                <!-- 修改账号模态框 -->
+                <!-- 修改模态框 -->
                 <div class="modal fade" id="modelUpdate" tabindex="-1" role="dialog" aria-labelledby="modelUpdateTit"
                     aria-hidden="true">
                     <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <h4 class="modal-title" id="modelUpdateTit">修改分公司 <i class="fa fa-edit"></i>
-                                    <button class="btn btn-box-tool font-size-12 float-r" @click="refreshPwd()"><i
-                                            class="fa fa-refresh"></i> 重置密码</button>
+                                    
                                 </h4>
 
                             </div>

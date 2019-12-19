@@ -20,17 +20,17 @@ public class DotServiceImpl implements DotService {
 	DotMapper dotMapper;
 	
 	@Override
-	public Dot getDot(Long dotId) {
-		return dotMapper.getDot(dotId);
+	public Dot getDot(String dotName) {
+		return dotMapper.getDot(dotName);
 	}
 
 	@Override
-	public List<Dot> getDotParentList(String dotName,Long parentId) {
-		return dotMapper.getDotParentList(dotName, parentId);
+	public List<Dot> getDotParentList(Long parentId) {
+		return dotMapper.getDotParentList(parentId);
 	}
 	@Override
-	public void insertDot(Dot dot) {
-		dotMapper.insertDot(dot);
+	public void insertDot(String dotName,Long parentId) {
+		dotMapper.insertDot(dotName,parentId);
 	}
 
 	@Override

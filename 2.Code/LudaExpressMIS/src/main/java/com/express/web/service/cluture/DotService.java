@@ -15,16 +15,15 @@ public interface DotService {
 	 * @param dotId
 	 * @return
 	 */
-	Dot getDot(Long dotId);
+	Dot getDot(String dotName);
 	
 	/**
-	 * 根据网点名称和父id查询出网点信息
+	 * 根据父id查询出网点信息
 	 * 父网点pid为-1，子网点根据左侧父网点的dotid来取
-	 * @param dotName
 	 * @param parentId
 	 * @return
 	 */
-	List<Dot> getDotParentList(String dotName,Long parentId);
+	List<Dot> getDotParentList(Long parentId);
 	
 	
 	/**
@@ -32,7 +31,7 @@ public interface DotService {
 	 * @param dot
 	 * @return
 	 */
-	void insertDot(Dot dot);
+	void insertDot(String dotName,Long parentId);
 	/**
 	 * 修改网点信息
 	 * @param dot

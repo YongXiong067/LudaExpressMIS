@@ -33,29 +33,34 @@ public class DotController {
 	@ApiOperation(value = "getDot", notes = "根据网点id查询出网点信息")
 	@GetMapping("/getDot")
 	@ResponseBody
-	public Dot getDot(@ApiParam(value = "网点id" ,required=true )@RequestParam Long dotId) {
-		return dotService.getDot(dotId);
+	public Dot getDot(@ApiParam(value = "网点id" ,required=true )@RequestParam String dotName) {
+		return dotService.getDot(dotName);
 	}
 
 	@ApiOperation(value = "getDotParentList", notes = "根据网点名称和父id查询出网点信息 父网点pid为-1，子网点根据左侧父网点的dotid来取")
-	@PostMapping("/getDotParentList")
+	@GetMapping("/getDotParentList")
 	@ResponseBody
-	public List<Dot> getDotParentList(@ApiParam(value = "网点名称" ,required=false )@RequestParam String dotName,
-			@ApiParam(value = "父id" ,required=true )@RequestParam Long parentId) {
-		return dotService.getDotParentList(dotName, parentId);
+	public List<Dot> getDotParentList(@ApiParam(value = "父id" ,required=true ) @RequestParam Long parentId) {
+		return dotService.getDotParentList(parentId);
 	}
+	
 	@ApiOperation(value = "insertDot", notes = "新增网点信息")
-	@PostMapping("/insertDot")
+	@GetMapping("/insertDot")
 	@ResponseBody
-	public boolean insertDot(@ApiParam(value = "网点对象" ,required=true ) @RequestBody Dot dot) {
-		boolean bool = false;
+	public int insertDot(@ApiParam(value = "网点对象" ,required=true ) @RequestParam String dotName,@RequestParam Long parentId) {
+		int success = 0;
 		try {
-			dotService.insertDot(dot);
-			bool = true;
+			Dot dot = dotService.getDot(dotName);
+			if(dot != null) {
+				success = -1;
+			}else {
+				dotService.insertDot(dotName,parentId);
+				success = 1;
+			}
 		}catch(Exception e) {
-			return bool;
+			return success;
 		}
-		return bool;
+		return success;
 	}
 	@ApiOperation(value = "updateDot", notes = "更新网点信息")
 	@PostMapping("/updateDot")
@@ -71,9 +76,15 @@ public class DotController {
 		return bool;
 	}
 	@ApiOperation(value = "deleteDot", notes = "根据网点id删除网点信息")
-	@PostMapping("/deleteDot")
+	@GetMapping("/deleteDot")
 	@ResponseBody
 	public boolean deleteDot(@ApiParam(value = "网点id" ,required=true ) @RequestParam Long dotId) {
+		 List<Dot> dot = dotService.getDotParentList(dotId);
+		 if(dot != null) {
+			 for (Dot dot2 : dot) {
+				 dotService.deleteDot(dot2.getDotId());
+			}
+		 }
 		return dotService.deleteDot(dotId);
 	}
 }

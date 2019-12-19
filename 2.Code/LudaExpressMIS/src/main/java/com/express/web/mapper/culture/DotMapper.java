@@ -18,12 +18,12 @@ import com.express.web.model.culture.Dot;
 @Mapper
 public interface DotMapper {
 	/**
-	 * 根据网点id查询出网点信息
+	 * 根据网点名称查询出网点信息
 	 * @param dotId
 	 * @return
 	 */
-	@Select("select * from dots where dotId = #{dotId}")
-	Dot getDot(@Param("dotId") Long dotId);
+	@Select("select * from dots where dotName = #{dotName}")
+	Dot getDot(@Param("dotName") String dotName);
 	/**
 	 * 根据网点名称和父id查询出网点信息
 	 * 父网点pid为-1，子网点根据左侧父网点的dotid来取
@@ -32,11 +32,10 @@ public interface DotMapper {
 	 * @return
 	 */
 	@Select("<script>"
-			+ "select * from dots where 1 =1"
-			+ "<if test = 'dotName != null'> and dotName = #{dotName} </if>"
+			+ "select * from dots where 1 = 1"
 			+ "<if test = 'parentId != null'> and parentId = #{parentId} </if>"
 			+ "</script>")
-	List<Dot> getDotParentList(String dotName,Long parentId);
+	List<Dot> getDotParentList(Long parentId);
 	
 	
 	/**
@@ -45,7 +44,7 @@ public interface DotMapper {
 	 * @return
 	 */
 	@Insert("insert into dots(parentId, dotName) value(#{parentId}, #{dotName})")
-	void insertDot(Dot dot);
+	void insertDot(String dotName,Long parentId);
 	/**
 	 * 修改网点信息
 	 * @param dot
