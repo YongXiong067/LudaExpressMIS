@@ -1,4 +1,4 @@
-package com.express.web.model.culture;
+package com.express.web.model.company;
 
 /**
  * 网点实体类

@@ -1,4 +1,4 @@
-package com.express.web.mapper.culture;
+package com.express.web.mapper.company;
 
 import java.util.List;
 
@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Param;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.express.web.model.culture.Dot;
+import com.express.web.model.company.Dot;
 /**
  * 网点Mapper接口
  * @author Administrator

@@ -1,8 +1,8 @@
-package com.express.web.service.cluture;
+package com.express.web.service.company;
 
 import java.util.List;
 
-import com.express.web.model.culture.Dot;
+import com.express.web.model.company.Dot;
 
 /**
  * 网点管理业务层接口

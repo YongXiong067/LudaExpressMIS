@@ -1,4 +1,4 @@
-package com.express.web.controller.culture;
+package com.express.web.controller.company;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.express.web.model.culture.Dot;
-import com.express.web.service.cluture.DotService;
+import com.express.web.model.company.Dot;
+import com.express.web.service.company.DotService;
 
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

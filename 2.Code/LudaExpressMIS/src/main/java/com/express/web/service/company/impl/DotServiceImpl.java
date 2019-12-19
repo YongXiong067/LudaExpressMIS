@@ -1,13 +1,13 @@
-package com.express.web.service.cluture.impl;
+package com.express.web.service.company.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.express.web.mapper.culture.DotMapper;
-import com.express.web.model.culture.Dot;
-import com.express.web.service.cluture.DotService;
+import com.express.web.mapper.company.DotMapper;
+import com.express.web.model.company.Dot;
+import com.express.web.service.company.DotService;
 
 /**
  * 网点管理业务层实现类
