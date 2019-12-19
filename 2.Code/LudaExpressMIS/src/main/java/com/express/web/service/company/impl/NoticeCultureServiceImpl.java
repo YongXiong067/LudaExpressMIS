@@ -20,7 +20,7 @@ public class NoticeCultureServiceImpl implements NoticeCultureService {
 	NoticeCultureMapper cultureMapper;
 	
 	@Override
-	public List<NoticeCulture> listByAll(String search,Integer type) {
+	public List<NoticeCulture> listByAll(String search,String type) {
 		return cultureMapper.listByAll(search,type);
 	}
 

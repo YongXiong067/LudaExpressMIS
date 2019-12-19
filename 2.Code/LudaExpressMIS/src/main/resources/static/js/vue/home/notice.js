@@ -168,37 +168,37 @@ new Vue({
          * 修改密码
          */
         updatePwd: function () {
-            if (this.pwdModel.newpwd != this.pwdModel.newpwd_) {
-                toastr.error('两次密码不相同！');
-            } else if (this.pwdModel.newpwd == '' || this.pwdModel.newpwd_ == '' || this.pwdModel.oldpwd == '') {
-                toastr.error('密码不能为空！');
-            } else {
-            	console.log(this.pwdModel.newpwd);
-                axios.get(this.apiurl + 'api/user/updatePwd',
-                    {
-                        params: {
-                            userId: this.user.userId,
-                            userName: this.user.userName,
-                            oldPwd: this.pwdModel.oldpwd,
-                            newpwd: this.pwdModel.newpwd
-                        }
-                    })
-                    .then(
-                        (res) => {
-                            if (res.data == 1) {
-                                toastr.success('修改成功！');
-                            } else if (res.data == -1) {
-                                toastr.error('密码验证失败！');
-                            } else {
-                                toastr.error('修改密码失败！');
-                            }
-                        }
-                    )
-                    .catch(
-                        (error) => { console.log(error); }
-                    );
-            }
-        },
+			 if (this.pwdModel.newpwd != this.pwdModel.newpwd_) {
+				 toastr.error('两次密码不相同！');
+			 } else if (this.pwdModel.newpwd == '' || this.pwdModel.newpwd_ == '' || this.pwdModel.oldpwd == '') {
+				 toastr.error('密码不能为空！');
+			 } else {
+				 console.log(this.pwdModel.newpwd);
+				 axios.get(this.apiurl + 'api/user/updatePwd',
+						 {
+					 params: {
+						 userId: this.user.userId,
+						 userName: this.user.userName,
+						 oldPwd: this.pwdModel.oldpwd,
+						 newpwd: this.pwdModel.newpwd
+					 }
+						 })
+						 .then(
+								 (res) => {
+									 if (res.data == 1) {
+										 toastr.success('修改成功！');
+									 } else if (res.data == -1) {
+										 toastr.error('密码验证失败！');
+									 } else {
+										 toastr.error('修改密码失败！');
+									 }
+								 }
+						 )
+						 .catch(
+								 (error) => { console.log(error); }
+						 );
+			 }
+		 },
         /**
          * 刷新数据
          */

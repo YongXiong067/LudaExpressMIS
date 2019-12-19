@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,9 +35,12 @@ public class NoticeCultureController {
 	HttpServletRequest request;
 
 	@ApiOperation(value = "getCulture", notes = "查询出企业文化、公告列表")
-	@PostMapping("/getCulture")
+	@GetMapping("/getCulture")
 	@ResponseBody
-	public List<NoticeCulture> getCulture(@ApiParam(value = "查询参数，可根据标题或者内容自动匹配" ,required=false )@RequestParam String search,@ApiParam(value = "类型" ,required=false )@RequestParam Integer type){
+	public List<NoticeCulture> getCulture(@ApiParam(value = "查询参数，可根据标题或者内容自动匹配" ,required=false )@RequestParam String search,@ApiParam(value = "类型" ,required=false )@RequestParam String type){
+		if(type == "") {
+			type = "1";
+		}
 		return cultureService.listByAll(search,type);
 	}
 
@@ -63,13 +67,14 @@ public class NoticeCultureController {
 			cultureService.update(culture);
 			bool = true;
 		}catch(Exception e) {
+			System.out.println(e);
 			return bool;
 		}
 		return bool;
 	}
 
 	@ApiOperation(value = "deleteCulture", notes = "删除企业文化、公告")
-	@PostMapping("/deleteCulture")
+	@GetMapping("/deleteCulture")
 	@ResponseBody
 	public boolean deleteCulture(@ApiParam(value = "根据企业文化、公告的id删除企业文化、公告内容" ,required=true )@RequestParam long id) {
 		boolean bool = false;

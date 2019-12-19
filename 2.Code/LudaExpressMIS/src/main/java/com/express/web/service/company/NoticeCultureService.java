@@ -15,7 +15,7 @@ public interface NoticeCultureService {
 	 * @param search
 	 * @return
 	 */
-	List<NoticeCulture> listByAll(String search,Integer type);
+	List<NoticeCulture> listByAll(String search,String type);
 	/**
 	 * 添加文化信息
 	 * @param culture
