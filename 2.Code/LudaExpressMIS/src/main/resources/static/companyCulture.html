@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>省人防办项目管理系统-项目入库</title>
+    <title>省人防办项目管理系统-项目招标</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
@@ -59,7 +59,7 @@
                             <div class="box-header">
                                 <div class="row">
                                     <div class="col-md-1 col-xs-3 pr-0" style="padding-top: 6px;">
-                                        <h4 class="box-title">合同列表</h4>
+                                        <h4 class="box-title">记录列表</h4>
                                     </div>
                                     <!-- 添加 刷新 导入 导出-->
                                     <div class="col-md-3 col-xs-5 pr-0">
@@ -72,10 +72,7 @@
                                                         data-target="#modelAdd"><button
                                                             class="btn btn-default btn-sm"><i
                                                                 class="fa fa-plus"></i></button></a>
-                                                    <a href="" title="关联合同" data-toggle="modal"
-                                                        data-target="#modelCont"><button class="btn btn-default btn-sm"
-                                                            style="padding: 5px 8px 5px 8px;"><i
-                                                                class="fa fa-exchange"></i></button></a>
+
                                                     <a href="javaScript:void(0);" @click="excelExport()"
                                                         title="导出Excel表格"><button class="btn btn-default btn-sm"><i
                                                                 class="fa fa-arrow-circle-down"></i></button></a>
@@ -89,7 +86,9 @@
                                                                 class="fa fa-refresh"></i></button></a>
                                                 </div>
                                             </div>
+
                                         </div>
+
                                     </div>
 
                                     <!-- 搜索 -->
@@ -99,7 +98,8 @@
                                                 <input type="text" v-model="beanSearch"
                                                     class="form-control input-sm pull-right" placeholder="Search">
                                                 <div class="input-group-btn">
-                                                    <button class="btn btn-sm btn-default" @click="search()"><i
+                                                    <button class="btn btn-sm btn-default"
+                                                        @click="beanPosition_change()"><i
                                                             class="fa fa-search"></i></button>
                                                 </div>
                                             </div>
@@ -168,7 +168,7 @@
                                                     <div class="col-md-4 col-xs-4 p-0 m-0">
                                                         <div class="input-group-btn">
                                                             <button class="btn btn-sm btn-default"
-                                                                @click="limit_page_go()"><i
+                                                                @click="limit_page(limitData.page_go)"><i
                                                                     class="fa fa-sign-in"></i></button>
                                                         </div>
                                                     </div>
@@ -179,6 +179,7 @@
                                 </div>
 
                             </div>
+                            <!-- 数据列表 -->
                             <div class="box-body table-responsive no-padding">
                                 <ul class="todo-list">
                                     <li>
@@ -187,30 +188,26 @@
                                                 <div class="row">
                                                     <div class="col-md-1 col-xs-2 p-0"><span class="text">ID</span>
                                                     </div>
-                                                    <div class="col-md-8 col-xs-2 p-0"><span class="text">合同名称</span>
+                                                    <div class="col-md-7 col-xs-2 p-0"><span class="text">项目名称</span>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-2 p-0"><span class="text">签订机构</span>
+                                                    <div class="col-md-4 col-xs-2 p-0"><span class="text">供应商</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="row">
-                                                    <div class="col-md-3 col-xs-2 p-0"><span class="text">签订金额</span>
-                                                    </div>
-                                                    <div class="col-md-4 col-xs-2 p-0"><span class="text">签订日期</span>
-                                                    </div>
-                                                    <div class="col-md-2 col-xs-2 p-0"><span class="text">年限</span>
-                                                    </div>
-                                                    <div class="col-md-3 col-xs-2 p-0"><span class="text">付款方式</span>
+                                                    <div class="col-md-5 col-xs-2 p-0"><span class="text">中标金额</span>
                                                     </div>
 
+                                                    <div class="col-md-7 col-xs-2 p-0"><span class="text">中标时间</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <div class="row">
-                                                    <div class="col-md-6 col-xs-2 p-0"><span class="text">合同资料</span>
+                                                    <div class="col-md-6 col-xs-2 p-0"><span class="text">中标资料</span>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-2 p-0"><span class="text">合同状态</span>
+                                                    <div class="col-md-3 col-xs-2 p-0"><span class="text">统筹类型</span>
                                                     </div>
                                                     <div class="col-md-3 col-xs-2 p-0"><span class="text">操作</span>
                                                     </div>
@@ -222,64 +219,53 @@
                                         <div class="row p-0 m-0 text-center">
                                             <div class="col-md-4">
                                                 <div class="row">
-                                                    <div class="col-md-1 col-xs-2 p-0"><span>{{item.c_id}}</span>
+                                                    <div class="col-md-1 col-xs-2 p-0"><span>{{item.p_id}}</span>
                                                     </div>
-                                                    <div class="col-md-8 col-xs-2 p-0 text-oneline"><span><a
-                                                                href="javascript:;" @click="contentChange(item)"
-                                                                :title="item.name">{{item.c_name}}</a></span>
+                                                    <div class="col-md-7 col-xs-2 p-0 text-oneline"><a
+                                                            href="javascript:;"
+                                                            @click="contentChange(item)"><span>{{item.p_name}}</span></a>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-2 p-0 text-oneline">
-                                                        <span>{{item.supplier}}</span>
+                                                    <div class="col-md-4 col-xs-2 p-0 text-oneline"><span>{{item.contractor}}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="row">
-                                                    <div class="col-md-3 col-xs-2 p-0"><span
-                                                            style="color: green;">{{item.signed_money}}<i
+                                                    <div class="col-md-5 col-xs-2 p-0 text-oneline"><span
+                                                            style="color: green;">{{item.bid_money}} <i
                                                                 class="fa fa-cny"></i></span>
                                                     </div>
-                                                    <div class="col-md-4 col-xs-2 p-0 text-oneline">
-                                                        <span>{{item.signed_time}}</span>
-                                                    </div>
-                                                    <div class="col-md-2 col-xs-2 p-0"><span>{{item.years}} 年</span>
-                                                    </div>
-                                                    <div class="col-md-3 col-xs-2 p-0 text-oneline">
-                                                        <span>{{item.mode}}</span>
-                                                    </div>
 
+                                                    <div class="col-md-7 col-xs-2 p-0 text-oneline">
+                                                        <span>{{item.bid_time}}</span>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-5">
                                                 <div class="row">
-                                                    <div class="col-md-6 col-xs-2 p-0 text-oneline"><a
-                                                            :href="'api/v2/db/open?fileurl='+item.fileUrl"
-                                                            target="_blank" title="点击查看文件"><span><i
-                                                                    class="fa fa-paperclip"></i> &nbsp;
-                                                                {{item.fileName}}</span></a>
+                                                    <div class="col-md-6 col-xs-2 p-0 text-oneline"><a :href="'api/v2/db/open?fileurl='+item.bid_fileUrl" 
+                                                        target="_blank" title="点击查看文件"><span><i class="fa fa-paperclip"></i> &nbsp;
+                                                                {{item.bid_fileName}}</span></a>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-2 p-0">
-                                                        <span v-if="item.tagle == 1" style="color: green;">正常</span>
-                                                        <span v-if="item.tagle == 0" style="color: red;">终止</span>
+                                                    <div class="col-md-3 col-xs-2 p-0 text-oneline">
+                                                        <span>{{item.overall_type}}</span>
                                                     </div>
                                                     <div class="col-md-3 col-xs-2 p-0">
                                                         <div class="tools">
-                                                            <a :href="'api/v2/db/dowlond?fileurl='+item.fileUrl"
-                                                                target="_blank" title="点击下载文件">
+                                                            <a :href="'api/v2/db/dowlond?fileurl='+item.bid_fileUrl" target="_blank" title="点击下载文件">
                                                                 <i class="fa fa-cloud-download"
                                                                     style="margin-right: 5px;"></i>
                                                             </a>
-                                                            <a href="javascript:;" title="上传文件" data-toggle="modal"
+                                                            <a href="###" title="上传文件" data-toggle="modal"
                                                                 data-target="#modelFile" @click="file(item)">
                                                                 <i class="fa fa-cloud-upload"
                                                                     style="margin-right: 5px;"></i>
                                                             </a>
-                                                            <a href="javascript:;" title="修改" data-toggle="modal"
+                                                            <a href="###" title="修改" data-toggle="modal"
                                                                 data-target="#modelUpdate" @click="update(item)">
                                                                 <i class="fa fa-edit" style="margin-right: 5px;"></i>
                                                             </a>
-                                                            <a href="javascript:;" @click="deleteProject(item.c_id)"
-                                                                title="删除"> <i class="fa fa-trash-o"
+                                                            <a href="###" title="删除" @click="deleteProject(item.p_id)"> <i class="fa fa-trash-o"
                                                                     style="margin-right: 5px;"></i> </a>
                                                         </div>
                                                     </div>
@@ -317,74 +303,57 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">合同编号</span>
-                                                            <input type="text" v-model="modalUpdate.c_no"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">合同名称</span>
-                                                            <input type="text" v-model="modalUpdate.c_name"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">公司名称</span>
-                                                            <input type="text" v-model="modalUpdate.supplier"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">负责人</span>
-                                                            <input type="text" v-model="modalUpdate.person"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">联系方式</span>
-                                                            <input type="text" v-model="modalUpdate.phone"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">签订金额</span>
+                                                            <span class="input-group-addon">项目名称</span>
                                                             <input type="text" class="form-control"
-                                                                v-model="modalUpdate.signed_money">
+                                                                v-model="modalUpdate.p_name" placeholder="请填写该字段"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">承建商</span>
+                                                            <input type="text" v-model="modalUpdate.contractor"
+                                                                class="form-control" placeholder="请填写该字段" required>
+                                                            
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">统筹类型</span>
+                                                            <select class="form-control"
+                                                                v-model="modalUpdate.overall_type">
+                                                                <option selected="selected" value="0">---选择统筹类型---
+                                                                </option>
+                                                                <option v-for="p in overall_typeList" :value="p.value">
+                                                                    {{p.value}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">中标金额</span>
+                                                            <input type="text" v-model="modalUpdate.bid_money"
+                                                                class="form-control" placeholder="请填写该字段" required>
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-cny"></i>
                                                             </span>
@@ -398,110 +367,9 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">已付款金额</span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalUpdate.payment_money">
-                                                            <span class="input-group-addon">
-                                                                <i class="fa fa-cny"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">签订年限</span>
-                                                            <input type="text" v-model="modalUpdate.years"
-                                                                class="form-control">
-                                                            <span class="input-group-addon">
-                                                                年
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div
-                                                            style="height: 230px; border: 0.5px solid rgb(219, 219, 219); line-height: 35px;">
-                                                            <div class="display-in"
-                                                                style="padding-left: 6px; font-size: 16px;">
-                                                                付款方式
-                                                            </div>
-                                                            <div class="float-r">
-                                                                <button type="button" class="btn btn-primary p-0 mr-2"
-                                                                    @click="addPer('0')"
-                                                                    style=" padding: 4px 8px 4px 8px; font-size: 14px;">添加</button>
-                                                            </div>
-                                                            <hr style="padding: 0px; margin: 0px;" />
-
-                                                            <div
-                                                                style="font-size: 12px; height: 190px; overflow: auto;">
-                                                                <div class="row p-0 m-0">
-                                                                    <div class="col-md-2 col-sm-2 p-0 m-0 pl-1">
-                                                                        付款次序
-                                                                    </div>
-                                                                    <div class="col-md-4 col-sm-4 p-0 m-0">
-                                                                        款项名称
-                                                                    </div>
-                                                                    <div class="col-md-3 col-sm-3 p-0 m-0">
-                                                                        付款百分比
-                                                                    </div>
-                                                                    <div class="col-md-1 col-sm-1"></div>
-                                                                    <div class="col-md-2 col-sm-2">
-                                                                        操作
-                                                                    </div>
-                                                                </div>
-                                                                <!-- 项目li -->
-                                                                <div class="hover-light"
-                                                                    v-for="(item, i) in modalUpdate.paylist"
-                                                                    style="line-height: 35px;">
-                                                                    <div class="row p-0 m-0">
-                                                                        <div class="col-md-2 col-sm-2 pl-3">
-                                                                            <span>{{i+1}}</span>
-                                                                        </div>
-                                                                        <div class="col-md-4 col-sm-4 p-0 m-0">
-                                                                            <input type="text "
-                                                                                v-model="modalUpdate.paylist[i].name"
-                                                                                class="form-control wh-12">
-                                                                        </div>
-                                                                        <div class="col-md-3 col-sm-3 p-0 m-0">
-                                                                            <input type="text"
-                                                                                v-model="modalUpdate.paylist[i].per"
-                                                                                class="form-control display-in wh-6"> <b
-                                                                                class="display-in"> %</b>
-                                                                        </div>
-                                                                        <div class="col-md-1 col-sm-1"></div>
-                                                                        <div class="col-md-2 col-sm-2 pl-2">
-                                                                            <a href="javascript:;" title="删除"
-                                                                                @click="deletePer(i, '0')"
-                                                                                class="color-black">
-                                                                                <i class="fa fa-close"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">签订时间</span>
-                                                            <input type="date" v-model="modalUpdate.signed_time"
+                                                            <span class="input-group-addon">立项时间</span>
+                                                            <input type="date"
+                                                                v-model="modalUpdate.bid_time"
                                                                 class="form-control" />
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-calendar"></i>
@@ -527,7 +395,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="modelAddTit">添加合同信息 <i class="fa fa-plus"></i>
+                                            <h4 class="modal-title" id="modelAddTit">添加项目招标信息 <i class="fa fa-plus"></i>
                                             </h4>
                                         </div>
                                         <div class="modal-body">
@@ -536,41 +404,16 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">采购编号<b
-                                                                    class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.c_no"
-                                                                class="form-control" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.c_no)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">合同名称<b
-                                                                    class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.c_name"
-                                                                class="form-control" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.c_name)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">公司名称<b
-                                                                    class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.supplier"
-                                                                class="form-control" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.supplier)">
+                                                            <span class="input-group-addon">项目名称<b class="color-danger">*</b></span>
+
+                                                            <select class="form-control" v-model="modalAdd.p_id"
+                                                                @change="modelAdd_change()">
+                                                                <option selected="selected" value="0">---请选择项目---
+                                                                </option>
+                                                                <option v-for="sel in list1" :value="sel.p_id">
+                                                                    {{sel.p_name}}</option>
+
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -581,11 +424,9 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">负责人<b
-                                                                    class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.person"
-                                                                class="form-control" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.person)">
+                                                            <span class="input-group-addon">归属处室</span>
+                                                            <input type="text" v-model="modalAdd_project.position"
+                                                                class="form-control" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -596,24 +437,23 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">联系方式</span>
-                                                            <input type="text" v-model="modalAdd.phone"
-                                                                class="form-control" placeholder="请填写该字段">
+                                                            <span class="input-group-addon">承建商<b class="color-danger">*</b></span>
+                                                            <input type="text" v-model="modalAdd.contractor"
+                                                                class="form-control" @blur="inputText(modalAdd.contractor)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
+
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">签订金额<b
-                                                                    class="color-danger">*</b></span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalAdd.signed_money"
-                                                                @blur="inputNumber(modalAdd.signed_money)">
+                                                            <span class="input-group-addon">中标金额<b class="color-danger">*</b></span>
+                                                            <input type="text" v-model="modalAdd.bid_money"
+                                                                class="form-control" @blur="inputNumber(modalAdd.bid_money)">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-cny"></i>
                                                             </span>
@@ -622,119 +462,16 @@
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
+
+                                            
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">已付款金额</span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalAdd.payment_money">
-                                                            <span class="input-group-addon">
-                                                                <i class="fa fa-cny"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">签订年限</span>
-                                                            <input type="text" v-model="modalAdd.years"
-                                                                @blur="inputNumber(modalAdd.years)"
-                                                                class="form-control">
-                                                            <span class="input-group-addon">
-                                                                年
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div
-                                                            style="height: 230px; border: 0.5px solid rgb(219, 219, 219); line-height: 35px;">
-                                                            <div class="display-in"
-                                                                style="padding-left: 6px; font-size: 16px;">
-                                                                付款方式
-                                                            </div>
-                                                            <div class="float-r">
-                                                                <button type="button" class="btn btn-primary p-0 mr-2"
-                                                                    @click="addPer('1')"
-                                                                    style=" padding: 4px 8px 4px 8px; font-size: 14px;">添加</button>
-                                                            </div>
-                                                            <hr style="padding: 0px; margin: 0px;" />
-
-                                                            <div
-                                                                style="font-size: 12px; height: 190px; overflow: auto;">
-                                                                <div class="row p-0 m-0">
-                                                                    <div class="col-md-2 col-sm-2 p-0 m-0 pl-1">
-                                                                        付款次序
-                                                                    </div>
-                                                                    <div class="col-md-4 col-sm-4 p-0 m-0">
-                                                                        款项名称
-                                                                    </div>
-                                                                    <div class="col-md-3 col-sm-3 p-0 m-0">
-                                                                        付款百分比
-                                                                    </div>
-                                                                    <div class="col-md-1 col-sm-1"></div>
-                                                                    <div class="col-md-2 col-sm-2">
-                                                                        操作
-                                                                    </div>
-                                                                </div>
-                                                                <!-- 项目li -->
-                                                                <div class="hover-light"
-                                                                    v-for="(item, i) in modalAdd.paylist"
-                                                                    style="line-height: 35px;">
-                                                                    <div class="row p-0 m-0">
-                                                                        <div class="col-md-2 col-sm-2 pl-3">
-                                                                            <span>{{i+1}}</span>
-                                                                        </div>
-                                                                        <div class="col-md-4 col-sm-4 p-0 m-0">
-                                                                            <input type="text "
-                                                                                v-model="modalAdd.paylist[i].name"
-                                                                                class="form-control wh-12">
-                                                                        </div>
-                                                                        <div class="col-md-3 col-sm-3 p-0 m-0">
-                                                                            <input type="text"
-                                                                                v-model="modalAdd.paylist[i].per"
-                                                                                class="form-control display-in wh-6"> <b
-                                                                                class="display-in"> %</b>
-                                                                        </div>
-                                                                        <div class="col-md-1 col-sm-1"></div>
-                                                                        <div class="col-md-2 col-sm-2 pl-2">
-                                                                            <a href="javascript:;" title="删除"
-                                                                                @click="deletePer(i, '1')"
-                                                                                class="color-black">
-                                                                                <i class="fa fa-close"></i>
-                                                                            </a>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">签订时间<b
-                                                                    class="color-danger">*</b></span>
-                                                            <input type="date" v-model="modalAdd.signed_time"
-                                                                class="form-control" />
+                                                            <span class="input-group-addon">中标时间<b class="color-danger">*</b></span>
+                                                            <input type="date"
+                                                                v-model="modalAdd.bid_time" class="form-control" />
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-calendar"></i>
                                                             </span>
@@ -754,9 +491,7 @@
                                                                 @change="fileUpload('uploadFile')" class="form-control">
                                                         </div>
                                                         <div>
-                                                            <p>须知：上传文件大小不超过20MB; 下载模板：<a
-                                                                    :href="'api/v2/db/dowlond?fileurl=File/model/合同模板.doc'"
-                                                                    target="_blank" title="点击下载文件">合同模板.doc</a></p>
+                                                            <p>须知：上传文件大小不超过20MB; 下载模板：<a :href="'api/v2/db/dowlond?fileurl=File/model/项目招标模板.doc'" target="_blank" title="点击下载文件">项目招标模板.doc</a></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -789,10 +524,10 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">归属处室</span>
+                                                            <span class="input-group-addon">承建商</span>
                                                             <select class="form-control" @change="beanPosition_change()"
-                                                                v-model="beanChange.beanPosition">
-                                                                <option selected="selected" value="0">---归属处室---
+                                                                v-model="beanChange.position">
+                                                                <option selected="selected" value="0">---承建商---
                                                                 </option>
                                                                 <option v-for="p in positionList" :value="p.key">
                                                                     {{p.value}}
@@ -808,9 +543,28 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
+                                                            <span class="input-group-addon">统筹类型</span>
+                                                            <select class="form-control" @change="beanPosition_change()"
+                                                                v-model="beanChange.overall_type">
+                                                                <option selected="selected" value="0">---统筹类型---
+                                                                </option>
+                                                                <option v-for="p in overall_typeList" :value="p.key">
+                                                                    {{p.value}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group mt-1">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
                                                             <span class="input-group-addon">年份</span>
                                                             <select class="form-control" @change="beanPosition_change()"
-                                                                v-model="beanChange.beanYear">
+                                                                v-model="beanChange.bid_time">
                                                                 <option selected="selected" value="0">---选择年份---
                                                                 </option>
                                                                 <option value="2019">2019年</option>
@@ -824,25 +578,6 @@
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
-                                            <div class="form-group mt-1">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">状态</span>
-                                                            <select class="form-control" @change="beanPosition_change()"
-                                                                v-model="beanChange.beanTagle">
-                                                                <option selected="selected" value="">---选择状态---
-                                                                </option>
-                                                                <option value="1">正常</option>
-                                                                <option value="0">终止</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-
                                         </div>
                                     </div>
                                 </div>
@@ -864,7 +599,7 @@
                                                         <div class="input-group">
                                                             <span class="input-group-addon">项目名称</span>
                                                             <input type="text" class="form-control"
-                                                                v-model="modalFile.c_name" placeholder="项目名" disabled>
+                                                                v-model="modalFile.p_name" placeholder="项目名" disabled>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -876,7 +611,7 @@
                                                     <div class="col-md-10">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">原文件路径</span>
-                                                            <input type="text" v-model="modalFile.fileName"
+                                                            <input type="text" v-model="modalFile.bid_fileName"
                                                                 class="form-control" placeholder="暂无" disabled>
 
                                                         </div>
@@ -895,9 +630,7 @@
                                                                 @change="fileUpload('updateFile')" class="form-control">
                                                         </div>
                                                         <div>
-                                                            <p>须知：上传文件大小不超过20MB; 下载模板：<a
-                                                                    :href="'api/v2/db/dowlond?fileurl=File/model/合同模板.doc'"
-                                                                    target="_blank" title="点击下载文件">合同模板.doc</a></p>
+                                                            <p>须知：上传文件大小不超过20MB; 下载模板：<a :href="'api/v2/db/dowlond?fileurl=File/model/项目招标模板.doc'" target="_blank" title="点击下载文件">项目招标模板.doc</a></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -913,30 +646,29 @@
                                     </div>
                                 </div>
                             </div>
-                            <!-- 关联合同模态框 -->
-                            <div class="modal fade" id="modelCont" tabindex="-1" role="dialog"
-                                aria-labelledby="modelContTit" aria-hidden="true">
+
+                            <!-- Excel导入模态框 -->
+                            <div class="modal fade" id="modelImport" tabindex="-1" role="dialog"
+                                aria-labelledby="modelImpTit" aria-hidden="true">
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="modelContTit">关联合同信息 <i
-                                                    class="fa fa-exchange"></i>
+                                            <h4 class="modal-title" id="modelImpTit">项目入库数据导入 <i
+                                                    class="fa fa-arrow-circle-up"></i>
                                             </h4>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="form-group ">
+                                            <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">项目名称</span>
-
-                                                            <select class="form-control" v-model="moldeHt.p_id">
-                                                                <option selected="selected" value="0">---请选择项目---
-                                                                </option>
-                                                                <option v-for="sel in list1" :value="sel.p_id">
-                                                                    {{sel.p_name}}</option>
-                                                            </select>
+                                                        <div class="card">
+                                                            <div class="card-body">
+                                                                <h4 class="card-title">导入须知</h4>
+                                                                <p class="card-text">1、导入文件大小不超过20MB.</p>
+                                                                <p class="card-text">2、支持Microsoft Office
+                                                                    Excel的 .xls和 .xlsx文件,模板<a href="#">点此下载</a>.</p>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -947,29 +679,26 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">合同名称</span>
-                                                            <select class="form-control" v-model="moldeHt.c_id">
-                                                                <option selected="selected" value="0">---请选择合同---
-                                                                </option>
-                                                                <option v-for="sel in limitData.list" :value="sel.c_id">
-                                                                    {{sel.c_name}}</option>
-                                                            </select>
+                                                            <span class="input-group-addon"><i
+                                                                    class="fa fa-file"></i></span>
+                                                            <input type="file" class="form-control">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
-
                                         </div>
+
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
                                                 data-dismiss="modal">取消</button>
                                             <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                @click="sumbitmodelChange()">提交</button>
+                                                @click="fileSubmit()">提交</button>
                                         </div>
                                     </div>
                                 </div>
                             </div>
+
 
                         </div>
                     </div>
@@ -981,9 +710,9 @@
             <!-- 右侧内容界面-记录列表 -->
             <section class="content" v-if="!contentTagle">
 
-                <n-content-contract v-on:return="contentReturn" :list="listPro" :project="projectContent"
-                    v-on:removeht="removeHt" v-on:refresh="refreshContent" :modelht="moldeHt" v-on:projectht="projectHt"
-                    :prolist="list1" v-on:projecthtsumbit="sumbitmodelChange"></n-content-contract>
+                <n-content-project v-on:return="contentReturn" :list="listHT" :project="projectContent" :htlist="contentHtModel"
+                    :modelht="moldeHt" v-on:projectht="projectHt" v-on:removeht="removeHt" v-on:refresh="refreshContent" v-on:projecthtsumbit="projectHtSumbit" 
+                    :listdata="listData" ></n-content-project>
 
             </section>
         </div>
@@ -1012,7 +741,7 @@
     <!-- 加载Vue公共模块 -->
     <script src="js/vue/commer/vue_commer.js"></script>
     <!-- 项目入库模块 -->
-    <script src="js/vue/build/contract.js"></script>
+    <script src="js/vue/build/companyCulture.js"></script>
 
     <script src="js/commer.js"></script>
 </body>

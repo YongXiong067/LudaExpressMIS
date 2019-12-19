@@ -25,6 +25,17 @@ public class SysUser {
 	 * 用户角色 0系统管理员，1普通用户，2快递员
 	 */
 	private int rolu;
+	/**
+	 * 	角色名称
+	 */
+	private String roluName;
+	
+	public String getRoluName() {
+		return roluName;
+	}
+	public void setRoluName(String roluName) {
+		this.roluName = roluName;
+	}
 	public long getUserId() {
 		return userId;
 	}

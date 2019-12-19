@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>省人防办项目管理系统-市州人防办管理</title>
+    <title>省人防办项目管理系统-付款信息</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
@@ -31,6 +31,7 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -73,17 +74,14 @@
                                                             class="btn btn-default btn-sm"><i
                                                                 class="fa fa-plus"></i></button></a>
 
-                                                    <!-- <a href="javaScript:void(0);" @click="refresh()"
+                                                    <a href="javaScript:void(0);" @click="excelExport()"
                                                         title="导出Excel表格"><button class="btn btn-default btn-sm"><i
                                                                 class="fa fa-arrow-circle-down"></i></button></a>
-                                                    <a href="javaScript:void(0);" @click="refresh()" title="导入Excel表格"
-                                                        data-toggle="modal" data-target="#modelImport"><button
-                                                            class="btn btn-default btn-sm"><i
-                                                                class="fa fa-arrow-circle-up"></i></button></a> -->
-                                                    <!-- <a href="javaScript:void(0);" title="选择过滤条件" data-toggle="modal"
+
+                                                    <a href="javaScript:void(0);" title="选择过滤条件" data-toggle="modal"
                                                         data-target="#modelChange"><button
                                                             class="btn btn-default btn-sm ml-1"><i
-                                                                class="fa fa-reorder"></i></button></a> -->
+                                                                class="fa fa-reorder"></i></button></a>
                                                     <a href="javaScript:void(0);" @click="refresh()" title="刷新"><button
                                                             class="btn btn-default btn-sm"><i
                                                                 class="fa fa-refresh"></i></button></a>
@@ -182,85 +180,89 @@
                                 </div>
 
                             </div>
+                            <!-- 数据列表 -->
                             <div class="box-body table-responsive no-padding">
                                 <ul class="todo-list">
                                     <li>
                                         <div class="row p-0 m-0 text-center">
-                                            <div class="col-md-3 col-xs-6 p-0">
+                                            <div class="col-md-6">
                                                 <div class="row">
-                                                    <div class="col-md-2 ">
-                                                        <span class="text">ID</span>
+                                                    <div class="col-md-1 col-xs-2 p-0"><span class="text">ID</span>
                                                     </div>
-                                                    <div class="col-md-10 col-xs-2 p-0">
-                                                        <span class="text">公司名称</span>
+                                                    <div class="col-md-5 col-xs-2 p-0"><span class="text">批次名称</span>
                                                     </div>
+                                                    <div class="col-md-6 col-xs-2 p-0"><span class="text">批次备注</span>
+                                                    </div>
+
+
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-xs-6 p-0">
+
+                                            <div class="col-md-6">
                                                 <div class="row">
-                                                    <div class="col-md-3 ">
-                                                        <span class="text">公司电话</span>
+                                                    <div class="col-md-3 col-xs-2 p-0"><span class="text">包含项目个数</span>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-2 p-0">
-                                                        <span class="text">收款人</span>
+                                                    <div class="col-md-4 col-xs-2 p-0"><span class="text">批次付款总金额</span>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-2 p-0">
-                                                        <span class="text">开户银行</span>
+                                                    <div class="col-md-3 col-xs-2 p-0"><span class="text">是否付过款</span>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-2 p-0">
-                                                        <span class="text">银行账号</span>
+                                                    <div class="col-md-2 col-xs-2 p-0"><span class="text">操作</span>
                                                     </div>
                                                 </div>
-                                            </div>
-                                            <div class="col-md-2 col-xs-3 p-0">
-                                                <span class="text">公司地址</span>
-                                            </div>
-                                            <div class="col-md-1 col-xs-1 p-0">
-                                                <span class="text">操作</span>
                                             </div>
                                         </div>
                                     </li>
                                     <li v-for="(item, index) in limitData.list">
-                                        <div class="row m-0 text-center">
-                                            <div class="col-md-3 col-xs-1 p-0">
+                                        <div class="row p-0 m-0 text-center">
+                                            <div class="col-md-6">
                                                 <div class="row">
-                                                    <div class="col-md-2 col-xs-1 p-0">
-                                                        <span>{{item.sup_id}}</span>
+                                                    <div class="col-md-1 col-xs-2 p-0"><span>{{item.id}}</span>
                                                     </div>
-                                                    <div class="col-md-10 col-xs-2 p-0 text-oneline">
-                                                        <a href="javascript:;" :title="item.sup_name"
-                                                            @click="contentChange(item)"><span>{{item.sup_name}}</span></a>
+                                                    <div class="col-md-5 col-xs-2 p-0 text-oneline"><span><a
+                                                                href="javascript:;" :title="item.p_name"
+                                                                data-toggle="modal" data-target="#modelPayAdd_"
+                                                                @click="payAdd(item)">{{item.name}}</a></span>
                                                     </div>
+                                                    <div class="col-md-6 col-xs-2 p-0 text-oneline">
+                                                        <span>{{item.remakes}}</span>
+                                                    </div>
+
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-xs-1 p-0">
+                                            <div class="col-md-6">
                                                 <div class="row">
-                                                    <div class="col-md-3 col-xs-1 p-0 text-oneline">
-                                                        <span>{{item.phone}}</span>
+                                                    <div class="col-md-3 col-xs-2 p-0 text-oneline">
+                                                        <span>{{item.nums}} 个</span>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-1 p-0 text-oneline">
-                                                        <span>{{item.payee}}</span>
+                                                    <div class="col-md-4 col-xs-2 p-0">
+                                                        <span class="color-success">{{item.money}}<i
+                                                                class="fa fa-cny"></i></span>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-1 p-0 text-oneline">
-                                                        <span>{{item.opening_bank}}</span>
+                                                    <div class="col-md-3 col-xs-2 p-0">
+                                                        <span class="color-success"
+                                                            v-if="item.tagle == '已付款'">{{item.tagle}}</span>
+                                                        <span class="color-danger"
+                                                            v-if="item.tagle == '未付款'">{{item.tagle}}</span>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-1 p-0 text-oneline">
-                                                        <span>{{item.bank_account}}</span>
+                                                    <div class="col-md-2 col-xs-2 p-0">
+                                                        <div class="tools">
+                                                            <a href="javaScript:;" v-if="item.tagle == '未付款'" title="付款"
+                                                                data-toggle="modal" data-target="#modelPayAdd"
+                                                                @click="payAdd(item)" class="mr-1">
+                                                                付款
+                                                            </a>
+                                                            <!-- <a href="javascript:;" title="修改" data-toggle="modal"
+                                                                data-target="#modelUpdate" @click="update(item)">
+                                                                <i class="fa fa-edit" style="margin-right: 5px;"></i>
+                                                            </a> -->
+                                                            <a href="javascript:;" @click="deleteProject(item.id)"
+                                                                title="删除"> <i class="fa fa-trash-o mr-1"></i>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-xs-2 p-0">
-                                                <span>{{item.address}}</span>
-                                            </div>
-                                            <div class="col-md-1 col-xs-1 px-0">
-                                                <div class="tools">
-                                                    <a href="javascript:;" title="修改" data-toggle="modal"
-                                                        data-target="#modelUpdate" @click="update(item)">
-                                                        <i class="fa fa-edit" style="margin-right: 15px;"></i> </a>
-                                                    <a href="javascript:;" title="删除" @click="deleteSupplier(item.sup_id)">
-                                                        <i class="fa fa-trash-o" style="margin-right: 25px;"></i> </a>
-                                                </div>
-                                            </div>
+
                                         </div>
                                     </li>
                                     <li>
@@ -293,24 +295,23 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">公司名称</span>
+                                                            <span class="input-group-addon">项目名称</span>
                                                             <input type="text" class="form-control"
-                                                                v-model="modalUpdate.sup_name" placeholder="请填写该字段"
+                                                                v-model="modalUpdate.p_name" placeholder="请填写该字段"
                                                                 required>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
-                                            <div class="form-group ">
+                                            <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">公司电话</span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalUpdate.phone" placeholder="请填写该字段"
-                                                                required>
+                                                            <span class="input-group-addon">应付款</span>
+                                                            <input type="text" v-model="modalUpdate.payable_money"
+                                                                class="form-control">
                                                             <span class="input-group-addon">
                                                                 <i class="fa fa-cny"></i>
                                                             </span>
@@ -324,9 +325,11 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">收款人</span>
-                                                            <input type="text" v-model="modalUpdate.payee"
-                                                                class="form-control" placeholder="请填写该字段" required>
+                                                            <span class="input-group-addon">付款约定信息</span>
+                                                            <textarea v-model="modalUpdate.payment_agreement" cols="50"
+                                                                rows="3"
+                                                                style="OVERFLOW:hidden; width: 100%; margin-bottom: -5px;">
+                                                            </textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -337,38 +340,11 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">开户银行</span>
-                                                            <input type="text" v-model="modalUpdate.opening_bank"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">银行账号</span>
-                                                            <input type="text" v-model="modalUpdate.bank_account"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">公司地址</span>
-                                                            <input type="text" v-model="modalUpdate.address"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                            <span class="input-group-addon">
-                                                                <i class="fa fa-cny"></i>
-                                                            </span>
+                                                            <span class="input-group-addon">补进付款信息</span>
+                                                            <textarea v-model="modalUpdate.supplementary_Payment"
+                                                                cols="50" rows="3"
+                                                                style="OVERFLOW:hidden; width: 100%; margin-bottom: -5px;">
+                                                            </textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -384,109 +360,308 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!-- 添加模态框 -->
                             <div class="modal fade" id="modelAdd" tabindex="-1" role="dialog"
                                 aria-labelledby="modelAddTit" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
+                                <div class="modal-dialog" role="document" style="width: 70%;">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="modelAddTit">添加入库信息 <i class="fa fa-plus"></i>
+                                            <h4 class="modal-title" id="modelAddTit">添加付款批次 <i class="fa fa-plus"></i>
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body px-3">
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">批次名称<b
+                                                                            class="color-danger">*</b></span>
+                                                                    <input type="text" v-model="modalAdd.name"
+                                                                        class="form-control">
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+
+                                                            <div class="col-md-12">
+                                                                <div class="input-group">
+                                                                    <span class="input-group-addon">批次备注</span>
+                                                                    <input type="text" v-model="modalAdd.remakes"
+                                                                        class="form-control">
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div
+                                                                    style="height: 230px;  border: 0.5px solid rgb(219, 219, 219);">
+                                                                    <div class="display-in"
+                                                                        style="line-height: 35px; padding-left: 6px; font-size: 16px;">
+                                                                        项目列表
+                                                                    </div>
+                                                                    <hr style="padding: 0px; margin: 0px;" />
+                                                                    <div style="height: 190px; overflow: auto;">
+                                                                        <!-- 项目li -->
+                                                                        <div v-for="(item, index) in addData.rPList"
+                                                                            class="hover-light"
+                                                                            style="line-height: 35px;">
+                                                                            <div class="display-in pl-1">
+                                                                                {{item.p_name}}
+                                                                            </div>
+                                                                            <div class="float-r">
+                                                                                <a href="javascript:;"
+                                                                                    @click="rChange(index, 'add')"
+                                                                                    title="选择项目"
+                                                                                    class="color-black mr-1">
+                                                                                    <i class="fa fa-check-circle"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-6">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div
+                                                                    style="height: 230px; border: 0.5px solid rgb(219, 219, 219); line-height: 35px;">
+                                                                    <div class="display-in"
+                                                                        style="padding-left: 6px; font-size: 16px;">
+                                                                        已选择项目
+                                                                    </div>
+                                                                    <div class="float-r">
+                                                                        <button type="button" @click="rChangeClearn()"
+                                                                            class="btn btn-primary p-0 mr-2"
+                                                                            style=" padding: 4px 8px 4px 8px; font-size: 12px;">全部清除</button>
+                                                                    </div>
+                                                                    <hr style="padding: 0px; margin: 0px;" />
+                                                                    <div style="height: 190px; overflow: auto;">
+                                                                        <!-- 项目li -->
+                                                                        <div v-for="(item, index) in addData.rSList"
+                                                                            class="hover-light"
+                                                                            style="line-height: 35px;">
+                                                                            <div class="display-in pl-1">
+                                                                                {{item.p_name}}
+                                                                            </div>
+                                                                            <div class="float-r">
+                                                                                <a href="javascript:;"
+                                                                                    @click="rChange(index, 'remove')"
+                                                                                    class="color-black mr-1">
+                                                                                    <i class="fa fa-close"></i>
+                                                                                </a>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+                                            </div>
+
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div
+                                                            style="height: 230px;  border: 0.5px solid rgb(219, 219, 219);">
+                                                            <div class="display-in"
+                                                                style="line-height: 35px; padding-left: 6px; font-size: 16px;">
+                                                                <span>付款项目详情</span><span class="float-r pr-4">付款总金额：<b
+                                                                        class="color-danger"><i
+                                                                            class="fa fa-cny"></i>{{addData.money}}</b></span>
+                                                            </div>
+                                                            <hr style="padding: 0px; margin: 0px;" />
+                                                            <div style="height: 190px; overflow: auto;">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">项目名称</th>
+                                                                            <th scope="col">合同名称</th>
+                                                                            <th scope="col">付款种类</th>
+                                                                            <th scope="col">付款金额</th>
+                                                                            <!-- <th scope="col">操作</th> -->
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr v-for="(item, index) in addData.rMList">
+                                                                            <td scope="row">{{item.p_name}}</td>
+                                                                            <td>{{item.c_name}}</td>
+                                                                            <td>{{item.paylist}}</td>
+                                                                            <td><span class="color-danger"><i
+                                                                                        class="fa fa-cny"></i>{{item.money}}</span>
+                                                                            </td>
+                                                                            <!-- <td>
+                                                                                <a href="javascript:;" title="添加项目其他付款类型"
+                                                                                    data-toggle="modal" data-target="#modelPayAdd"> <i
+                                                                                        class="fa fa-plus mr-1"></i></a>
+                                                                                <a href="javascript:;" title="移除该付款类型">
+                                                                                    <i class="fa fa-close"></i></a>
+
+                                                                            </td> -->
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">取消</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                    @click="addSubmit()">提交</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- 付款模态框 -->
+                            <div class="modal fade" id="modelPayAdd" tabindex="-2" role="dialog"
+                                aria-labelledby="modelPayAddTit" aria-hidden="true">
+                                <div class="modal-dialog w-70" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modelPayAddTit">批次付款 <i
+                                                    class="fa fa-reorder"></i>
                                             </h4>
                                         </div>
                                         <div class="modal-body">
-                                            <div class="form-group ">
+                                            <div class="form-group mt-1">
                                                 <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">公司名称<b class="color-danger">*</b></span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalAdd.sup_name" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.sup_name)">
+                                                    <div class="col-md-12">
+                                                        <div
+                                                            style="height: 230px;  border: 0.5px solid rgb(219, 219, 219);">
+                                                            <div class="display-in"
+                                                                style="line-height: 35px; padding-left: 6px; font-size: 16px;">
+                                                                <span>付款项目详情</span><span class="float-r pr-4">付款总金额：<b
+                                                                        class="color-danger"><i
+                                                                            class="fa fa-cny"></i>{{modalAdd_pay.money}}</b></span>
+                                                            </div>
+                                                            <hr style="padding: 0px; margin: 0px;" />
+                                                            <div style="height: 190px; overflow: auto;">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">项目名称</th>
+                                                                            <th scope="col">合同名称</th>
+                                                                            <th scope="col">付款种类</th>
+                                                                            <th scope="col">付款金额</th>
+                                                                            <!-- <th scope="col">操作</th> -->
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr
+                                                                            v-for="(item, index) in modalAdd_pay.rMList">
+                                                                            <td scope="row">{{item.p_name}}</td>
+                                                                            <td>{{item.c_name}}</td>
+                                                                            <td>{{item.paylist}}</td>
+                                                                            <td><span class="color-danger"><i
+                                                                                        class="fa fa-cny"></i>{{item.money}}</span>
+                                                                            </td>
+                                                                            <!-- <td>
+                                                                                <a href="javascript:;" title="添加项目其他付款类型"
+                                                                                    data-toggle="modal" data-target="#modelPayAdd"> <i
+                                                                                        class="fa fa-plus mr-1"></i></a>
+                                                                                <a href="javascript:;" title="移除该付款类型">
+                                                                                    <i class="fa fa-close"></i></a>
+
+                                                                            </td> -->
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                    <div class="col-md-1"></div>
                                                 </div>
                                             </div>
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">公司电话</span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalAdd.phone" placeholder="请填写该字段"
-                                                                required>
-                                                            <span class="input-group-addon">
-                                                                <i class="fa fa-cny"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">收款人</span>
-                                                            <input type="text" v-model="modalAdd.payee"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">开户银行</span>
-                                                            <input type="text" v-model="modalAdd.opening_bank"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">银行账号</span>
-                                                            <input type="text" v-model="modalAdd.bank_account"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">公司地址</span>
-                                                            <input type="text" v-model="modalAdd.address"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                            <span class="input-group-addon">
-                                                                <i class="fa fa-cny"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
+                                            <div class="modal-footer">
+                                                <button type="button" class="btn btn-secondary"
+                                                    data-dismiss="modal">取消</button>
+                                                <button type="button" class="btn btn-primary" data-dismiss="modal"
+                                                    @click="addPay()">提交</button>
                                             </div>
                                         </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">取消</button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                @click="addSubmit()">提交</button>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- 付款模态框 -->
+                            <div class="modal fade" id="modelPayAdd_" tabindex="-2" role="dialog"
+                                aria-labelledby="modelPayAddTit_" aria-hidden="true">
+                                <div class="modal-dialog w-70" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modelPayAddTit_">批次付款 <i
+                                                    class="fa fa-reorder"></i>
+                                            </h4>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="form-group mt-1">
+                                                <div class="row">
+                                                    <div class="col-md-12">
+                                                        <div
+                                                            style="height: 230px;  border: 0.5px solid rgb(219, 219, 219);">
+                                                            <div class="display-in"
+                                                                style="line-height: 35px; padding-left: 6px; font-size: 16px;">
+                                                                <span>付款项目详情</span><span class="float-r pr-4">付款总金额：<b
+                                                                        class="color-danger"><i
+                                                                            class="fa fa-cny"></i>{{modalAdd_pay.money}}</b></span>
+                                                            </div>
+                                                            <hr style="padding: 0px; margin: 0px;" />
+                                                            <div style="height: 190px; overflow: auto;">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th scope="col">项目名称</th>
+                                                                            <th scope="col">合同名称</th>
+                                                                            <th scope="col">付款种类</th>
+                                                                            <th scope="col">付款金额</th>
+                                                                            <!-- <th scope="col">操作</th> -->
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr
+                                                                            v-for="(item, index) in modalAdd_pay.rMList">
+                                                                            <td scope="row">{{item.p_name}}</td>
+                                                                            <td>{{item.c_name}}</td>
+                                                                            <td>{{item.paylist}}</td>
+                                                                            <td><span class="color-danger"><i
+                                                                                        class="fa fa-cny"></i>{{item.money}}</span>
+                                                                            </td>
+                                                                            <!-- <td>
+                                                                                <a href="javascript:;" title="添加项目其他付款类型"
+                                                                                    data-toggle="modal" data-target="#modelPayAdd"> <i
+                                                                                        class="fa fa-plus mr-1"></i></a>
+                                                                                <a href="javascript:;" title="移除该付款类型">
+                                                                                    <i class="fa fa-close"></i></a>
+
+                                                                            </td> -->
+                                                                        </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -508,10 +683,10 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">归属处室</span>
+                                                            <span class="input-group-addon">承建商</span>
                                                             <select class="form-control" @change="beanPosition_change()"
-                                                                v-model="beanChange.beanPosition">
-                                                                <option selected="selected" value="0">---归属处室---
+                                                                v-model="beanChange.position">
+                                                                <option selected="selected" value="0">---承建商---
                                                                 </option>
                                                                 <option v-for="p in positionList" :value="p.key">
                                                                     {{p.value}}
@@ -523,6 +698,25 @@
                                                 </div>
                                             </div>
                                             <div class="form-group mt-1">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">统筹类型</span>
+                                                            <select class="form-control" @change="beanPosition_change()"
+                                                                v-model="beanChange.overall_type">
+                                                                <option selected="selected" value="0">---统筹类型---
+                                                                </option>
+                                                                <option v-for="p in overall_typeList" :value="p.key">
+                                                                    {{p.value}}
+                                                                </option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <!-- <div class="form-group mt-1">
                                                 <div class="row">
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
@@ -542,7 +736,7 @@
                                                     </div>
                                                     <div class="col-md-1"></div>
                                                 </div>
-                                            </div>
+                                            </div> -->
                                         </div>
                                     </div>
                                 </div>
@@ -576,7 +770,7 @@
                                                     <div class="col-md-10">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">原文件路径</span>
-                                                            <input type="text" v-model="modalFile.warehousing_fileName"
+                                                            <input type="text" v-model="modalFile.bid_fileName"
                                                                 class="form-control" placeholder="暂无" disabled>
 
                                                         </div>
@@ -593,6 +787,11 @@
                                                                     class="fa fa-file"></i></span>
                                                             <input type="file" name="file" id="updateFile"
                                                                 @change="fileUpload('updateFile')" class="form-control">
+                                                        </div>
+                                                        <div>
+                                                            <p>须知：上传文件大小不超过20MB; 下载模板：<a
+                                                                    :href="'api/v2/db/dowlond?fileurl=File/model/项目付款模板.doc'"
+                                                                    target="_blank" title="点击下载文件">项目付款模板.doc</a></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -672,8 +871,9 @@
             <!-- 右侧内容界面-记录列表 -->
             <section class="content" v-if="!contentTagle">
 
-                <n-content-supplier v-on:return="contentReturn" :list="listHT" :project="projectContent"
-                    :modelht="moldeHt" v-on:projectht="projectHt" v-on:removeht="deleteSup"></n-content-supplier>
+                <n-content-project v-on:return="contentReturn" :list="listHT" :project="projectContent"
+                    :htlist="contentHtModel" :modelht="moldeHt" v-on:projectht="projectHt"
+                    v-on:projecthtsumbit="projectHtSumbit" :listdata="listData"></n-content-project>
 
             </section>
         </div>
@@ -702,7 +902,7 @@
     <!-- 加载Vue公共模块 -->
     <script src="js/vue/commer/vue_commer.js"></script>
     <!-- 项目入库模块 -->
-    <script src="js/vue/supplier/Manage.js"></script>
+    <script src="js/vue/payment/ordersLj.js"></script>
 
     <script src="js/commer.js"></script>
 </body>

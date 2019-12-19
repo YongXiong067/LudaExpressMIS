@@ -45,7 +45,17 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Override
 	public List<SysUser> listByAll(String search) {
-		return sysUserMapper.listByAll(search);
+		 List<SysUser> list = sysUserMapper.listByAll(search);
+		 for (SysUser sysUser : list) {
+			if(sysUser.getRolu() == 0) {
+				sysUser.setRoluName("管理员");
+			}else if(sysUser.getRolu() == 1) {
+				sysUser.setRoluName("用户");
+			}else {
+				sysUser.setRoluName("快递员");
+			}
+		}
+		return list;
 	}
 
 	@Override

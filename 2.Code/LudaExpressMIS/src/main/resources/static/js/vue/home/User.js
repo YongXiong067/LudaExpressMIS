@@ -14,7 +14,7 @@ new Vue({
             username: '',
             sex: '',
             phone: '',
-            img_src: '',
+            img_src: 'images/img.jpg',
             last_logintime: '',
             rol: {
                 id: '',
@@ -44,20 +44,20 @@ new Vue({
          * 页面内容标题栏导航
          */
         pagePosition: {
-            parent_id: 3,
-            id: 5,
-            title: '市州账号管理',
+            parent_id: 2,
+            id: 24,
+            title: '网点管理',
             text: '',
             position: [
                 {
-                    name: '账号管理',
+                    name: '公司',
                     img: 'fa fa-clone',
                     url: 'javaScript:void(0);'
                 },
                 {
-                    name: '市州账号管理',
+                    name: '网点管理',
                     img: '',
-                    url: 'supplierAccount.html'
+                    url: 'userAccount.html'
                 }
             ]
         },
@@ -86,32 +86,12 @@ new Vue({
         },
         beanSearch: '',         //搜索
         modalUpdate: {          //修改模态框
-            id: '',
-            userid: '',
-            username: '',
-            sex: '',
-            phone: '',
-            img_src: '',
-            last_logintime: '',
-            rol: {
-                id: '0',
-                name: ''
-            }
+            dotId: '',
+            dotName: '',
         },
         modalAdd: {          //添加模态框
-            id: '',
-            userid: '',
-            username: '',
-            sex: '',
-            phone: '',
-            img_src: '',
-            last_logintime: '',
-            level: 0,
-            address: 0,
-            rol: {
-                id: '5',
-                name: ''
-            }
+            dotId: '',
+            dotName: '',
         },
         modalFile: {          //文件上传模态框
             p_id: '',
@@ -154,14 +134,47 @@ new Vue({
          * 
          */
         accountChange: {
-            id: 0
+            dotId: 0,
+
         },
         /**
-         * 权限列表数据
+         * 网点列表数据
          */
         listUser: {
-            account: [],
-            nav: [],
+            oneList: [
+                {
+                    dotId: 2,
+                    parentId: 1,
+                    dotName: '长沙分公司'
+                },
+                {
+                    dotId: 3,
+                    parentId: 1,
+                    dotName: '株洲分公司'
+                }
+            ],
+            twoList: [
+                {
+                    dotId: 4,
+                    parentId: 2,
+                    dotName: '岳麓区网点'
+                },
+                {
+                    dotId: 4,
+                    parentId: 2,
+                    dotName: '天心区网点'
+                },
+                {
+                    dotId: 4,
+                    parentId: 2,
+                    dotName: '芙蓉区网点'
+                },
+                {
+                    dotId: 4,
+                    parentId: 2,
+                    dotName: '雨花区网点'
+                },
+            ],
             nav_: [],
             rol: []
         },
@@ -247,7 +260,7 @@ new Vue({
          * 修改数据提交
          */
         updateSubmit: function () {
-            if (this.accountChange.id == 0) {
+            if(this.accountChange.id == 0){
                 toastr.warning('请选择账号！');
                 return false;
             }
@@ -285,29 +298,21 @@ new Vue({
          * 添加账号提交
          */
         addSubmit: function () {
-            if (this.modalAdd.userid == '' || this.modalAdd.username == '' || this.modalAdd.address == 0) {
+            if (this.modalAdd.dotName == '') {
                 toastr.warning('请填写完整的信息！');
                 return false;
             }
-            axios.post(this.apiurl + 'api/v2/user/saveUser', this.modalAdd)
+            axios.get(this.apiurl + 'api/v2/user/saveUser', {
+                params: {
+                    dotName: this.modalAdd.dotName
+                }
+            })
                 .then(
                     (res) => {
                         if (res.data == 1) {
                             toastr.success('添加成功！');
                             this.modalAdd = {          //添加模态框
-                                id: '',
-                                userid: '',
-                                username: '',
-                                sex: '',
-                                phone: '',
-                                img_src: '',
-                                last_logintime: '',
-                                level: 0,
-                                address: 0,
-                                rol: {
-                                    id: '5',
-                                    name: ''
-                                }
+                                dotName: '',
                             }
                             this.listlimit();
                         } else if (res.data == -1) {
@@ -635,7 +640,7 @@ new Vue({
             axios.get(this.apiurl + 'api/v2/user/getListAll',
                 {
                     params: {
-                        level: '0',
+                        level: '1',
                     }
                 })
                 .then(
@@ -671,13 +676,16 @@ new Vue({
         //- api请求 -
         //-------------
         //HTTP GET 请求-获得当前登录用户信息
-        axios.get(this.apiurl + 'api/v2/user/getLogin')
+        axios.get(this.apiurl + 'api/user/getUser')
             .then(
                 (res) => {
-                    if (res.data.id == 0) {
+                    if (res.data.userId == 0) {
                         window.location.href = "login.html";
                     } else {
-                        this.user = res.data;
+                        this.user.id = res.data.userId;
+                        this.user.userid = res.data.userName;
+                        this.user.username = res.data.userName;
+
                     }
                 }
             )
@@ -722,6 +730,23 @@ new Vue({
             .catch(
                 (error) => { console.log(error); }
             );
+        /**
+         * 获得归属处室下拉框数据
+         */
+        axios.get(this.apiurl + 'api/v2/db/getDropdown',
+            {
+                params: {
+                    typecode: 'DICT02',
+                }
+            })
+            .then(
+                (res) => {
+                    this.positionList = res.data;
+                }
+            )
+            .catch(
+                (error) => { console.log(error); }
+            );
 
         /**
          * 获得归属处室下拉框数据
@@ -753,7 +778,7 @@ new Vue({
         axios.get(this.apiurl + 'api/v2/nav/getListAll',
             {
                 params: {
-                    level: '0',
+                    level: '1',
                 }
             })
             .then(
@@ -766,29 +791,12 @@ new Vue({
             );
 
         /**
-         * 获得归属处室下拉框数据
-         */
-        axios.get(this.apiurl + 'api/v2/db/getDropdown',
-            {
-                params: {
-                    typecode: 'DICT05',
-                }
-            })
-            .then(
-                (res) => {
-                    this.positionList = res.data;
-                }
-            )
-            .catch(
-                (error) => { console.log(error); }
-            );
-        /**
          * 获得所有账号数据
          */
         axios.get(this.apiurl + 'api/v2/user/getListAll',
             {
                 params: {
-                    level: '0',
+                    level: '1',
                 }
             })
             .then(

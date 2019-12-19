@@ -36,8 +36,7 @@ public interface SysUserMapper {
 	@Select("<script>"
 			+ "select "+ param +" from sys_user "	
 			+ "where 1=1 "
-			+"<if test= 'userName != null'> and userName like %#{search}% </if>"
-			+"<if test= 'phone != null'> or phone like %#{search}% </if>"
+			+"<if test= 'search != null'> and userName like concat('%',#{search},'%') or phone like concat('%',#{search},'%')</if>"
 			+"</script>")
 	@Results(id="SysUserMap",
 	value={

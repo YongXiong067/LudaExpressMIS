@@ -14,6 +14,7 @@ public class orders {
     private Long userid;
     //关联网点id
     private Long dotid;
+
     //发件人手机号码
     private String sendtel;
     //发件人地址
@@ -24,6 +25,7 @@ public class orders {
     private String receivetel;
     //收件人地址
     private String receiveaddr;
+
     //订单编号，系统自动生成
     private Integer ordernum;
     //包裹重量
@@ -45,7 +47,16 @@ public class orders {
         this.orderid = orderid;
     }
 
-    public Long getDotid() {
+    @Override
+	public String toString() {
+		return "orders [orderid=" + orderid + ", dotid=" + dotid + ", userid=" + userid + ", sendtel=" + sendtel
+				+ ", sendaddr=" + sendaddr + ", orderdate=" + orderdate + ", receivetel=" + receivetel
+				+ ", receiveaddr=" + receiveaddr + ", ordernum=" + ordernum + ", weight=" + weight + ", money=" + money
+				+ ", state=" + state + ", currentuser=" + currentuser + ", content=" + content + "]";
+	}
+
+
+	public Long getDotid() {
         return dotid;
     }
 
@@ -93,15 +104,7 @@ public class orders {
         this.receiveaddr = receiveaddr == null ? null : receiveaddr.trim();
     }
 
-    public Integer getOrdernum() {
-        return ordernum;
-    }
-
-    public void setOrdernum(Integer ordernum) {
-        this.ordernum = ordernum;
-    }
-
-    public String getWeight() {
+	public String getWeight() {
         return weight;
     }
 

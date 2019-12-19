@@ -141,10 +141,10 @@
                  return;
             }
             $.ajax({
-                url: apiurl + "/api/user/register",
+                url: apiurl + "/api/user/insertUser",
                 type: "post",
                 contentType: "application/json;charset=utf-8",
-                data: JSON.stringify({ userName: userName, password: password,phone: phone }),
+                data: JSON.stringify({ userName: userName, password: password,phone: phone ,rolu: -1}),
                 success: function (data) {
                     if (data == 11) {
                         toastr.success("注册成功......");

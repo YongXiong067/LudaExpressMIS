@@ -16,51 +16,9 @@ Vue.component('n-nav-top', {
          	 * 系统消息列表
          	 */
 			news: [
-				{
-					id: '2019-07-03-1',
-					title: '项目验收提醒！',
-					user: {
-						id: '8',
-						userName: 'zwl',
-						realName: '周伟林',
-						sex: '男',
-						phone: '15574361955',
-						img: 'images/img.jpg',
-						lastLoginTime: '2019-06-03 14:52:24'
-					},
-					text: '省厅等保项目可以验收了，8月1号审核！',
-					time: '2019-07-03 17:54:11'
-				},
-				{
-					id: '2019-07-03-2',
-					title: '合同付款提醒！',
-					user: {
-						id: '8',
-						userName: 'zwl',
-						realName: '周伟林',
-						sex: '男',
-						phone: '15574361955',
-						img: 'images/img.jpg',
-						lastLoginTime: '2019-06-03 14:52:24'
-					},
-					text: '合同付款合同付款合同付款合同付款合同付款！',
-					time: '2019-07-03 17:54:11'
-				},
-				{
-					id: '2019-07-03-3',
-					title: '合同付款提醒！',
-					user: {
-						id: '8',
-						userName: 'zwl',
-						realName: '周伟林',
-						sex: '男',
-						phone: '15574361955',
-						img: 'images/img.jpg',
-						lastLoginTime: '2019-06-03 14:52:24'
-					},
-					text: '合同付款合同付款合同付款合同付款合同付款！',
-					time: '2019-07-03 17:54:11'
-				},
+				{},
+				{},
+				{},
 			],
 
 
@@ -213,7 +171,7 @@ Vue.component('n-nav-left', {
 								name: '用户管理',
 								icon_cls: '',
 								left: 1,
-								url: 'projectWarehousing.html',
+								url: 'user.html',
 							}
 						]
 					},
@@ -231,7 +189,7 @@ Vue.component('n-nav-left', {
 								name: '企业文化管理',
 								icon_cls: '',
 								left: 1,
-								url: 'buildTendering.html',
+								url: 'companyCulture.html',
 							},
 							{
 								id: 22,
@@ -239,7 +197,7 @@ Vue.component('n-nav-left', {
 								name: '公告管理',
 								icon_cls: '',
 								left: 1,
-								url: 'buildContract.html',
+								url: 'notice.html',
 							},
 							{
 								id: 23,
@@ -247,7 +205,7 @@ Vue.component('n-nav-left', {
 								name: '留言板管理',
 								icon_cls: '',
 								left: 1,
-								url: 'buildSupervise.html',
+								url: 'leaving.html',
 							},
 							{
 								id: 24,
@@ -255,7 +213,7 @@ Vue.component('n-nav-left', {
 								name: '网点管理',
 								icon_cls: '',
 								left: 1,
-								url: 'buildSupervise.html',
+								url: 'userAccount.html',
 							}
 						]
 					},
@@ -273,7 +231,7 @@ Vue.component('n-nav-left', {
 								name: '订单管理',
 								icon_cls: '',
 								left: 1,
-								url: 'acceptanceBefore.html',
+								url: 'orders.html',
 							},
 							{
 								id: 32,
@@ -289,7 +247,7 @@ Vue.component('n-nav-left', {
 								name: '揽件管理',
 								icon_cls: '',
 								left: 1,
-								url: 'acceptanceBefore.html',
+								url: 'ordersLj.html',
 							},
 							{
 								id: 34,
@@ -357,7 +315,7 @@ Vue.component('n-nav-left', {
 												name: '用户管理',
 												icon_cls: '',
 												left: 1,
-												url: 'projectWarehousing.html',
+												url: 'user.html',
 											}
 										]
 									},
@@ -375,7 +333,7 @@ Vue.component('n-nav-left', {
 												name: '企业文化管理',
 												icon_cls: '',
 												left: 1,
-												url: 'buildTendering.html',
+												url: 'companyCulture.html',
 											},
 											{
 												id: 22,
@@ -383,7 +341,7 @@ Vue.component('n-nav-left', {
 												name: '公告管理',
 												icon_cls: '',
 												left: 1,
-												url: 'buildContract.html',
+												url: 'notice.html',
 											},
 											{
 												id: 23,
@@ -391,7 +349,7 @@ Vue.component('n-nav-left', {
 												name: '留言板管理',
 												icon_cls: '',
 												left: 1,
-												url: 'buildSupervise.html',
+												url: 'leaving.html',
 											},
 											{
 												id: 24,
@@ -399,7 +357,7 @@ Vue.component('n-nav-left', {
 												name: '网点管理',
 												icon_cls: '',
 												left: 1,
-												url: 'buildSupervise.html',
+												url: 'userAccount.html',
 											}
 										]
 									},
@@ -417,7 +375,7 @@ Vue.component('n-nav-left', {
 												name: '订单管理',
 												icon_cls: '',
 												left: 1,
-												url: 'acceptanceBefore.html',
+												url: 'orders.html',
 											},
 											{
 												id: 34,
@@ -468,7 +426,7 @@ Vue.component('n-nav-left', {
 												name: '企业文化',
 												icon_cls: '',
 												left: 1,
-												url: 'buildTendering.html',
+												url: 'companyCulture.html',
 											},
 											{
 												id: 22,
@@ -476,7 +434,7 @@ Vue.component('n-nav-left', {
 												name: '信息公告',
 												icon_cls: '',
 												left: 1,
-												url: 'buildContract.html',
+												url: 'notice.html',
 											},
 											{
 												id: 23,
@@ -484,7 +442,7 @@ Vue.component('n-nav-left', {
 												name: '留言板',
 												icon_cls: '',
 												left: 1,
-												url: 'buildSupervise.html',
+												url: 'leaving.html',
 											}
 										]
 									},
@@ -502,7 +460,7 @@ Vue.component('n-nav-left', {
 												name: '订单查询',
 												icon_cls: '',
 												left: 1,
-												url: 'acceptanceBefore.html',
+												url: 'orderSearch.html',
 											},
 											{
 												id: 32,
@@ -535,7 +493,7 @@ Vue.component('n-nav-left', {
 												name: '订单管理',
 												icon_cls: '',
 												left: 1,
-												url: 'acceptanceBefore.html',
+												url: 'orders.html',
 											},
 											{
 												id: 34,
@@ -551,7 +509,7 @@ Vue.component('n-nav-left', {
 												name: '揽件管理',
 												icon_cls: '',
 												left: 1,
-												url: 'acceptanceBefore.html',
+												url: 'ordersLj.html',
 											}
 										]
 									}
@@ -585,7 +543,7 @@ Vue.component('n-nav-left', {
 
 			<!-- 左侧导航栏目 -->
 			<ul class="sidebar-menu">
-				<li class="header">PROJECT-MIS</li>
+				<li class="header">EXPRESS-MIS</li>
 				<li class="active" v-if="page.title == 'HOME'">
 					<a href="index.html"><i class="fa fa-home"></i> <span>首页</span></a>
 				</li>
