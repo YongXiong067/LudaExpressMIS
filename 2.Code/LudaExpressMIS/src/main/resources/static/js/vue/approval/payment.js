@@ -1,4 +1,4 @@
-/*** 项目入库 vue实例 ***/
+/*** 财务管理 vue实例 ***/
 
 new Vue({
     el: '#app',
@@ -44,20 +44,20 @@ new Vue({
          * 页面内容标题栏导航
          */
         pagePosition: {
-            parent_id: 2,
-            id: 22,
-            title: '公告管理',
+            parent_id: 4,
+            id: 41,
+            title: '财务管理',
             text: '',
             position: [
                 {
-                    name: '公司',
-                    img: 'fa fa-edit',
+                    name: '财务',
+                    img: 'fa fa-cny',
                     url: 'javaScript:void(0);'
                 },
                 {
-                    name: '公告管理',
+                    name: '财务管理',
                     img: '',
-                    url: 'user.html'
+                    url: 'payment.html'
                 }
             ]
         },
@@ -73,18 +73,7 @@ new Vue({
             page_go: '',    //跳转页
             line: 20,       //每页数据条数
             nums: '',      //总条数
-            list: [
-                {
-                    noticeId: 1,
-                    title: '标题1',
-                    content: '内容1内容1内容1内容1内容1内容1'
-                },
-                {
-                    noticeId: 2,
-                    title: '标题2',
-                    content: '内容2内容2内容2内容2内容2内容2'
-                },
-            ],       //数据集合
+            list: [],       //数据集合
         },
         positionList: [
 
@@ -118,29 +107,58 @@ new Vue({
             p_id: '0'
         },
         /**
-         * 项目详情列表数据
+         * 项目近五年分布情况条形图数据
          */
-        listData: {
-            htList: [],
-            submitList: [],
-            signList: [],
-            superviseList: [],
-            paymentList: [],
-            supplierList: []
+        dougCanvasData: [
+            {
+                value: 65,
+                color: "#de5e4e",
+                highlight: "#b94b3e",
+                label: "2015年"
+            },
+            {
+                value: 59,
+                color: "#2ac2d8",
+                highlight: "#1aa3c4",
+                label: "2016年"
+            },
+            {
+                value: 80,
+                color: "#eea736",
+                highlight: "#cf8f29",
+                label: "2017年"
+            },
+            {
+                value: 81,
+                color: "#367fa9",
+                highlight: "#307298",
+                label: "2018年"
+            },
+            {
+                value: 56,
+                color: "#1cbc72",
+                highlight: "#0da35d",
+                label: "2019年"
+            }
+        ],
+
+        /**
+         * 项目近五年分布情况折线图数据
+         */
+        lineCanvasData: {
+            labels: ["2015年", "2016年", "2017年", "2018年", "2019年"],
+            datasets: [
+                {
+                    fillColor: "rgba(42,194,216,.1)",
+                    strokeColor: "rgba(54,127,169,.8)",
+                    pointColor: "rgba(255,255,255,1)",
+                    pointStrokeColor: "#2ac2d8",
+                    pointHighlightFill: "#2ac2d8",
+                    pointHighlightStroke: "rgba(255,255,255,1)",
+                    data: [12, 66, 31, 22, 41]
+                }
+            ],
         },
-        /**
-         * 项目详情页面数据
-         */
-        projectContent: {},
-        /**
-         * 测试数据
-         */
-        list1: [],
-        list3: [],
-        /**
-         * 测试数据-合同列表
-         */
-        listHT: [],
     },
     methods: {
         /**  输入验证-start **/
@@ -168,37 +186,37 @@ new Vue({
          * 修改密码
          */
         updatePwd: function () {
-			 if (this.pwdModel.newpwd != this.pwdModel.newpwd_) {
-				 toastr.error('两次密码不相同！');
-			 } else if (this.pwdModel.newpwd == '' || this.pwdModel.newpwd_ == '' || this.pwdModel.oldpwd == '') {
-				 toastr.error('密码不能为空！');
-			 } else {
-				 console.log(this.pwdModel.newpwd);
-				 axios.get(this.apiurl + 'api/user/updatePwd',
-						 {
-					 params: {
-						 userId: this.user.userId,
-						 userName: this.user.userName,
-						 oldPwd: this.pwdModel.oldpwd,
-						 newpwd: this.pwdModel.newpwd
-					 }
-						 })
-						 .then(
-								 (res) => {
-									 if (res.data == 1) {
-										 toastr.success('修改成功！');
-									 } else if (res.data == -1) {
-										 toastr.error('密码验证失败！');
-									 } else {
-										 toastr.error('修改密码失败！');
-									 }
-								 }
-						 )
-						 .catch(
-								 (error) => { console.log(error); }
-						 );
-			 }
-		 },
+            if (this.pwdModel.newpwd != this.pwdModel.newpwd_) {
+                toastr.error('两次密码不相同！');
+            } else if (this.pwdModel.newpwd == '' || this.pwdModel.newpwd_ == '' || this.pwdModel.oldpwd == '') {
+                toastr.error('密码不能为空！');
+            } else {
+            	console.log(this.pwdModel.newpwd);
+                axios.get(this.apiurl + 'api/user/updatePwd',
+                    {
+                        params: {
+                            userId: this.user.userId,
+                            userName: this.user.userName,
+                            oldPwd: this.pwdModel.oldpwd,
+                            newpwd: this.pwdModel.newpwd
+                        }
+                    })
+                    .then(
+                        (res) => {
+                            if (res.data == 1) {
+                                toastr.success('修改成功！');
+                            } else if (res.data == -1) {
+                                toastr.error('密码验证失败！');
+                            } else {
+                                toastr.error('修改密码失败！');
+                            }
+                        }
+                    )
+                    .catch(
+                        (error) => { console.log(error); }
+                    );
+            }
+        },
         /**
          * 刷新数据
          */
@@ -302,7 +320,11 @@ new Vue({
          * @param {*} obj 
          */
         update: function (obj) {
-            this.modalUpdate = obj;
+            this.modalUpdate.userId = obj.userId;
+            this.modalUpdate.userName = obj.userName;
+            this.modalUpdate.password = obj.password;
+            this.modalUpdate.phone = obj.phone;
+            this.modalUpdate.rolu = obj.rolu;
         },
 
         /**
@@ -422,27 +444,11 @@ new Vue({
 //                );
         },
         numsByPosition: function () {
-//            axios.get(this.apiurl + 'api/db/nums',
-//                {
-//                    params: {
-//                        state: '1',
-//                        p_tagle: this.ProjectTagle,
-//                        position: this.beanChange.beanPosition,
-//                        a_year: this.beanChange.beanYear,
-//                        w_year: '0',
-//                        search: this.beanSearch
-//                    }
-//                })
-//                .then(
-//                    (res) => {
-//                        this.limitData.nums = res.data;
-//                    }
-//                )
-//                .catch(
-//                    (error) => { console.log(error); }
-//                );
-//        }
-		}
+
+        }
+        
+        
+
     },
     mounted() {
         //-------------
@@ -467,20 +473,77 @@ new Vue({
         /**
          * 获得分页详细列表
          */
-        // axios.get(this.apiurl + 'api/user/getAllUser',
-	    //     {
-	    // 		params: {
-	    // 			search: this.beanSearch
-	    // 		}
-	    // 	})
-        //     .then(
-        //         (res) => {
-        //             this.limitData.list = res.data;
-        //         }
-        //     )
-        //     .catch(
-        //         (error) => { console.log(error); }
-        //     );
+        axios.get(this.apiurl + 'api/user/getAllUser',
+	        {
+	    		params: {
+	    			search: this.beanSearch
+	    		}
+	    	})
+            .then(
+                (res) => {
+                    this.limitData.list = res.data;
+                }
+            )
+            .catch(
+                (error) => { console.log(error); }
+            );
+
+        //-------------
+        //- 近五年项目分布情况饼状图渲染 -
+        //-------------
+        var DougChartCanvas = $("#dougChart").get(0).getContext("2d");
+        var myDoughnutChart = new Chart(DougChartCanvas);
+
+        var dougOptions = {
+            segmentShowStroke: true,
+            segmentStrokeColor: "#fff",
+            segmentStrokeWidth: 2,
+            percentageInnerCutout: 50,
+            animationSteps: 100,
+            animationEasing: "easeOutBounce",
+            animateRotate: true,
+            animateScale: false,
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<segments.length; i++){%><li><span style=\"background-color:<%=segments[i].fillColor%>\"></span><%if(segments[i].label){%><%=segments[i].label%><%}%></li><%}%></ul>",
+            responsive: true,
+            maintainAspectRatio: true
+        }
+        myDoughnutChart.Doughnut(this.dougCanvasData, dougOptions);
+
+        //-------------
+        //- 近五年项目分布情况折线图渲染 -
+        //-------------
+        var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
+        var mylinehnutChart = new Chart(lineChartCanvas);
+        var lineChartPotions = {
+            //Boolean - 刻度是从零开始，还是从最低值向下一个数量级开始
+            scaleBeginAtZero: true,
+            //Boolean - 是否在图表中显示网格线
+            scaleShowGridLines: true,
+            //String - 网格线的颜色
+            scaleGridLineColor: "rgba(0,0,0,.05)",
+            //Number - 网格线宽度
+            scaleGridLineWidth: 1,
+            //Number - 网格字体的颜色
+            scaleFontColor: "#FFF",
+            //Boolean - 是否显示水平线（X轴除外）
+            scaleShowHorizontalLines: true,
+            //Boolean - 是否显示水平线（y轴除外）
+            scaleShowVerticalLines: false,
+            //Boolean - 每根杆上是不是都有一个笔划
+            barShowStroke: true,
+            //Number - 条笔划的像素宽度
+            barStrokeWidth: 2,
+            //Number - 每个x值集之间的间距
+            barValueSpacing: 10,
+            //Number - X值内数据集之间的间距
+            barDatasetSpacing: 1,
+            //String - 图例模板
+            legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
+            //Boolean - 是否使图表响应
+            responsive: true,
+            maintainAspectRatio: true
+        };
+        mylinehnutChart.Line(this.lineCanvasData, lineChartPotions);
     },
     computed: {
         pages: function () {

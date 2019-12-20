@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>路达快递管理系统-企业文化管理</title>
+    <title>省人防办项目管理系统-财务管理</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
@@ -46,6 +46,63 @@
         <div class="content-wrapper">
             <!-- 内容栏标题导航 -->
             <n-page-nav :page="pagePosition"></n-page-nav>
+
+            <section class="content">
+                <!-- 折线图 -->
+                <div class="row ">
+                    <div class="col-md-6 col-xs-12">
+                        <div class="box box-solid bg-teal-gradient">
+                            <div class="box-header">
+                                <i class="fa fa-th"></i>
+                                <h3 class="box-title">近五年项目情况统计</h3>
+                                <div class="box-tools pull-right">
+                                    <button class="btn bg-teal btn-sm" data-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                    <button class="btn bg-teal btn-sm" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body border-radius-none p-1" style="margin-top: 20px;">
+                                <canvas id="lineChart" class="pr-1"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- 饼状图 -->
+                    <div class="col-md-6 col-xs-12">
+                        <div class="box box-success">
+                            <div class="box-header with-border">
+                                <h3 class="box-title">近五年项目情况统计 </h3>
+                                <div class="box-tools pull-right">
+
+                                    <button class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                    <button class="btn btn-box-tool" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body">
+                                <div class="chart" style="height:100%; width:100%">
+                                    <div class="row pl-2">
+                                        <div class="col-md-2 col-xs-2 text-center" v-for="item in dougCanvasData">
+                                            <div class="row">
+                                                <div class="col-md-4 col-xs-4 p-0"
+                                                    :style="' height: 20px; background-color:'+item.color+';'">
+                                                </div>
+                                                <div class="col-md-7 col-xs-7 p-0">
+                                                    <span>{{item.label}}</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <canvas id="dougChart"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+
 
             <!-- 右侧内容界面-记录列表 -->
             <section class="content" v-if="contentTagle">
@@ -178,12 +235,15 @@
                                                         <span class="text">ID</span>
                                                     </div>
                                                     <div class="col-md-10 col-xs-2 p-0">
-                                                        <span class="text">标题</span>
+                                                        <span class="text">用户名</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-xs-2 p-0">
-                                                <span class="text">内容</span>
+                                            <div class="col-md-3 col-xs-2 p-0">
+                                                <span class="text">电话</span>
+                                            </div>
+                                            <div class="col-md-3 col-xs-2 p-0">
+                                                <span class="text">账号类别</span>
                                             </div>
                                             <div class="col-md-1 p-0 pl-5">
                                                 <span class="text float-right">操作</span>
@@ -195,16 +255,19 @@
                                             <div class="col-md-5 col-xs-1">
                                                 <div class="row">
                                                     <div class="col-md-1 col-xs-1 p-0">
-                                                        <span>{{item.ncId}}</span>
+                                                        <span>{{item.userId}}</span>
                                                     </div>
                                                     <div class="col-md-10 col-xs-2 p-0 text-oneline">
-                                                        <a href="javascript:;" :title="item.title"
-                                                            @click="contentChange(item)"><span>{{item.title}}</span></a>
+                                                        <a href="javascript:;" :title="item.userName"
+                                                            @click="contentChange(item)"><span>{{item.userName}}</span></a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.content}}</span>
+                                            <div class="col-md-3 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.phone}}</span>
+                                            </div>
+                                            <div class="col-md-3 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.roluName}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-1 px-0">
                                                 <div class="tools">
@@ -212,7 +275,7 @@
                                                         data-target="#modelUpdate" @click="update(item)">
                                                         <i class="fa fa-edit" style="margin-right: 15px;"></i> </a>
                                                     <a href="javascript:;" title="删除"
-                                                        @click="deleteCulture(item.ncId)">
+                                                        @click="deleteProject(item.userId)">
                                                         <i class="fa fa-trash-o" style="margin-right: 35px;"></i> </a>
                                                 </div>
                                             </div>
@@ -239,7 +302,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="modelUpdateTit">修改企业文化信息 <i
+                                            <h4 class="modal-title" id="modelUpdateTit">修改记录信息 <i
                                                     class="fa fa-edit"></i></h4>
                                         </div>
                                         <div class="modal-body">
@@ -248,9 +311,9 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">标题</span>
+                                                            <span class="input-group-addon">用户名</span>
                                                             <input type="text" class="form-control"
-                                                                v-model="modalUpdate.title" placeholder="请填写该字段"
+                                                                v-model="modalUpdate.userName" placeholder="请填写该字段"
                                                                 required>
                                                         </div>
                                                     </div>
@@ -262,11 +325,28 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">内容</span>
-                                                            <textarea type="textarea" class="form-control" rows="10"
-                                                                v-model="modalUpdate.content" placeholder="请填写该字段"
-                                                                required></textarea>
-                                                            
+                                                            <span class="input-group-addon">手机号</span>
+                                                            <input type="text" class="form-control"
+                                                                v-model="modalUpdate.phone" placeholder="请填写该字段"
+                                                                required>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">角色</span>
+                                                            <select class="form-control" v-model="modalUpdate.rolu">
+                                                                <option selected="selected" value="0">---选择账号类别---
+                                                                </option>
+                                                                <option value="0">管理员</option>
+                                                                <option value="1">用户</option>
+                                                                <option value="2">快递员</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -289,7 +369,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="modelAddTit">添加企业文化信息 <i class="fa fa-plus"></i>
+                                            <h4 class="modal-title" id="modelAddTit">添加账号信息 <i class="fa fa-plus"></i>
                                             </h4>
                                         </div>
                                         <div class="modal-body">
@@ -298,11 +378,11 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">标题<b
+                                                            <span class="input-group-addon">用户名<b
                                                                     class="color-danger">*</b></span>
                                                             <input type="text" class="form-control"
-                                                                v-model="modalAdd.title" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.title)">
+                                                                v-model="modalAdd.userName" placeholder="请填写该字段"
+                                                                @blur="inputText(modalAdd.userName)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -313,17 +393,50 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">内容<b
+                                                            <span class="input-group-addon">密码<b
                                                                     class="color-danger">*</b></span>
-                                                            <textarea type="text" class="form-control" rows="10"
-                                                                v-model="modalAdd.content" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.content)"></textarea>
+                                                            <input type="password" class="form-control"
+                                                                v-model="modalAdd.password" placeholder="请填写该字段"
+                                                                @blur="inputText(modalAdd.password)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
-
+                                            <div class="form-group ">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">电话<b
+                                                                    class="color-danger">*</b></span>
+                                                            <input type="text" class="form-control"
+                                                                v-model="modalAdd.phone" placeholder="请填写该字段"
+                                                                @blur="inputText(modalAdd.phone)">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">账号类别<b
+                                                                    class="color-danger">*</b></span>
+                                                            <select class="form-control" v-model="modalAdd.rolu">
+                                                                <option selected="selected" value="-1">---选择账号类别---
+                                                                </option>
+                                                                <option value="0">管理员</option>
+                                                                <option value="1">用户</option>
+                                                                <option value="2">快递员</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-secondary"
                                                     data-dismiss="modal">取消</button>
@@ -333,24 +446,23 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
 
-                            <!-- 过滤模态框 -->
-                            <div class="modal fade" id="modelChange" tabindex="-1" role="dialog"
-                                aria-labelledby="modelChangeTit" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="modelChangeTit">过滤条件选择 <i
-                                                    class="fa fa-reorder"></i>
-                                            </h4>
+                                <!-- 过滤模态框 -->
+                                <div class="modal fade" id="modelChange" tabindex="-1" role="dialog"
+                                    aria-labelledby="modelChangeTit" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h4 class="modal-title" id="modelChangeTit">过滤条件选择 <i
+                                                        class="fa fa-reorder"></i>
+                                                </h4>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
             </section>
 
             <!-- 右侧内容界面-记录列表 -->
@@ -370,13 +482,17 @@
         <n-nav-footer></n-nav-footer>
 
     </div>
- <!-- jQuery -->
+
+    <!-- REQUIRED JS SCRIPTS -->
+
+    <!-- jQuery -->
     <script src="plugins/jquery/jquery.min.js"></script>
     <!-- Bootstrap -->
     <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
     <!-- 弹出框插件 toastr.min.js -->
     <script src="plugins/toastr/toastr.min.js"></script>
-
+    <!-- Chart.js -->
+    <script src="plugins/chartjs/Chart.min.js"></script>
     <!-- 界面动态显示隐藏 -->
     <script src="plugins/dist/js/app.min.js"></script>
     <!-- Vue.js / ajax -->
@@ -386,8 +502,8 @@
 
     <!-- 加载Vue公共模块 -->
     <script src="js/vue/commer/vue_commer.js"></script>
-    <!-- 项目入库模块 -->
-    <script src="js/vue/build/companyCulture.js"></script>
+    <!-- user模块 -->
+    <script src="js/vue/approval/payment.js"></script>
 
     <script src="js/commer.js"></script>
 </body>

@@ -1,13 +1,13 @@
-package com.express.web.service.cluture.impl;
+package com.express.web.service.company.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.express.web.mapper.culture.DotMapper;
-import com.express.web.model.culture.Dot;
-import com.express.web.service.cluture.DotService;
+import com.express.web.mapper.company.DotMapper;
+import com.express.web.model.company.Dot;
+import com.express.web.service.company.DotService;
 
 /**
  * 网点管理业务层实现类
@@ -20,17 +20,17 @@ public class DotServiceImpl implements DotService {
 	DotMapper dotMapper;
 	
 	@Override
-	public Dot getDot(Long dotId) {
-		return dotMapper.getDot(dotId);
+	public Dot getDot(String dotName) {
+		return dotMapper.getDot(dotName);
 	}
 
 	@Override
-	public List<Dot> getDotParentList(String dotName,Long parentId) {
-		return dotMapper.getDotParentList(dotName, parentId);
+	public List<Dot> getDotParentList(Long parentId) {
+		return dotMapper.getDotParentList(parentId);
 	}
 	@Override
-	public void insertDot(Dot dot) {
-		dotMapper.insertDot(dot);
+	public void insertDot(String dotName,Long parentId) {
+		dotMapper.insertDot(dotName,parentId);
 	}
 
 	@Override
