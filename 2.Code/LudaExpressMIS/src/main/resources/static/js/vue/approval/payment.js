@@ -146,7 +146,7 @@ new Vue({
          * 项目近五年分布情况折线图数据
          */
         lineCanvasData: {
-            labels: ["2015年", "2016年", "2017年", "2018年", "2019年"],
+            labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
             datasets: [
                 {
                     fillColor: "rgba(42,194,216,.1)",
@@ -155,7 +155,7 @@ new Vue({
                     pointStrokeColor: "#2ac2d8",
                     pointHighlightFill: "#2ac2d8",
                     pointHighlightStroke: "rgba(255,255,255,1)",
-                    data: [12, 66, 31, 22, 41]
+                    data: [12, 66, 31, 22, 41, 12, 66, 31, 22, 41, 0, 0]
                 }
             ],
         },

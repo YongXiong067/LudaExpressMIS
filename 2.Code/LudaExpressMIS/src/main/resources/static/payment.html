@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>省人防办项目管理系统-财务管理</title>
+    <title>路达快递管理系统-财务管理</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
@@ -54,7 +54,7 @@
                         <div class="box box-solid bg-teal-gradient">
                             <div class="box-header">
                                 <i class="fa fa-th"></i>
-                                <h3 class="box-title">近五年项目情况统计</h3>
+                                <h3 class="box-title">2019年-月份资金统计</h3>
                                 <div class="box-tools pull-right">
                                     <button class="btn bg-teal btn-sm" data-widget="collapse"><i
                                             class="fa fa-minus"></i></button>
@@ -123,10 +123,10 @@
                                             <div class="col-md-10 col-xs-12 p-0">
                                                 <div class="btn-group">
 
-                                                    <a href="javaScript:void(0);" title="添加" data-toggle="modal"
+                                                    <!-- <a href="javaScript:void(0);" title="添加" data-toggle="modal"
                                                         data-target="#modelAdd"><button
                                                             class="btn btn-default btn-sm"><i
-                                                                class="fa fa-plus"></i></button></a>
+                                                                class="fa fa-plus"></i></button></a> -->
                                                     <a href="javaScript:void(0);" @click="refresh()" title="刷新"><button
                                                             class="btn btn-default btn-sm"><i
                                                                 class="fa fa-refresh"></i></button></a>
@@ -228,56 +228,60 @@
                                 <ul class="todo-list">
                                     <li>
                                         <div class="row p-0 m-0 text-center">
-
-                                            <div class="col-md-5 col-xs-6 p-0">
+                                            <div class="col-md-4 col-xs-6 p-0">
                                                 <div class="row">
-                                                    <div class="col-md-1 ">
-                                                        <span class="text">ID</span>
+                                                    <div class="col-md-6 p-0">
+                                                        <span class="text">下单时间</span>
                                                     </div>
-                                                    <div class="col-md-10 col-xs-2 p-0">
+                                                    <div class="col-md-6 p-0">
                                                         <span class="text">用户名</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 col-xs-2 p-0">
-                                                <span class="text">电话</span>
+                                            <div class="col-md-1 col-xs-2 p-0">
+                                                <span class="text">下单金额</span>
                                             </div>
-                                            <div class="col-md-3 col-xs-2 p-0">
-                                                <span class="text">账号类别</span>
+                                            <div class="col-md-2 col-xs-2 p-0">
+                                                <span class="text">始发地</span>
+                                            </div>
+                                            <div class="col-md-2 p-0 pl-5">
+                                                <span class="text float-right">目的地</span>
+                                            </div>
+                                            <div class="col-md-2 p-0 pl-5">
+                                                <span class="text float-right">目的地网点名称</span>
                                             </div>
                                             <div class="col-md-1 p-0 pl-5">
-                                                <span class="text float-right">操作</span>
+                                                <span class="text float-right">订单状态</span>
                                             </div>
+                                            
                                         </div>
                                     </li>
                                     <li v-for="(item, index) in limitData.list">
                                         <div class="row m-0 text-center">
-                                            <div class="col-md-5 col-xs-1">
+                                            <div class="col-md-4">
                                                 <div class="row">
-                                                    <div class="col-md-1 col-xs-1 p-0">
-                                                        <span>{{item.userId}}</span>
+                                                    <div class="col-md-6 p-0">
+                                                        <span>{{item.orderDate}}11</span>
                                                     </div>
-                                                    <div class="col-md-10 col-xs-2 p-0 text-oneline">
-                                                        <a href="javascript:;" :title="item.userName"
-                                                            @click="contentChange(item)"><span>{{item.userName}}</span></a>
+                                                    <div class="col-md-6 p-0 text-oneline">
+                                                        <span>{{item.userName}}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-3 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.phone}}</span>
+                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.money}}11</span>
                                             </div>
-                                            <div class="col-md-3 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.roluName}}</span>
+                                            <div class="col-md-2 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.sendAddr}}11</span>
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.receiveAddr}}11</span>
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.dotName}}11</span>
                                             </div>
                                             <div class="col-md-1 col-xs-1 px-0">
-                                                <div class="tools">
-                                                    <a href="javascript:;" title="修改" data-toggle="modal"
-                                                        data-target="#modelUpdate" @click="update(item)">
-                                                        <i class="fa fa-edit" style="margin-right: 15px;"></i> </a>
-                                                    <a href="javascript:;" title="删除"
-                                                        @click="deleteProject(item.userId)">
-                                                        <i class="fa fa-trash-o" style="margin-right: 35px;"></i> </a>
-                                                </div>
+                                                <span>{{item.orderState}}11</span>
                                             </div>
                                         </div>
                                     </li>
