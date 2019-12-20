@@ -9,6 +9,8 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
+import com.express.web.model.money.ColumnarMoney;
+import com.express.web.model.money.MoneyTable;
 import com.express.web.model.order_model.orders;
 
 
@@ -56,6 +58,37 @@ public interface DeliverGoodMapper {
 	List<orders> getDeliverList(@Param("ordernum") String ordernum,int state);
 	
 	/**
+	 * 根据月份年份查出金额数据,折线图，按月
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	@Select("select DATE_FORMAT(orderdate,\"%m\") as dateMonth,SUM(money) as money "
+			+ " from orders where state = 2 "
+			+ "and DATE_FORMAT(orderdate,\"%Y\") = #{year} "
+			+ "and DATE_FORMAT(orderdate,\"%m\") = #{month} "
+			+ "GROUP BY DATE_FORMAT(orderdate,\"%m\")")
+	@Results({
+			@Result(property="dateMonth",column="dateMonth"),
+			@Result(property="money",column="money")
+	})
+	ColumnarMoney getColumnar(@Param("year") String year,@Param("month") String month);
+	
+	/**
+	 * 根据月份年份查出金额数据,柱状图，按年
+	 * @param year
+	 * @param month
+	 * @return
+	 */
+	@Select("select DATE_FORMAT(orderdate,\"%Y\") as dateMonth,SUM(money) as money "
+			+ " from orders where state = 2 and DATE_FORMAT(orderdate,\"%Y\") = '${year}'"
+			+ " GROUP BY DATE_FORMAT(orderdate,\"%Y\")")
+	@Results({
+			@Result(property="dateMonth",column="dateMonth"),
+			@Result(property="money",column="money")
+	})
+	ColumnarMoney getColumnarYear(@Param("year") String year);
+	/**
 	 * 根据订单id查询出订单详细信息
 	 * @param orderId
 	 * @return
@@ -69,4 +102,14 @@ public interface DeliverGoodMapper {
 	@Update("update orders set state = #{state} "
 			+ " where orderid = #{orderid}")
 	boolean update(Long orderid,int state);
+	
+	/**
+	 * 查询财务管理表格界面的数据
+	 * @return
+	 */
+	@Select("select o.orderdate as orderDate,u.userName as userName,o.money as money,"
+			+ " o.sendAddr as sendAddr,o.receiveAddr as receiveAddr,d.dotName as dotName,"
+			+ " o.state as orderState from orders o LEFT JOIN sys_user u ON o.userId = u.userId"
+			+ "  LEFT JOIN dots d on o.dotId = d.dotId ")
+	List<MoneyTable> getMoneyTable();
 }

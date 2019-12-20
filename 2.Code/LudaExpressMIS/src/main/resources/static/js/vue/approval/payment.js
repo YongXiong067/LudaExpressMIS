@@ -1,13 +1,61 @@
-/*** 财务管理 vue实例 ***/
-
+/** * 财务管理 vue实例 ** */
+var dougCanvasData = [
+    {
+        value: 65,
+        color: "#de5e4e",
+        highlight: "#b94b3e",
+        label: "2015年"
+    },
+    {
+        value: 59,
+        color: "#2ac2d8",
+        highlight: "#1aa3c4",
+        label: "2016年"
+    },
+    {
+        value: 80,
+        color: "#eea736",
+        highlight: "#cf8f29",
+        label: "2017年"
+    },
+    {
+        value: 81,
+        color: "#367fa9",
+        highlight: "#307298",
+        label: "2018年"
+    },
+    {
+        value: 56,
+        color: "#1cbc72",
+        highlight: "#0da35d",
+        label: "2019年"
+    }
+];
+/**
+ * 分布情况折线图数据
+ */
+var lineCanvasData = {
+    labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
+    datasets: [
+        {
+            fillColor: "rgba(42,194,216,.1)",
+            strokeColor: "rgba(54,127,169,.8)",
+            pointColor: "rgba(255,255,255,1)",
+            pointStrokeColor: "#2ac2d8",
+            pointHighlightFill: "#2ac2d8",
+            pointHighlightStroke: "rgba(255,255,255,1)",
+            data: [12, 66, 31, 22, 41, 12, 66, 31, 22, 41, 0, 0]
+        }
+    ],
+};
 new Vue({
     el: '#app',
     data: {
         apiurl: '',
         ProjectTagle: '用户管理',
         /**
-         * 账号资料
-         */
+		 * 账号资料
+		 */
         user: {
             id: '',
             userid: '',
@@ -22,27 +70,27 @@ new Vue({
             }
         },
         /**
-         * 账号权限资料
-         */
+		 * 账号权限资料
+		 */
         userRol: {
             id: 1,
             list: []
         },
         /**
-         * 修改密码模态框
-         */
+		 * 修改密码模态框
+		 */
         pwdModel: {
             oldpwd: '',
             newpwd: '',
             newpwd_: ''
         },
         /**
-         * 系统消息列表
-         */
+		 * 系统消息列表
+		 */
         systemNews: [],
         /**
-         * 页面内容标题栏导航
-         */
+		 * 页面内容标题栏导航
+		 */
         pagePosition: {
             parent_id: 4,
             id: 41,
@@ -62,129 +110,45 @@ new Vue({
             ]
         },
         /**
-         * 右侧内容页展示状态
-         */
+		 * 右侧内容页展示状态
+		 */
         contentTagle: true,
         /**
-         * 数据分页
-         */
+		 * 数据分页
+		 */
         limitData: {
-            page: 1,        //当前页
-            page_go: '',    //跳转页
-            line: 20,       //每页数据条数
-            nums: '',      //总条数
-            list: [],       //数据集合
+            page: 1,        // 当前页
+            page_go: '',    // 跳转页
+            line: 20,       // 每页数据条数
+            nums: '',      // 总条数
+            list: [],       // 数据集合
         },
         positionList: [
 
         ],
-        beanChange: {       //过滤条件
+        beanChange: {       // 过滤条件
             beanPosition: '0',
             beanYear: '0',
         },
-        beanSearch: '',         //搜索
-        modalUpdate: {          //修改模态框
+        beanSearch: '',         // 搜索
+        modalUpdate: {          // 修改模态框
         	userName: '',
             password: '',
             phone: '',
             rolu: ''
         },
-        modalAdd: {          //添加模态框
+        modalAdd: {          // 添加模态框
             userName: '',
             password: '',
             phone: '',
             rolu: ''
-        },
-        /**
-         * 关联合同模态框
-         */
-        moldeHt: {
-            id: '',
-            htid: '0'
-        },
-        moldePro: {
-            sub_id: '0',
-            p_id: '0'
-        },
-        /**
-         * 项目近五年分布情况条形图数据
-         */
-        dougCanvasData: [
-            {
-                value: 65,
-                color: "#de5e4e",
-                highlight: "#b94b3e",
-                label: "2015年"
-            },
-            {
-                value: 59,
-                color: "#2ac2d8",
-                highlight: "#1aa3c4",
-                label: "2016年"
-            },
-            {
-                value: 80,
-                color: "#eea736",
-                highlight: "#cf8f29",
-                label: "2017年"
-            },
-            {
-                value: 81,
-                color: "#367fa9",
-                highlight: "#307298",
-                label: "2018年"
-            },
-            {
-                value: 56,
-                color: "#1cbc72",
-                highlight: "#0da35d",
-                label: "2019年"
-            }
-        ],
-
-        /**
-         * 项目近五年分布情况折线图数据
-         */
-        lineCanvasData: {
-            labels: ["1月", "2月", "3月", "4月", "5月", "6月", "7月", "8月", "9月", "10月", "11月", "12月"],
-            datasets: [
-                {
-                    fillColor: "rgba(42,194,216,.1)",
-                    strokeColor: "rgba(54,127,169,.8)",
-                    pointColor: "rgba(255,255,255,1)",
-                    pointStrokeColor: "#2ac2d8",
-                    pointHighlightFill: "#2ac2d8",
-                    pointHighlightStroke: "rgba(255,255,255,1)",
-                    data: [12, 66, 31, 22, 41, 12, 66, 31, 22, 41, 0, 0]
-                }
-            ],
-        },
+        }
     },
     methods: {
-        /**  输入验证-start **/
-        //正常验证
-        inputText: function (value) {
-            if (value != '') {
-
-            } else {
-                toastr.warning("内容不能为空!");
-            }
-        },
-        //数字验证
-        inputNumber: function (value) {
-            if (value != '') {
-                if (!value.match(/^-?\d+(\.\d+)?$/)) {
-                    toastr.warning("只能输入数字呢！");
-                }
-            } else {
-                toastr.warning("内容不能为空!");
-            }
-        },
-
-        /**  输入验证-end **/
+       
         /**
-         * 修改密码
-         */
+		 * 修改密码
+		 */
         updatePwd: function () {
             if (this.pwdModel.newpwd != this.pwdModel.newpwd_) {
                 toastr.error('两次密码不相同！');
@@ -218,25 +182,25 @@ new Vue({
             }
         },
         /**
-         * 刷新数据
-         */
+		 * 刷新数据
+		 */
         refresh: function () {
             this.limitData.page = 1;
             this.limitData.line = 20;
             this.beanSearch = '';
             this.limitData.page_go = '';
-            //this.numsByPosition();
+            // this.numsByPosition();
             this.listlimit();
         },
 
         /**
-         * 注销登录
-         */
+		 * 注销登录
+		 */
         cancellation: function () {
             axios.get(this.apiurl + 'api/user/cancellation')
                 .then(
                     (res) => {
-                        //toastr.success('注销成功！');
+                        // toastr.success('注销成功！');
                         window.location.href = "login.html";
                     }
                 )
@@ -244,17 +208,16 @@ new Vue({
                     (error) => {
                         console.log(error);
                         window.location.href = "login.html";
-                        //toastr.danger('注销失败！');
                     }
                 );
         },
-
         /**
-         * 分页跳转
-         * @param {*} tagle 
-         */
+		 * 分页跳转
+		 * 
+		 * @param {*}
+		 *            tagle
+		 */
         limit_page: function (tagle) {
-
             if (tagle == 'next') {
                 if (this.limitData.page < this.pages) {
                     this.limitData.page++;
@@ -279,182 +242,65 @@ new Vue({
             this.listlimit();
         },
         /**
-         * 页面条数更新
-         */
+		 * 页面条数更新
+		 */
         search: function () {
             this.limitData.page = 1;
-            //this.numsByPosition();
+            // this.numsByPosition();
             this.listlimit();
         },
 
         /**
-         * 筛选值改变触发方法，按值去查询
-         */
+		 * 筛选值改变触发方法，按值去查询
+		 */
         beanPosition_change: function () {
             this.limitData.page = 1;
-            //this.numsByPosition();
+            // this.numsByPosition();
             this.listlimit();
         },
 
         /* *******************项目详情所需方法-start********************** */
         /**
-         * 进入详情界面
-         * @param {*} obj 
-         */
+		 * 进入详情界面
+		 * 
+		 * @param {*}
+		 *            obj
+		 */
         contentChange: function (obj) {
             this.projectContent = obj;
             this.contentTagle = false;
         },
         /**
-         * 返回列表界面
-         * @param {*} obj 
-         */
+		 * 返回列表界面
+		 * 
+		 * @param {*}
+		 *            obj
+		 */
         contentReturn: function () {
             this.contentTagle = true;
         },
 
         /* *******************所需方法-end********************** */
-
-        /**
-         * 修改模态框获得数据数据
-         * @param {*} obj 
-         */
-        update: function (obj) {
-            this.modalUpdate.userId = obj.userId;
-            this.modalUpdate.userName = obj.userName;
-            this.modalUpdate.password = obj.password;
-            this.modalUpdate.phone = obj.phone;
-            this.modalUpdate.rolu = obj.rolu;
-        },
-
-        /**
-         * 修改数据提交
-         */
-        updateSubmit: function () {
-            axios.post(this.apiurl + 'api/user/update', this.modalUpdate)
-                .then(
+        listlimit: function () { 
+        	axios.get(this.apiurl + 'api/money/getMoneyTable')
+            .then(
                     (res) => {
-                        toastr.success('修改成功！');
-                        this.listlimit();
+                        this.limitData.list = res.data;
                     }
                 )
                 .catch(
-                    (error) => {
-                        console.log(error);
-                        toastr.danger('修改失败！');
-                    }
+                    (error) => { console.log(error); }
                 );
-        },
-          /**
-         * 添加数据提交
-         */
-        addSubmit: function () {
-            if (this.modalAdd.userName == '' || this.modalAdd.password == '' || this.modalAdd.phone == '' || this.modalAdd.rolu == '') {
-            	console.log(this.modalAdd.password);
-            	console.log(this.modalAdd.phone);
-            	toastr.warning('请填写完整的信息！');
-                return false;
-            }
-
-            var name = '';
-            axios.post(this.apiurl + 'api/user/insertUser', this.modalAdd)
-                .then(
-                    (res) => {
-                        if (res.data) {
-                            toastr.success('添加成功！');
-                            this.modalAdd = {          //添加模态框
-                                userName: '',
-                                password: '',
-                                phone: '',
-                                rolu: ''
-                            },
-                            //this.numsByPosition();
-                            this.listlimit();
-                        } else {
-                            toastr.danger('添加失败！');
-                        }
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-        },
-        /**
-         * 删除数据
-         * @param {} id 
-         */
-        deleteProject: function (id) {
-            if (confirm("是否确定删除？")) {
-                axios.get(this.apiurl + 'api/user/deleteUser',
-                    {
-                        params: {
-                        	userId: id,
-                        }
-                    })
-                    .then(
-                        (res) => {
-                            toastr.success('删除成功！');
-                            //this.numsByPosition();
-                            this.listlimit();
-                        }
-                    )
-                    .catch(
-                        (error) => {
-                            console.log(error);
-                            toastr.danger('删除失败！');
-                        }
-                    );
-            }
-        },
-        listlimit: function () {
-        	
-        	axios.get(this.apiurl + 'api/user/getAllUser', {
-        		params: {
-        			search: this.beanSearch
-        		}
-        	})
-                    .then(
-                        (res) => {
-                            this.limitData.list = res.data;
-                        }
-                    )
-                    .catch(
-                        (error) => { console.log(error); }
-                    );
-//            axios.post(this.apiurl + 'api/v2/project/getListByLimit',
-//                {
-//                    state: '1',
-//                    p_tagle: this.ProjectTagle,
-//                    page_no: this.limitData.page,
-//                    page_line: this.limitData.line,
-//                    position: this.beanChange.beanPosition,
-//                    warehousing_time: this.beanChange.beanYear,
-//                    search: this.beanSearch
-//                })
-//                .then(
-//                    (res) => {
-//
-//                        this.limitData.list = res.data;
-//                    }
-//                )
-//                .catch(
-//                    (error) => { console.log(error); }
-//                );
         },
         numsByPosition: function () {
 
         }
-        
-        
-
     },
     mounted() {
-        //-------------
-        //- api请求 -
-        //-------------
-        //HTTP GET 请求-获得当前登录用户信息
+        // -------------
+        // - api请求 -
+        // -------------
+        // HTTP GET 请求-获得当前登录用户信息
         axios.get(this.apiurl + 'api/user/getUser')
             .then(
                 (res) => {
@@ -471,14 +317,9 @@ new Vue({
                 (error) => { console.log(error); }
             );
         /**
-         * 获得分页详细列表
-         */
-        axios.get(this.apiurl + 'api/user/getAllUser',
-	        {
-	    		params: {
-	    			search: this.beanSearch
-	    		}
-	    	})
+		 * 获得详细列表
+		 */
+        axios.get(this.apiurl + 'api/money/getMoneyTable')
             .then(
                 (res) => {
                     this.limitData.list = res.data;
@@ -487,13 +328,49 @@ new Vue({
             .catch(
                 (error) => { console.log(error); }
             );
-
-        //-------------
-        //- 近五年项目分布情况饼状图渲染 -
-        //-------------
+        //饼图数据
+        $.ajax({
+            url: this.apiurl + 'api/money/getMoneyColumnYear',
+            data: {
+            },
+            async: false,
+            type: "GET",
+            dataType: "json",
+            success: function (res) {
+                for(var i = 0;i < res.length;i++){
+            		dougCanvasData[i].value = res[i].money;
+            		dougCanvasData[i].label = res[i].dateMonth+"年";
+            	}
+            }
+        });
+      //折线图数据
+        $.ajax({
+            url: this.apiurl + 'api/money/getMoneyColumn',
+            data: {
+            },
+            async: false,
+            type: "GET",
+            dataType: "json",
+            success: function (res) {
+            	//对标题进行自动获取当前年份
+            	var myDate = new Date();
+                var tYear = myDate.getFullYear();
+            	$("#zxTitle").html(tYear+"年1-12月份资金统计");
+            	var labels = new Array();
+            	var values = new Array();
+                for(var i = 0;i < res.length;i++){
+                	labels[i] = res[i].dateMonth;
+                	values[i] = res[i].money;
+            	}
+                lineCanvasData.labels = labels;
+                lineCanvasData.datasets[0].data = values;
+            }
+        });
+        // -------------
+        // - 近五年项目分布情况饼状图渲染 -
+        // -------------
         var DougChartCanvas = $("#dougChart").get(0).getContext("2d");
         var myDoughnutChart = new Chart(DougChartCanvas);
-
         var dougOptions = {
             segmentShowStroke: true,
             segmentStrokeColor: "#fff",
@@ -507,43 +384,43 @@ new Vue({
             responsive: true,
             maintainAspectRatio: true
         }
-        myDoughnutChart.Doughnut(this.dougCanvasData, dougOptions);
+        myDoughnutChart.Doughnut(dougCanvasData, dougOptions);
 
-        //-------------
-        //- 近五年项目分布情况折线图渲染 -
-        //-------------
+        // -------------
+        // - 近五年项目分布情况折线图渲染 -
+        // -------------
         var lineChartCanvas = $("#lineChart").get(0).getContext("2d");
         var mylinehnutChart = new Chart(lineChartCanvas);
         var lineChartPotions = {
-            //Boolean - 刻度是从零开始，还是从最低值向下一个数量级开始
+            // Boolean - 刻度是从零开始，还是从最低值向下一个数量级开始
             scaleBeginAtZero: true,
-            //Boolean - 是否在图表中显示网格线
+            // Boolean - 是否在图表中显示网格线
             scaleShowGridLines: true,
-            //String - 网格线的颜色
+            // String - 网格线的颜色
             scaleGridLineColor: "rgba(0,0,0,.05)",
-            //Number - 网格线宽度
+            // Number - 网格线宽度
             scaleGridLineWidth: 1,
-            //Number - 网格字体的颜色
+            // Number - 网格字体的颜色
             scaleFontColor: "#FFF",
-            //Boolean - 是否显示水平线（X轴除外）
+            // Boolean - 是否显示水平线（X轴除外）
             scaleShowHorizontalLines: true,
-            //Boolean - 是否显示水平线（y轴除外）
+            // Boolean - 是否显示水平线（y轴除外）
             scaleShowVerticalLines: false,
-            //Boolean - 每根杆上是不是都有一个笔划
+            // Boolean - 每根杆上是不是都有一个笔划
             barShowStroke: true,
-            //Number - 条笔划的像素宽度
+            // Number - 条笔划的像素宽度
             barStrokeWidth: 2,
-            //Number - 每个x值集之间的间距
+            // Number - 每个x值集之间的间距
             barValueSpacing: 10,
-            //Number - X值内数据集之间的间距
+            // Number - X值内数据集之间的间距
             barDatasetSpacing: 1,
-            //String - 图例模板
+            // String - 图例模板
             legendTemplate: "<ul class=\"<%=name.toLowerCase()%>-legend\"><% for (var i=0; i<datasets.length; i++){%><li><span style=\"background-color:<%=datasets[i].fillColor%>\"></span><%if(datasets[i].label){%><%=datasets[i].label%><%}%></li><%}%></ul>",
-            //Boolean - 是否使图表响应
+            // Boolean - 是否使图表响应
             responsive: true,
             maintainAspectRatio: true
         };
-        mylinehnutChart.Line(this.lineCanvasData, lineChartPotions);
+        mylinehnutChart.Line(lineCanvasData, lineChartPotions);
     },
     computed: {
         pages: function () {
@@ -559,7 +436,7 @@ new Vue({
             return this.limitData.page * this.limitData.line;
         }
     },
-    created() {  //全局监听键盘事件
+    created() {  // 全局监听键盘事件
         var _this = this;
         document.onkeydown = function (e) {
             let key = window.event.keyCode;

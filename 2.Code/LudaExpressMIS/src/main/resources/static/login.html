@@ -119,9 +119,9 @@
         }
 		$("#test").click(function(){
 			 $.ajax({
-	                url: apiurl + "/api/company/getCulture",
+	                url: apiurl + "/api/money/getMoneyColumn",
 	                type: "post",
-	                data: { search: "测试", type: 2 },
+	                //data: { search: "测试", type: 2 },
 	                success: function (data) {
 	                	console.log(data);
 	                },

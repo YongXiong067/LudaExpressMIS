@@ -49,12 +49,12 @@
 
             <section class="content">
                 <!-- 折线图 -->
-                <div class="row ">
+                <div class="row">
                     <div class="col-md-6 col-xs-12">
                         <div class="box box-solid bg-teal-gradient">
                             <div class="box-header">
                                 <i class="fa fa-th"></i>
-                                <h3 class="box-title">2019年-月份资金统计</h3>
+                                <h3 class="box-title" id = "zxTitle">2019年1-12月份资金统计</h3>
                                 <div class="box-tools pull-right">
                                     <button class="btn bg-teal btn-sm" data-widget="collapse"><i
                                             class="fa fa-minus"></i></button>
@@ -71,7 +71,7 @@
                     <div class="col-md-6 col-xs-12">
                         <div class="box box-success">
                             <div class="box-header with-border">
-                                <h3 class="box-title">近五年项目情况统计 </h3>
+                                <h3 class="box-title">近五年财务情况统计 </h3>
                                 <div class="box-tools pull-right">
 
                                     <button class="btn btn-box-tool" data-widget="collapse"><i
@@ -106,7 +106,6 @@
 
             <!-- 右侧内容界面-记录列表 -->
             <section class="content" v-if="contentTagle">
-
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box">
@@ -261,7 +260,7 @@
                                             <div class="col-md-4">
                                                 <div class="row">
                                                     <div class="col-md-6 p-0">
-                                                        <span>{{item.orderDate}}11</span>
+                                                        <span>{{item.orderDate}}</span>
                                                     </div>
                                                     <div class="col-md-6 p-0 text-oneline">
                                                         <span>{{item.userName}}</span>
@@ -269,19 +268,19 @@
                                                 </div>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.money}}11</span>
+                                                <span>￥{{item.money}}</span>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.sendAddr}}11</span>
+                                                <span>{{item.sendAddr}}</span>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.receiveAddr}}11</span>
+                                                <span>{{item.receiveAddr}}</span>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.dotName}}11</span>
+                                                <span>{{item.dotName}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-1 px-0">
-                                                <span>{{item.orderState}}11</span>
+                                                <span>{{item.orderStateName}}</span>
                                             </div>
                                         </div>
                                     </li>
@@ -299,158 +298,6 @@
                                     </li>
                                 </ul>
                             </div>
-
-                            <!-- 修改模态框 -->
-                            <div class="modal fade" id="modelUpdate" tabindex="-1" role="dialog"
-                                aria-labelledby="modelUpdateTit" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="modelUpdateTit">修改记录信息 <i
-                                                    class="fa fa-edit"></i></h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">用户名</span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalUpdate.userName" placeholder="请填写该字段"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">手机号</span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalUpdate.phone" placeholder="请填写该字段"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">角色</span>
-                                                            <select class="form-control" v-model="modalUpdate.rolu">
-                                                                <option selected="selected" value="0">---选择账号类别---
-                                                                </option>
-                                                                <option value="0">管理员</option>
-                                                                <option value="1">用户</option>
-                                                                <option value="2">快递员</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">取消</button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                @click="updateSubmit()">提交</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- 添加模态框 -->
-                            <div class="modal fade" id="modelAdd" tabindex="-1" role="dialog"
-                                aria-labelledby="modelAddTit" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="modelAddTit">添加账号信息 <i class="fa fa-plus"></i>
-                                            </h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">用户名<b
-                                                                    class="color-danger">*</b></span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalAdd.userName" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.userName)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">密码<b
-                                                                    class="color-danger">*</b></span>
-                                                            <input type="password" class="form-control"
-                                                                v-model="modalAdd.password" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.password)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">电话<b
-                                                                    class="color-danger">*</b></span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalAdd.phone" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.phone)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">账号类别<b
-                                                                    class="color-danger">*</b></span>
-                                                            <select class="form-control" v-model="modalAdd.rolu">
-                                                                <option selected="selected" value="-1">---选择账号类别---
-                                                                </option>
-                                                                <option value="0">管理员</option>
-                                                                <option value="1">用户</option>
-                                                                <option value="2">快递员</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button type="button" class="btn btn-secondary"
-                                                    data-dismiss="modal">取消</button>
-                                                <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                    @click="addSubmit()">提交</button>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
                                 <!-- 过滤模态框 -->
                                 <div class="modal fade" id="modelChange" tabindex="-1" role="dialog"
                                     aria-labelledby="modelChangeTit" aria-hidden="true">

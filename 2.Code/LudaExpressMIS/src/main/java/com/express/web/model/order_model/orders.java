@@ -27,7 +27,7 @@ public class orders {
     private String receiveaddr;
 
     //订单编号，系统自动生成
-    private Integer ordernum;
+    private String ordernum;
     //包裹重量
     private String weight;
     //订单所产生的费用
@@ -43,7 +43,15 @@ public class orders {
         return orderid;
     }
 
-    public void setOrderid(Long orderid) {
+    public String getOrdernum() {
+		return ordernum;
+	}
+
+	public void setOrdernum(String ordernum) {
+		this.ordernum = ordernum;
+	}
+
+	public void setOrderid(Long orderid) {
         this.orderid = orderid;
     }
 
