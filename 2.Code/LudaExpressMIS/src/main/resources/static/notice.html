@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>省人防办项目管理系统-公告管理</title>
+    <title>路达快递管理系统-公告管理</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
@@ -195,7 +195,7 @@
                                             <div class="col-md-5 col-xs-1">
                                                 <div class="row">
                                                     <div class="col-md-1 col-xs-1 p-0">
-                                                        <span>{{item.noticeId}}</span>
+                                                        <span>{{item.ncId}}</span>
                                                     </div>
                                                     <div class="col-md-10 col-xs-2 p-0 text-oneline">
                                                         <a href="javascript:;" :title="item.title"
@@ -212,7 +212,7 @@
                                                         data-target="#modelUpdate" @click="update(item)">
                                                         <i class="fa fa-edit" style="margin-right: 15px;"></i> </a>
                                                     <a href="javascript:;" title="删除"
-                                                        @click="deleteProject(item.userId)">
+                                                        @click="deleteCulture(item.ncId)">
                                                         <i class="fa fa-trash-o" style="margin-right: 35px;"></i> </a>
                                                 </div>
                                             </div>
@@ -239,7 +239,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="modelUpdateTit">修改记录信息 <i
+                                            <h4 class="modal-title" id="modelUpdateTit">修改公告信息 <i
                                                     class="fa fa-edit"></i></h4>
                                         </div>
                                         <div class="modal-body">
@@ -263,9 +263,10 @@
                                                     <div class="col-md-10">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">内容</span>
-                                                            <input type="text" class="form-control"
+                                                            <textarea type="textarea" class="form-control" rows="10"
                                                                 v-model="modalUpdate.content" placeholder="请填写该字段"
-                                                                required>
+                                                                required></textarea>
+                                                            
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -314,9 +315,9 @@
                                                         <div class="input-group">
                                                             <span class="input-group-addon">内容<b
                                                                     class="color-danger">*</b></span>
-                                                            <input type="text" class="form-control"
+                                                            <textarea type="text" class="form-control" rows="10"
                                                                 v-model="modalAdd.content" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.content)">
+                                                                @blur="inputText(modalAdd.content)"></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -389,7 +390,7 @@
     <!-- 加载Vue公共模块 -->
     <script src="js/vue/commer/vue_commer.js"></script>
     <!-- user模块 -->
-    <script src="js/vue/home/notice.js"></script>
+    <script src="js/vue/build/notice.js"></script>
 
     <script src="js/commer.js"></script>
 </body>

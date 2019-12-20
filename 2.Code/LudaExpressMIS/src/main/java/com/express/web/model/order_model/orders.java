@@ -8,32 +8,35 @@ import java.util.Date;
  * @Description: 订单表
  */
 public class orders {
+    //订单id
     private Long orderid;
-
-    private Long dotid;
-    
+    //关联用户表id
     private Long userid;
-    
+    //关联网点id
+    private Long dotid;
+
+    //发件人手机号码
     private String sendtel;
-
+    //发件人地址
     private String sendaddr;
-
+    //下单时间
     private Date orderdate;
-
+    //收件人手机号码
     private String receivetel;
-
+    //收件人地址
     private String receiveaddr;
 
-    private String ordernum;
-
+    //订单编号，系统自动生成
+    private Integer ordernum;
+    //包裹重量
     private String weight;
-
+    //订单所产生的费用
     private Double money;
-
+    //订单状态  0为预约，1为运输中，2为派送中，3为已签收
     private String state;
-
+    //当前处理人
     private String currentuser;
-
+    //处理步骤记录
     private String content;
 
     public Long getOrderid() {
@@ -52,13 +55,6 @@ public class orders {
 				+ ", state=" + state + ", currentuser=" + currentuser + ", content=" + content + "]";
 	}
 
-	public Long getUserid() {
-		return userid;
-	}
-
-	public void setUserid(Long userid) {
-		this.userid = userid;
-	}
 
 	public Long getDotid() {
         return dotid;
@@ -108,14 +104,6 @@ public class orders {
         this.receiveaddr = receiveaddr == null ? null : receiveaddr.trim();
     }
 
-    public String getOrdernum() {
-		return ordernum;
-	}
-
-	public void setOrdernum(String ordernum) {
-		this.ordernum = ordernum;
-	}
-
 	public String getWeight() {
         return weight;
     }
@@ -154,5 +142,14 @@ public class orders {
 
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
+
+    }
+
+    public Long getUserid() {
+        return userid;
+    }
+
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 }
