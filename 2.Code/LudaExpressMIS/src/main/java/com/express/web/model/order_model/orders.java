@@ -1,7 +1,5 @@
 package com.express.web.model.order_model;
 
-import java.util.Date;
-
 /**
  * @Author: YIHUI HE
  * @Date: 2019/12/17
@@ -20,14 +18,14 @@ public class orders {
     //发件人地址
     private String sendaddr;
     //下单时间
-    private Date orderdate;
+    private String orderdate;
     //收件人手机号码
     private String receivetel;
     //收件人地址
     private String receiveaddr;
 
     //订单编号，系统自动生成
-    private Integer ordernum;
+    private String ordernum;
     //包裹重量
     private String weight;
     //订单所产生的费用
@@ -43,7 +41,15 @@ public class orders {
         return orderid;
     }
 
-    public void setOrderid(Long orderid) {
+    public String getOrdernum() {
+		return ordernum;
+	}
+
+	public void setOrdernum(String ordernum) {
+		this.ordernum = ordernum;
+	}
+
+	public void setOrderid(Long orderid) {
         this.orderid = orderid;
     }
 
@@ -80,15 +86,15 @@ public class orders {
         this.sendaddr = sendaddr == null ? null : sendaddr.trim();
     }
 
-    public Date getOrderdate() {
-        return orderdate;
-    }
+    public String getOrderdate() {
+		return orderdate;
+	}
 
-    public void setOrderdate(Date orderdate) {
-        this.orderdate = orderdate;
-    }
+	public void setOrderdate(String orderdate) {
+		this.orderdate = orderdate;
+	}
 
-    public String getReceivetel() {
+	public String getReceivetel() {
         return receivetel;
     }
 

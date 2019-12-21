@@ -6,11 +6,15 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.express.web.model.money.ColumnarMoney;
 import com.express.web.model.money.Money;
+import com.express.web.model.money.MoneyTable;
+import com.express.web.service.deliver.DeliverGoodsService;
 import com.express.web.service.money.MoneyService;
 
 import io.swagger.annotations.Api;
@@ -30,6 +34,8 @@ public class MoneyController {
 	HttpServletRequest request;
 	@Autowired
 	MoneyService moneyService;
+	@Autowired
+	DeliverGoodsService deliverService;
 	/**
 	 * 	查询财务记录
 	 * @param user
@@ -42,4 +48,37 @@ public class MoneyController {
 		return moneyService.getMoneyList();
 	}
 	
+	/**
+	 * 	查询财务折线图数据
+	 * @param user
+	 * @return
+	 */
+	@ApiOperation(value = "getMoneyColumn", notes = "查询财务折线图数据，按月")
+	@GetMapping("/getMoneyColumn")
+	@ResponseBody
+	public List<ColumnarMoney> getMoneyColumn() {
+		return moneyService.getMoneyColumn();
+	}
+	/**
+	 * 	查询财务柱状图数据
+	 * @param user
+	 * @return
+	 */
+	@ApiOperation(value = "getMoneyColumnYear", notes = "查询财务柱状图数据，按年")
+	@GetMapping("/getMoneyColumnYear")
+	@ResponseBody
+	public List<ColumnarMoney> getMoneyColumnByYear() {
+		return moneyService.getMoneyColumnYear();
+	}
+	
+	/**
+	 * 查询财务管理表格界面的数据
+	 * @return
+	 */
+	@ApiOperation(value = "getMoneyTable", notes = "查询财务管理表格界面的数据")
+	@GetMapping("/getMoneyTable")
+	@ResponseBody
+	public List<MoneyTable> getMoneyTable() {
+		return moneyService.getMoneyTable();
+	}
 }
