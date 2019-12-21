@@ -26,4 +26,18 @@ public interface DeliverGoodsService {
 	 */
 	boolean updateOrderState(Long orderId,Integer state);
 	
+	/**
+	 * 根据订单id获取到详细的数据
+	 * @param orderId
+	 * @return
+	 */
+	orders getById(Long orderId);
+	
+	/**
+	 * 根据订单id修改订单步骤内容
+	 * @param orderid
+	 * @param content
+	 * @return
+	 */
+	boolean updateContent(Long orderid,String content);
 }

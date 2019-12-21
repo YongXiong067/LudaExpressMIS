@@ -29,5 +29,15 @@ public class DeliverGoodsServiceImpl implements DeliverGoodsService {
 	public boolean updateOrderState(Long orderId, Integer state) {
 		return deliverMapper.update(orderId, state);
 	}
+
+	@Override
+	public orders getById(Long orderId) {
+		return deliverMapper.getById(orderId);
+	}
+
+	@Override
+	public boolean updateContent(Long orderid, String content) {
+		return deliverMapper.updateContent(orderid, content);
+	}
 	
 }

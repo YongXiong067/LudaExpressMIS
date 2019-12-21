@@ -89,20 +89,8 @@ new Vue({
 				dotId: '',
 				dotName: '',
 			},
-			modalAdd: {          // 添加模态框
-				dotId: '',
-				dotName: '',
-			},
-			modalFile: {          // 文件上传模态框
-				p_id: '',
-				p_name: '',
-				declare_money: '',
-				position: '',
-				warehousing_time: '',
-				warehousing_fileName: '',
-				warehousing_fileUrl: '',
-				p_tagle: '项目入库'
-			},
+			modalAdd: {},
+			modalFile: {},
 
 
 
@@ -152,22 +140,22 @@ new Vue({
 	},
 	methods: {
 		setAccount: function (obj) {
-			this.accountChange.dotId = obj.dotId;
 			// HTTP GET 请求-获得列表数据总条数
-			axios.get(this.apiurl + 'api/dot/getDotParentList',
-					{
+			axios.get(this.apiurl + 'api/deliver/getDeliver',
+				{
 				params: {
-					parentId: obj.dotId
+					ordernum: this.beanSearch,
+					state :1
 				}
-					})
-					.then(
-							(res) => {
-								this.listUser.twoList = res.data;
-							}
-					)
-					.catch(
-							(error) => { console.log(error); }
-					);
+			})
+			.then(
+					(res) => {
+						this.limitData.list = res.data;
+					}
+			)
+			.catch(
+					(error) => { console.log(error); }
+			);
 		},
 
 		/**
@@ -209,71 +197,12 @@ new Vue({
 		 /**
 			 * 添加账号提交
 			 */
-		 addSubmit: function (type) {
-			 if (this.modalAdd.dotName == '') {
-				 toastr.warning('请填写完整的信息！');
-				 return false;
-			 }
-			 var parentId = -1;
-			 if(type == 1){
-				 parentId = 1;
-			 }else{
-				 parentId = this.accountChange.dotId
-			 }
-			 axios.get(this.apiurl + 'api/dot/insertDot', {
-				 params: {
-					 dotName: this.modalAdd.dotName,
-					 parentId: parentId
-				 }
-			 })
-			 .then(
-					 (res) => {
-						 if (res.data == 1) {
-							 toastr.success('添加成功！');
-							 this.modalAdd = {          // 添加模态框
-									 dotName: '',
-							 }
-							 this.listlimit();
-						 } else if (res.data == -1) {
-							 toastr.error('该网点已存在！');
-						 } else {
-							 toastr.error('添加失败！');
-						 }
-
-					 }
-			 )
-			 .catch(
-					 (error) => {
-						 console.log(error);
-						 toastr.error('添加失败！');
-					 }
-			 );
-
-		 },
+		 addSubmit: function (type) {},
 
 		 /**
 			 * 修改数据
 			 */
-		 updateUser: function () {
-			 axios.post(this.apiurl + 'api/dot/updateDot',this.modalUpdate)
-					 .then(
-							 (res) => {
-								 if (res.data) {
-									 toastr.success('修改成功！');
-									 this.listlimit();
-								 } else {
-									 toastr.error('修改失败！');
-								 }
-
-							 }
-					 )
-					 .catch(
-							 (error) => {
-								 console.log(error);
-
-							 }
-					 );
-		 },
+		 updateUser: function () {},
 
 		 /**
 			 * 发货
@@ -281,30 +210,27 @@ new Vue({
 			 * @param {}
 			 *            id
 			 */
-		 deleteDot: function (id) {
+		 updateOrder: function (id) {
 			 if (confirm("是否确定发货？")) {
-				 axios.get(this.apiurl + 'api/dot/deleteDot',
+				 axios.get(this.apiurl + 'api/deliver/deliverGoods',
 						 {
 					 params: {
-						 dotId: id
+						 orderId : id,
+						 state : 2
 					 }
 						 })
 						 .then(
 								 (res) => {
-									 if (res.data) {
-										 toastr.success('删除成功！');
+									 if (res) {
+										 toastr.success('发货成功！');
 										 this.listlimit();
 									 } else {
-										 toastr.error('删除失败！');
+										 toastr.error('发货成功！');
 									 }
-
 								 }
 						 )
 						 .catch(
-								 (error) => {
-									 console.log(error);
-
-								 }
+								 (error) => { console.log(error); }
 						 );
 			 }
 		 },
@@ -479,51 +405,24 @@ new Vue({
 		 },
 
 		 listlimit: function () {
-			 axios.get(this.apiurl + 'api/dot/getDotParentList',
-					 {
-				 params: {
-					 parentId: '1'
-				 }
-					 })
-					 .then(
-							 (res) => {
-								 this.listUser.oneList = res.data;
-							 }
-					 )
-					 .catch(
-							 (error) => { console.log(error); }
-					 );
-			 axios.get(this.apiurl + 'api/dot/getDotParentList',
-					 {
-				 params: {
-					 parentId: this.accountChange.dotId
-				 }
-					 })
-					 .then(
-							 (res) => {
-								 this.listUser.twoList = res.data;
-							 }
-					 )
-					 .catch(
-							 (error) => { console.log(error); }
-					 );	
+			 axios.get(this.apiurl + 'api/deliver/getDeliver',
+						{
+						params: {
+							ordernum: this.beanSearch,
+							state :1
+						}
+					})
+					.then(
+							(res) => {
+								this.limitData.list = res.data;
+							}
+					)
+					.catch(
+							(error) => { console.log(error); }
+					);
 		 },
 		 numsByPosition: function () {
-			 axios.get(this.apiurl + 'api/v2/db/numBySupplierApply',
-					 {
-				 params: {
-					 state: '1',
-					 search: this.beanSearch
-				 }
-					 })
-					 .then(
-							 (res) => {
-								 this.limitData.nums = res.data;
-							 }
-					 )
-					 .catch(
-							 (error) => { console.log(error); }
-					 );
+			 
 		 }
 
 	},
@@ -550,34 +449,21 @@ new Vue({
 		);
 
 		// HTTP GET 请求-获得列表数据总条数
-		axios.get(this.apiurl + 'api/dot/getDotParentList',
+		axios.get(this.apiurl + 'api/deliver/getDeliver',
 				{
-			params: {
-				parentId: '1'
-			}
-				})
-				.then(
-						(res) => {
-							this.listUser.oneList = res.data;
-						}
-				)
-				.catch(
-						(error) => { console.log(error); }
-				);
-		axios.get(this.apiurl + 'api/dot/getDotParentList',
-				{
-			params: {
-				parentId: 2
-			}
-				})
-				.then(
-						(res) => {
-							this.listUser.twoList = res.data;
-						}
-				)
-				.catch(
-						(error) => { console.log(error); }
-				);
+				params: {
+					ordernum: this.beanSearch,
+					state :1
+				}
+			})
+			.then(
+					(res) => {
+						this.limitData.list = res.data;
+					}
+			)
+			.catch(
+					(error) => { console.log(error); }
+			);
 	},
 	computed: {
 		pages: function () {

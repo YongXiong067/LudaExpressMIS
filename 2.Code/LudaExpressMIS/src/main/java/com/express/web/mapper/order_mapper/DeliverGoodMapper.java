@@ -104,6 +104,13 @@ public interface DeliverGoodMapper {
 	boolean update(Long orderid,int state);
 	
 	/**
+	 * 	修改订单的步骤内容信息
+	 * @return
+	 */
+	@Update("update orders set content = #{content} "
+			+ " where orderid = #{orderid}")
+	boolean updateContent(Long orderid,String content);
+	/**
 	 * 查询财务管理表格界面的数据
 	 * @return
 	 */
