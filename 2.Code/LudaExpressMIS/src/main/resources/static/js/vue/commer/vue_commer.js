@@ -426,7 +426,7 @@ Vue.component('n-nav-left', {
 												name: '企业文化',
 												icon_cls: '',
 												left: 1,
-												url: 'companyCulture.html',
+												url: 'companyCulture_.html',
 											},
 											{
 												id: 22,
@@ -494,14 +494,6 @@ Vue.component('n-nav-left', {
 												icon_cls: '',
 												left: 1,
 												url: 'orders.html',
-											},
-											{
-												id: 34,
-												parent_id: 3,
-												name: '仓储发货管理',
-												icon_cls: '',
-												left: 1,
-												url: 'acceptance.html',
 											},
 											{
 												id: 33,
