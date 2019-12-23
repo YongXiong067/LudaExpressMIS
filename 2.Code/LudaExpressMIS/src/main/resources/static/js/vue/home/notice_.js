@@ -5,7 +5,7 @@ new Vue({
     data: {
 
         apiurl: '',
-        ProjectTagle: '企业文化',
+        ProjectTagle: '公告信息',
         /**
          * 账号资料
          */
@@ -46,8 +46,8 @@ new Vue({
          */
         pagePosition: {
             parent_id: 2,
-            id: 21,
-            title: '企业文化',
+            id: 22,
+            title: '公告信息',
             text: '',
             position: [
                 {
@@ -56,9 +56,9 @@ new Vue({
                     url: 'javaScript:void(0);'
                 },
                 {
-                    name: '企业文化',
+                    name: '公告信息',
                     img: '',
-                    url: 'companyCulture_.html'
+                    url: 'notice_.html'
                 }
             ]
         },
@@ -320,7 +320,7 @@ new Vue({
                 {
                     params: {
                         search: this.beanSearch,
-                        type: 1
+                        type: 2
                     }
                 })
                 .then(
@@ -362,7 +362,7 @@ new Vue({
             {
                 params: {
                     search: this.beanSearch,
-                    type: 1
+                    type: 2
                 }
             })
             .then(

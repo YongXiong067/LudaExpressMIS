@@ -1,5 +1,7 @@
 package com.express.web.model.company;
 
+import java.util.Date;
+
 /**
  * 企业文化实体类
  * @author Administrator
@@ -22,7 +24,27 @@ public class NoticeCulture {
 	 * 类型 1为公告2为企业文化
 	 */
 	private Integer type;
+	/**
+	 * 记录时间
+	 */
+	private Date recordTime;
+	/**
+	 * 时间格式
+	 */
+	private String recordTimeStr;
 	
+	public String getRecordTimeStr() {
+		return recordTimeStr;
+	}
+	public void setRecordTimeStr(String recordTimeStr) {
+		this.recordTimeStr = recordTimeStr;
+	}
+	public Date getRecordTime() {
+		return recordTime;
+	}
+	public void setRecordTime(Date recordTime) {
+		this.recordTime = recordTime;
+	}
 	public Integer getType() {
 		return type;
 	}
@@ -49,7 +71,8 @@ public class NoticeCulture {
 	}
 	@Override
 	public String toString() {
-		return "NoticeCulture [ncId=" + ncId + ", title=" + title + ", content=" + content + ", type=" + type + "]";
+		return "NoticeCulture [ncId=" + ncId + ", title=" + title + ", content=" + content + ", type=" + type
+				+ ", recordTime=" + recordTime + "]";
 	}
 	
 }

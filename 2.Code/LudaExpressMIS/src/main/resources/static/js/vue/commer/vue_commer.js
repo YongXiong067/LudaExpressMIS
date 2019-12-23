@@ -434,7 +434,7 @@ Vue.component('n-nav-left', {
 												name: '信息公告',
 												icon_cls: '',
 												left: 1,
-												url: 'notice.html',
+												url: 'notice_.html',
 											},
 											{
 												id: 23,
