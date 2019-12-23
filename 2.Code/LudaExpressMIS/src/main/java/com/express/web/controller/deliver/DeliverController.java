@@ -45,8 +45,15 @@ public class DeliverController {
 	@ApiOperation(value = "getCulture", notes = "查询出所有待发货列表")
 	@GetMapping("/getDeliver")
 	@ResponseBody
-	public List<orders> getDeliverList(@ApiParam(value = "可根据订单号进行查询，采用模糊匹配，如若查全部，请传空字符串" ,required=true ) @RequestParam String ordernum,@RequestParam Integer state){
-		return deliverService.getDeliverList(ordernum,state);
+	public List<orders> getDeliverList(@ApiParam(value = "可根据订单号进行查询，采用模糊匹配，如若查全部，请传空字符串" ,required=true )
+	@RequestParam String ordernum,@RequestParam Integer state,@RequestParam String type){
+		Long currentuser = null;
+		//获取存储在session中的用户角色id
+		HttpSession session = request.getSession(true);
+		if(type.equals("op")) {
+			currentuser = (Long)session.getAttribute("userId");
+		}
+		return deliverService.getDeliverList(ordernum,state,currentuser);
 	}
 	
 	/**

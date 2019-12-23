@@ -36,6 +36,7 @@ public interface DeliverGoodMapper {
 			+ "select "+ param +" from orders "	
 			+ "where 1=1 and state = #{state} "
 			+"<if test= 'ordernum != null'> and ordernum like concat('%',#{ordernum},'%') </if>"
+			+"<if test= 'currentuser != null'> and currentuser = #{currentuser} </if>"
 			+"</script>")
 	@Results(id="DeliverGoodsMap",
 	value={
@@ -55,7 +56,7 @@ public interface DeliverGoodMapper {
 		@Result(property="content",column="content")
 		}
 	)
-	List<orders> getDeliverList(@Param("ordernum") String ordernum,int state);
+	List<orders> getDeliverList(@Param("ordernum") String ordernum,int state,Long currentuser);
 	
 	/**
 	 * 根据月份年份查出金额数据,折线图，按月
