@@ -1,4 +1,3 @@
-/** * 市州人防办申请记录 vue实例 ** */
 
 new Vue({
 	el: '#app',
@@ -50,7 +49,7 @@ new Vue({
 			text: '',
 			position: [
 				{
-					name: '公司',
+					name: '快递',
 					img: 'fa fa-suitcase',
 					url: 'javaScript:void(0);'
 				},
@@ -170,29 +169,7 @@ new Vue({
 		/**
 		 * 修改数据提交
 		 */
-		 updateSubmit: function () {
-			 if(this.accountChange.id == 0){
-				 toastr.warning('请选择账号！');
-				 return false;
-			 }
-			 let arr = [];
-			 this.accountChange.nav = arr;
-			 axios.post(this.apiurl + 'api/dot/updateDot', this.accountChange)
-			 .then(
-					 (res) => {
-						 if (res.data) {
-							 toastr.success('修改成功！');
-						 } else {
-							 toastr.error('修改失败！');
-						 }
-					 }
-			 )
-			 .catch(
-					 (error) => {
-						 console.log(error);
-					 }
-			 );
-		 },
+		 updateSubmit: function () {},
 
 		 /**
 			 * 添加账号提交

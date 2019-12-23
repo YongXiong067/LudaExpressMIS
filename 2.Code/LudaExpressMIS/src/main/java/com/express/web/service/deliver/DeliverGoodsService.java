@@ -16,7 +16,7 @@ public interface DeliverGoodsService {
 	 * @param state
 	 * @return
 	 */
-	List<orders> getDeliverList(String search,int state);
+	List<orders> getDeliverList(String search,int state,Long currId);
 	
 	/**
 	 * 	修改订单状态

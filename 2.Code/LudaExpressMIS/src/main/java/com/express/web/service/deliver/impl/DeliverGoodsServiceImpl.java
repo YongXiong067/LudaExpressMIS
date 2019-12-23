@@ -20,8 +20,8 @@ public class DeliverGoodsServiceImpl implements DeliverGoodsService {
 	DeliverGoodMapper deliverMapper;
 	
 	@Override
-	public List<orders> getDeliverList(String search,int state) {
-		List<orders> list = deliverMapper.getDeliverList(search,state);
+	public List<orders> getDeliverList(String search,int state,Long currId) {
+		List<orders> list = deliverMapper.getDeliverList(search,state,currId);
 		return list;
 	}
 
