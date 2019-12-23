@@ -58,6 +58,19 @@ public class SysUserController {
 		return -1;
 	}
 	/**
+	 * 注销登录
+	 * @return
+	 */
+	@GetMapping("/cancellation")
+	@ResponseBody
+	public int cancellation() {
+		HttpSession session = request.getSession(true);
+		session.setAttribute("userId", null);
+		session.setAttribute("userName", null);
+		session.setAttribute("rolu", null);
+		return 1;
+	}
+	/**
 	 *  注册用户
 	 * @return
 	 */

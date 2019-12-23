@@ -204,7 +204,7 @@ new Vue({
          * 注销登录
          */
         cancellation: function () {
-            axios.get(this.apiurl + 'api/v2/user/cancellation')
+            axios.get(this.apiurl + 'api/user/cancellation')
                 .then(
                     (res) => {
                         //toastr.success('注销成功！');
