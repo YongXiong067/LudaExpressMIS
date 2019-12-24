@@ -1,15 +1,18 @@
 package com.express.web.controller.order;
 
 
+import com.express.web.model.message.leavingMessage;
 import com.express.web.model.order_model.orders;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import com.express.web.service.order.orderServie;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.List;
 
 /**
  * @Author: YIHUI HE
@@ -28,17 +31,12 @@ public class orderController {
     HttpServletRequest request;
 
 
-
-    /**
-     * 查找订单根据参数查找,后台返回整条信息,前端取需
-     * @param orders
-     * @return
-     */
-    @ApiOperation(value = "selectOrder", notes = "查找订单")
-    @RequestMapping("/selectOrder")
-    public orders selectOrder(orders orders){
-       return  orderServie.selectOrder(orders);
+    @ApiOperation(value = "getOrders", notes = "查找订单")
+    @GetMapping("/getOrders")
+    public List<orders> getOrders(@ApiParam(value = "查询参数，可根据内容自动匹配" ,required=false )@RequestParam String search){
+        return orderServie.listByAll(search);
     }
+
 
 
     /**
@@ -47,7 +45,7 @@ public class orderController {
      * @return  只有管理员才能修改
      */
     @ApiOperation(value = "updateOrders", notes = "修改订单")
-    @RequestMapping("/updateOrders")
+    @GetMapping("/updateOrders")
     public Boolean updateOrders(orders orders){
         Boolean result = false;
         HttpSession session = request.getSession(true);
@@ -74,9 +72,16 @@ public class orderController {
      * @return
      */
     @ApiOperation(value = "addorders", notes = "添加订单")
-    @RequestMapping("/addorders")
-    public Boolean addorders(orders orders){
+    @PostMapping("/addorders")
+    public Boolean addorders(@RequestBody orders orders){
         Boolean result = false;
+        HttpSession session = request.getSession(true);
+        if(null!=session){
+            String name = (String)session.getAttribute("userName");
+            Long userId = (Long) session.getAttribute("userId");
+            orders.setCurrentuser(name);
+            orders.setUserid(userId);
+        }
         int resultflag = orderServie.addOrder(orders);
         if(resultflag>0){
             result = true;
@@ -92,7 +97,7 @@ public class orderController {
      * @return
      */
     @ApiOperation(value = "deleterOrders", notes = "删除订单")
-    @RequestMapping("/deleterOrders")
+    @GetMapping("/deleterOrders")
     public Boolean deleterOrders(orders orders){
         //TODO 不需要删除订单?
          return false;

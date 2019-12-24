@@ -184,33 +184,31 @@
                                 <ul class="todo-list">
                                     <li>
                                         <div class="row p-0 m-0 text-center">
-                                            <div class="col-md-3">
-                                                <div class="row">
-                                                    <div class="col-md-1 col-xs-2 p-0"><span class="text">ID</span>
-                                                    </div>
-                                                    <div class="col-md-8 col-xs-2 p-0"><span class="text">项目名称</span>
-                                                    </div>
-                                                    <div class="col-md-3 col-xs-2 p-0"><span class="text">督办人</span>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="col-md-5">
                                                 <div class="row">
-                                                    <div class="col-md-4 col-xs-2 p-0"><span class="text">督办内容</span>
+                                                    <div class="col-md-3"><span class="text">ID</span>
                                                     </div>
-                                                    <div class="col-md-3 col-xs-2 p-0"><span class="text">督办时间</span>
+                                                    <div class="col-md-4"><span class="text">用户名</span>
                                                     </div>
-                                                    <div class="col-md-4 col-xs-2 p-0"><span class="text">项目进度情况</span>
+                                                    <div class="col-md-3"><span class="text">状态</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="row">
-                                                    <div class="col-md-3 col-xs-2 p-0"><span class="text">反馈人</span>
+                                                    <div class="col-md-4 col-xs-2 p-0"><span class="text">留言内容</span>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row">
                                                     <div class="col-md-7 col-xs-2 p-0"><span class="text">反馈内容</span>
                                                     </div>
-                                                    <div class="col-md-2 col-xs-2 p-0"><span class="text">操作</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
+                                                <div class="row">
+                                                    <div class="col-md-7 col-xs-2 p-0"><span class="text">操作</span>
                                                     </div>
                                                 </div>
                                             </div>
@@ -218,54 +216,49 @@
                                     </li>
                                     <li v-for="(item, index) in limitData.list">
                                         <div class="row p-0 m-0 text-center">
-                                            <div class="col-md-3">
-                                                <div class="row">
-                                                    <div class="col-md-1 col-xs-2 p-0">
-                                                        <span>{{item.id}}</span>
-                                                    </div>
-                                                    <div class="col-md-8 col-xs-2 p-0 text-oneline"><a
-                                                            href="javascript:;" @click="contentChange(item.p_id)">
-                                                            <span>{{item.p_id.p_name}}</span></a>
-                                                    </div>
-                                                    <div class="col-md-3 col-xs-2 p-0 text-oneline">
-                                                        <span>{{item.sup_person}}</span>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <div class="col-md-5">
                                                 <div class="row">
+                                                    <div class="col-md-3 col-xs-2 p-0">
+                                                        <span>{{item.leavingId}}</span>
+                                                    </div>
+                                                    <div class="col-md-0 col-xs-2 p-0 text-oneline" style="display:none"><a
+                                                            href="javascript:;" @click="contentChange(item.p_id)">
+                                                            <span>{{item.userId}}</span></a>
+                                                    </div>
                                                     <div class="col-md-4 col-xs-2 p-0 text-oneline">
-                                                        <span>{{item.sup_text}}</span>
+                                                        <span>{{item.name}}</span>
                                                     </div>
                                                     <div class="col-md-3 col-xs-2 p-0 text-oneline">
-                                                        <span>{{item.sup_time}}</span>
-                                                    </div>
-                                                    <div class="col-md-4 col-xs-2 p-0 text-oneline">
-                                                        <span>{{item.project_situation}}</span>
+                                                        <span>{{item.stateName}}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-4">
+                                            <div class="col-md-3">
                                                 <div class="row">
-                                                    <div class="col-md-3 col-xs-2 p-0 text-oneline">
-                                                        <span>{{item.feedback_person}}</span>
+                                                    <div class="col-md-10 col-xs-2 p-0 text-oneline">
+                                                        <span>{{item.content}}</span>
                                                     </div>
-                                                    <div class="col-md-7 col-xs-2 p-0">
-                                                        <span>{{item.feedback_text}}</span>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-3">
+                                                <div class="row">
+                                                    <div class="col-md-3">
+                                                        <span>{{item.rsContert}}</span>
                                                     </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-1">
                                                     <div class="col-md-2 col-xs-2 p-0">
                                                         <div class="tools">
-
                                                             <a href="javaScript:;" title="修改" data-toggle="modal"
                                                                 data-target="#modelUpdate" @click="update(item)">
                                                                 <i class="fa fa-edit" style="margin-right: 5px;"></i>
                                                             </a>
                                                             <a href="javaScript:;" title="删除"
-                                                                @click="deleteProject(item.id)"> <i
+                                                                @click="deleteProject(item.leavingId)"> <i
                                                                     class="fa fa-trash-o"
                                                                     style="margin-right: 5px;"></i> </a>
                                                         </div>
-                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -274,8 +267,8 @@
                                         <div class="row m-0">
                                             <div class="col-md-12 p-0 m-0 text-center">
                                                 <span>
-                                                    显示第<code>{{page_first}}</code>到第<code>{{page_last}}</code>条记录，
-                                                    总共<code>{{limitData.nums}}</code>条记录 每页显示
+                                                    显示第<code>{{page_first}}</code>到第<code>{{limitData.list.length}}</code>条记录，
+                                                    总共<code>{{limitData.list.length}}</code>条记录 每页显示
                                                     <input type="text" v-model="limitData.line" style="width: 30px;"
                                                         @blur="beanPosition_change()"> 条记录
                                                 </span>
@@ -291,7 +284,7 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="modelUpdateTit">修改记录信息 <i
+                                            <h4 class="modal-title" id="modelUpdateTit">回复留言 <i
                                                     class="fa fa-edit"></i></h4>
                                         </div>
                                         <div class="modal-body">
@@ -300,9 +293,9 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">项目名称</span>
-                                                            <input type="text" v-model="modalUpdate.p_id.p_name"
-                                                                class="form-control" placeholder="请填写该字段" disabled>
+                                                            <span class="input-group-addon">留言内容</span>
+                                                            <textarea type="textarea" v-model="modalUpdate.content"
+                                                                      class="form-control" placeholder="请填写该字段" disabled></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -313,77 +306,10 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">督办人</span>
-                                                            <input type="text" v-model="modalUpdate.sup_person"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">督办内容</span>
-                                                            <input type="text" v-model="modalUpdate.sup_text"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">项目进度情况</span>
-                                                            <input type="text" v-model="modalUpdate.project_situation"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">反馈人</span>
-                                                            <input type="text" v-model="modalUpdate.feedback_person"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">反馈内容</span>
-                                                            <input type="text" v-model="modalUpdate.feedback_text"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">督办时间</span>
-                                                            <input type="date" v-model="modalUpdate.sup_time"
-                                                                class="form-control" />
-                                                            <span class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </span>
+                                                            <span class="input-group-addon">回复内容</span>
+                                                            <textarea type="textarea" class="form-control" rows="10"
+                                                                      v-model="modalUpdate.rsContert" placeholder="请填写该字段"
+                                                                      required></textarea>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -405,107 +331,24 @@
                                 <div class="modal-dialog" role="document">
                                     <div class="modal-content">
                                         <div class="modal-header">
-                                            <h4 class="modal-title" id="modelAddTit">添加项目督办信息 <i class="fa fa-plus"></i>
+                                            <h4 class="modal-title" id="modelAddTit">添加留言 <i class="fa fa-plus"></i>
                                             </h4>
                                         </div>
                                         <div class="modal-body">
                                             <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">项目名称<b class="color-danger">*</b></span>
-
-                                                            <select class="form-control" v-model="modalAdd.p_id.p_id">
-                                                                <option selected="selected" value="0">---请选择项目---
-                                                                </option>
-                                                                <option v-for="sel in list1" :value="sel.p_id">
-                                                                    {{sel.p_name}}</option>
-                                                            </select>
+                                                <div class="form-group ">
+                                                    <div class="row">
+                                                        <div class="col-md-1"></div>
+                                                        <div class="col-md-10">
+                                                            <div class="input-group">
+                                                                <span class="input-group-addon">内容</span>
+                                                                <textarea type="textarea" class="form-control" rows="10"
+                                                                          v-model="modalAdd.content" placeholder="请填写该字段"
+                                                                          ></textarea>
+                                                            </div>
                                                         </div>
+                                                        <div class="col-md-1"></div>
                                                     </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">督办人<b class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.sup_person"
-                                                                class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.sup_person)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">督办内容<b class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.sup_text"
-                                                                class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.sup_text)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">项目进度情况<b class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.project_situation"
-                                                                class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.project_situation)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">反馈人</span>
-                                                            <input type="text" v-model="modalAdd.feedback_person"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">反馈内容</span>
-                                                            <input type="text" v-model="modalAdd.feedback_text"
-                                                                class="form-control" placeholder="请填写该字段" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">督办时间<b class="color-danger">*</b></span>
-                                                            <input type="date" v-model="modalAdd.sup_time"
-                                                                class="form-control" />
-                                                            <span class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
                                                 </div>
                                             </div>
                                         </div>

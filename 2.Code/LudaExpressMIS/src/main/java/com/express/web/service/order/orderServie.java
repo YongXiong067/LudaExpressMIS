@@ -1,5 +1,6 @@
 package com.express.web.service.order;
 
+import com.express.web.model.message.leavingMessage;
 import com.express.web.model.order_model.orders;
 
 import java.util.List;
@@ -10,6 +11,15 @@ import java.util.List;
  * @Description: 订单业务层接口
  */
 public interface orderServie {
+
+
+
+    /**
+     * 	根据查询条件获取信息
+     * @param search
+     * @return
+     */
+    List<orders> listByAll(String search);
 
 
     /**
@@ -23,7 +33,7 @@ public interface orderServie {
      * 查寻多条订单
      * @param orders
      */
-    List<orders> selectMoreOrder(orders orders);
+//    List<orders> selectMoreOrder(orders orders);
 
     /**
      * 添加订单

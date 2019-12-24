@@ -61,6 +61,14 @@ public class DeliverController {
 	public boolean deliverGoods(@ApiParam(value = "订单id" ,required=true )@RequestParam Long orderId, @RequestParam Integer state) {
 		boolean bool = false;
 		try {
+			String inintVule = null;
+			switch (state){
+				case 0: inintVule = "预约";break;
+				case 1: inintVule = "揽件";break;
+				case 2: inintVule = "运输中";break;
+				case 3: inintVule = "派送中";break;
+				case 4: inintVule = "已签收";break;
+			}
 			//时间格式化
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
@@ -68,6 +76,7 @@ public class DeliverController {
 			//获取存储在session中的用户角色id
 			HttpSession session = request.getSession(true);
 			Long userId = (Long)session.getAttribute("userId");
+			String name = (String)session.getAttribute("userName");
 			//查询出该订单的详细信息
 			orders order = deliverService.getById(orderId);
 			String content = "";
@@ -78,9 +87,9 @@ public class DeliverController {
 					content = order.getContent();
 					//如果值为空，则是第一次存储，需要去掉前面的；号
 					if(content == "") {
-						content +=userId+","+state+","+nowDate+"";
+						content +=name+","+inintVule+","+nowDate+"";
 					}else {
-						content +=";"+userId+","+state+","+nowDate+"";
+						content +=";"+name+","+inintVule+","+nowDate+"";
 					}
 				}
 			}

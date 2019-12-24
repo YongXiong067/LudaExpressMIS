@@ -31,6 +31,16 @@
         <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
         <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
     <![endif]-->
+
+    <style type="text/css">
+        .comments {
+            width:100%;/*自动适应父布局宽度*/
+            overflow:auto;
+            word-break:break-all;
+            /*在ie中解决断行问题(防止自动变为在一行显示，主要解决ie兼容问题，ie8中当设宽度为100%时，文本域类容超过一行时，
+            当我们双击文本内容就会自动变为一行显示，所以只能用ie的专有断行属性“word-break或word-wrap”控制其断行)*/
+        }
+    </style>
 </head>
 
 <body class="hold-transition skin-blue sidebar-mini">
@@ -194,12 +204,6 @@
                                             <div class="col-md-2 col-xs-2 p-0">
                                                 <span class="text">下单时间</span>
                                             </div>
-                                            <div class="col-md-1 col-xs-2 p-0">
-                                                <span class="text">费用</span>
-                                            </div>
-                                            <div class="col-md-1 col-xs-2 p-0">
-                                                <span class="text">关联网点</span>
-                                            </div>
                                             <div class="col-md-2 p-0 pl-5">
                                                 <span class="text">收件人地址</span>
                                             </div>
@@ -209,11 +213,8 @@
                                             <div class="col-md-1 col-xs-2 p-0">
                                                 <span class="text">订单状态</span>
                                             </div>
-                                            <div class="col-md-1 p-0 pl-5">
-                                                <span class="text">当前处理人</span>
-                                            </div>
-                                            <div class="col-md-1 p-0 pl-5">
-                                                <span class="text">操作</span>
+                                            <div class="col-md-4 p-0 pl-5">
+                                                <span class="text">订单信息记录</span>
                                             </div>
                                         </div>
                                     </li>
@@ -223,18 +224,12 @@
                                                 <div class="row">
                                                     <div class="col-md-12 col-xs-2 p-0 text-oneline">
                                                         <a href="javascript:;" :title="item.userName"
-                                                           @click="contentChange(item)"><span>{{item.ordernum}}</span></a>
+                                                           ><span>{{item.ordernum}}</span></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0 text-oneline">
                                                 <span>{{item.orderdate}}</span>
-                                            </div>
-                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>￥{{item.money}}</span>
-                                            </div>
-                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.dotid}}</span>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0 text-oneline">
                                                 <span>{{item.receiveaddr}}</span>
@@ -249,17 +244,8 @@
                                                 <span v-if="item.state == '3'">派送中</span>
                                                 <span v-if="item.state == '1'">已签收</span>
                                             </div>
-                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.currentuser}}</span>
-                                            </div>
-                                            <div class="col-md-1 col-xs-1 px-0">
-                                                <div class="tools">
-                                                    <!-- <a href="javascript:;" title="发货" data-toggle="modal"
-                                                        data-target="#modelUpdate" @click="update(item)">
-                                                        <i class="fa fa-edit" style="margin-right: 15px;"></i> </a> -->
-                                                    <a href="javascript:;" title="发货" @click="updateOrder(item.orderid)">
-                                                        <i class="fa fa-edit" style="margin-right: 35px;"></i> </a>
-                                                </div>
+                                            <div class="col-md-4 col-xs-2 p-0 text-oneline">
+                                                <span class="comments">{{item.content}}</span>
                                             </div>
                                         </div>
                                     </li>

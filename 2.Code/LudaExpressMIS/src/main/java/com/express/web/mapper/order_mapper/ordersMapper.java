@@ -35,7 +35,35 @@ public interface ordersMapper {
      * @param
      * @return
      */
-    List<orders> listByAll(orders orders);
+    /**
+     * 	获取待发货订单，可传查询参数
+     * @param search
+     * @return
+     */
+    @Select("<script>"
+            + "select "+ param +" from orders "
+            + "where 1=1 "
+            +"<if test= 'search != null'> and ( ordernum like concat('%',#{search},'%')) </if>"
+            +"</script>")
+    @Results(id="ordersList",
+            value={
+                    @Result(id=true,property="orderid",column="orderId"),
+                    @Result(property="dotid",column="dotId"),
+                    @Result(property="userid",column="userId"),
+                    @Result(property="sendtel",column="sendTel"),
+                    @Result(property="sendaddr",column="sendAddr"),
+                    @Result(property="orderdate",column="orderDate"),
+                    @Result(property="receivetel",column="receiveTel"),
+                    @Result(property="receiveaddr",column="receiveAddr"),
+                    @Result(property="ordernum",column="orderNum"),
+                    @Result(property="weight",column="weight"),
+                    @Result(property="money",column="money"),
+                    @Result(property="state",column="state"),
+                    @Result(property="currentuser",column="currentUser"),
+                    @Result(property="content",column="content")
+            }
+    )
+    List<orders> listByAll(String search);
 
     /**
      * 插入记录

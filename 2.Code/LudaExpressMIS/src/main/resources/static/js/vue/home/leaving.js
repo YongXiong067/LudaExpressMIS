@@ -3,14 +3,13 @@
 new Vue({
     el: '#app',
     data: {
-
         apiurl: '',
         ProjectTagle: '项目督办',
         /**
          * 账号资料
          */
         user: {
-            id: '',
+            userId: '',
             userid: '',
             username: '',
             sex: '',
@@ -81,35 +80,22 @@ new Vue({
             nums: '',      //总条数
             list: [],       //数据集合
         },
-        positionList: [],   //归属处室
-        overall_typeList: [],      //统筹类型
+        // positionList: [],   //归属处室
+        // overall_typeList: [],      //统筹类型
         beanChange: {       //过滤条件
             beanPosition: '0',
             beanYear: '0',
         },
         beanSearch: '',         //搜索
         modalUpdate: {          //修改模态框
-            p_id: {
-                p_id: '0'
-            },
-            sup_person: '',
-            sup_text: '',
-            sup_time: '',
-            project_situation: '',
-            feedback_person: '',
-            feedback_text: '',
+            rsContert:'',
+            stateName:''
         },
-
         modalAdd: {          //添加模态框
-            p_id: {
-                p_id: '0'
-            },
-            sup_person: '',
-            sup_text: '',
-            sup_time: '',
-            project_situation: '',
-            feedback_person: '',
-            feedback_text: '',
+            userId:'',
+            state:'',
+            content:'',
+            rsContert:''
         },
         modalFile: {          //文件上传模态框
             p_id: '',
@@ -127,10 +113,10 @@ new Vue({
             c_id: '0',
         },
 
-        /**
-         * 模态框下拉项目列表
-         */
-        list1: [],
+        // /**
+        //  * 模态框下拉项目列表
+        //  */
+        // list1: [],
         /**
          * 项目详情列表数据
          */
@@ -237,7 +223,7 @@ new Vue({
             this.beanChange.beanYear = '0';
             this.beanSearch = '';
             this.limitData.page_go = '';
-            this.numsByPosition();
+            // this.numsByPosition();
             this.listlimit();
         },
 
@@ -298,7 +284,7 @@ new Vue({
          */
         search: function () {
             this.limitData.page = 1;
-            this.numsByPosition();
+            // this.numsByPosition();
             this.listlimit();
         },
 
@@ -307,7 +293,7 @@ new Vue({
          */
         beanPosition_change: function () {
             this.limitData.page = 1;
-            this.numsByPosition();
+            // this.numsByPosition();
             this.listlimit();
         },
 
@@ -519,7 +505,7 @@ new Vue({
          * 修改数据提交
          */
         updateSubmit: function () {
-            axios.post(this.apiurl + 'api/v2/supervise/update', this.modalUpdate)
+            axios.post(this.apiurl + 'api/leavingMesaage/updateMessage', this.modalUpdate)
                 .then(
                     (res) => {
                         if(res.data){
@@ -592,28 +578,24 @@ new Vue({
          * 添加数据提交
          */
         addSubmit: function () {
-            if (this.modalAdd.p_id.p_id == 0 || this.modalAdd.sup_person == '' || this.modalAdd.sup_text == '' || this.modalAdd.project_situation == ''
-                || this.modalAdd.sup_time == '') {
+            if (this.modalAdd.content == '') {
                 toastr.warning('请填写完整的信息！');
                 return false;
             }
-            axios.post(this.apiurl + 'api/v2/supervise/save', this.modalAdd)
+            console.log(this.modalAdd);
+            axios.post(this.apiurl + 'api/leavingMesaage/insertMessage', this.modalAdd)
                 .then(
                     (res) => {
                         if (res.data) {
+                            console.log(' 普通输出~ '+res.data);
                             toastr.success('添加成功！');
                             this.modalAdd = {          //添加模态框
-                                p_id: {
-                                    p_id: '0'
-                                },
-                                sup_person: '',
-                                sup_text: '',
-                                sup_time: '',
-                                project_situation: '',
-                                feedback_person: '',
-                                feedback_text: '',
+                                userId:'',
+                                state:'',
+                                content:'',
+                                rsContert:''
                             }
-                            this.numsByPosition();
+                            // this.numsByPosition();
                             this.listlimit();
                         }else{
                             toastr.error('添加失败！');
@@ -672,7 +654,7 @@ new Vue({
          */
         deleteProject: function (id) {
         	if (confirm("是否确定删除？")) {
-            axios.get(this.apiurl + 'api/v2/supervise/delete',
+            axios.get(this.apiurl + 'api/leavingMesaage/deleteMessage',
                 {
                     params: {
                         id: id,
@@ -682,7 +664,7 @@ new Vue({
                     (res) => {
                         if(res.data){
                             toastr.success('删除成功！');
-                            this.numsByPosition();
+                            // this.numsByPosition();
                             this.listlimit();
                         }else {
                             toastr.error('删除失败！');
@@ -781,13 +763,9 @@ new Vue({
         },
 
         listlimit: function () {
-            axios.get(this.apiurl + 'api/v2/supervise/getListByLimit',
+            axios.get(this.apiurl + 'api/leavingMesaage/getMessage',
                 {
                     params: {
-                        state: '1',
-                        page_no: this.limitData.page,
-                        page_line: this.limitData.line,
-                        p_year: this.beanChange.beanYear,
                         search: this.beanSearch
                     }
                 })
@@ -801,143 +779,146 @@ new Vue({
                     (error) => { console.log(error); }
                 );
         },
-        numsByPosition: function () {
-            axios.get(this.apiurl + 'api/v2/db/numBySupervise',
-                {
-                    params: {
-                        state: '1',
-                        p_year: this.beanChange.beanYear,
-                        search: this.beanSearch
-                    }
-                })
-                .then(
-                    (res) => {
-                        this.limitData.nums = res.data;
-                    }
-                )
-                .catch(
-                    (error) => { console.log(error); }
-                );
-        }
+        // numsByPosition: function () {
+        //     axios.get(this.apiurl + 'api/v2/db/numBySupervise',
+        //         {
+        //             params: {
+        //                 state: '1',
+        //                 p_year: this.beanChange.beanYear,
+        //                 search: this.beanSearch
+        //             }
+        //         })
+        //         .then(
+        //             (res) => {
+        //                 this.limitData.nums = res.data;
+        //             }
+        //         )
+        //         .catch(
+        //             (error) => { console.log(error); }
+        //         );
+        // }
 
     },
     mounted() {
         //-------------
         //- api请求 -
         //-------------
-        //HTTP GET 请求-获得当前登录用户信息
-        axios.get(this.apiurl + 'api/v2/user/getLogin')
-            .then(
-                (res) => {
-                    if (res.data.id == 0) {
-                        window.location.href = "login.html";
-                    } else {
-                        this.user = res.data;
-                    }
-                }
-            )
-            .catch(
-                (error) => { console.log(error); }
-            );
+        // //HTTP GET 请求-获得当前登录用户信息
+        // axios.get(this.apiurl + 'api/user/getUser')
+        //     .then(
+        //         (res) => {
+        //             if (res.data.id == 0) {
+        //                 window.location.href = "login.html";
+        //             } else {
+        //                 this.user = res.data;
+        //             }
+        //         }
+        //     )
+        //     .catch(
+        //         (error) => { console.log(error); }
+        //     );
 
         //HTTP GET 请求-获得列表数据总条数
-        axios.get(this.apiurl + 'api/v2/db/numBySupervise',
-            {
-                params: {
-                    state: '1',
-                    p_year: this.beanChange.beanYear,
-                    search: this.beanSearch
-                }
-            })
-            .then(
-                (res) => {
-                    this.limitData.nums = res.data;
-                }
-            )
-            .catch(
-                (error) => { console.log(error); }
-            );
+        // axios.get(this.apiurl + 'api/v2/db/numBySupervise',
+        //     {
+        //         params: {
+        //             state: '1',
+        //             p_year: this.beanChange.beanYear,
+        //             search: this.beanSearch
+        //         }
+        //     })
+        //     .then(
+        //         (res) => {
+        //             this.limitData.nums = res.data;
+        //         }
+        //     )
+        //     .catch(
+        //         (error) => { console.log(error); }
+        //     );
 
-        /**
-         * 获得分页详细列表
-         */
-        axios.get(this.apiurl + 'api/v2/supervise/getListByLimit',
-            {
-                params: {
-                    state: '1',
-                    page_no: this.limitData.page,
-                    page_line: this.limitData.line,
-                    p_year: this.beanChange.beanYear,
-                    search: this.beanSearch
-                }
-            })
-            .then(
-                (res) => {
-                    this.limitData.list = res.data;
-                }
-            )
-            .catch(
-                (error) => { console.log(error); }
-            );
+        // /**
+        //  * 获得分页详细列表
+        //  */
+        // axios.get(this.apiurl + 'api/v2/supervise/getListByLimit',
+        //     {
+        //         params: {
+        //             state: '1',
+        //             page_no: this.limitData.page,
+        //             page_line: this.limitData.line,
+        //             p_year: this.beanChange.beanYear,
+        //             search: this.beanSearch
+        //         }
+        //     })
+        //     .then(
+        //         (res) => {
+        //             this.limitData.list = res.data;
+        //         }
+        //     )
+        //     .catch(
+        //         (error) => { console.log(error); }
+        //     );
         /**
          * 获得归属处室下拉框数据
          */
-        axios.get(this.apiurl + 'api/v2/db/getDropdown',
-            {
-                params: {
-                    typecode: 'DICT02',
-                }
-            })
-            .then(
-                (res) => {
-                    this.positionList = res.data;
-                }
-            )
-            .catch(
-                (error) => { console.log(error); }
-            );
+        // axios.get(this.apiurl + 'api/v2/db/getDropdown',
+        //     {
+        //         params: {
+        //             typecode: 'DICT02',
+        //         }
+        //     })
+        //     .then(
+        //         (res) => {
+        //             this.positionList = res.data;
+        //         }
+        //     )
+        //     .catch(
+        //         (error) => { console.log(error); }
+        //     );
         /**
          * 获得统筹类型下拉框数据
          */
-        axios.get(this.apiurl + 'api/v2/db/getDropdown',
-            {
-                params: {
-                    typecode: 'DICT03',
-                }
-            })
-            .then(
-                (res) => {
-                    this.overall_typeList = res.data;
-                }
-            )
-            .catch(
-                (error) => { console.log(error); }
-            );
+        // axios.get(this.apiurl + 'api/v2/db/getDropdown',
+        //     {
+        //         params: {
+        //             typecode: 'DICT03',
+        //         }
+        //     })
+        //     .then(
+        //         (res) => {
+        //             this.overall_typeList = res.data;
+        //         }
+        //     )
+        //     .catch(
+        //         (error) => { console.log(error); }
+        //     );
         /**
          * 获得模态框项目列表
          */
-        axios.get(this.apiurl + 'api/v2/project/getListByDropdown',
-            {
-                params: {
-                    p_tagle: '签订合同',
-                }
-            })
-            .then(
-                (res) => {
-                    this.list1 = res.data;
-                }
-            )
-            .catch(
-                (error) => { console.log(error); }
-            );
+        // axios.get(this.apiurl + 'api/v2/project/getListByDropdown',
+        //     {
+        //         params: {
+        //             p_tagle: '签订合同',
+        //         }
+        //     })
+        //     .then(
+        //         (res) => {
+        //             this.list1 = res.data;
+        //         }
+        //     )
+        //     .catch(
+        //         (error) => { console.log(error); }
+        //     );
         /**
-         * 获得分页合同详细列表
+         * 获得分页数据留言细列表
          */
-        axios.get(this.apiurl + 'api/v2/contract/getListByLimitAll'
-        )
+        axios.get(this.apiurl + 'api/leavingMesaage/getMessage',{
+            params: {
+                search: this.beanSearch
+            }
+        })
             .then(
                 (res) => {
-                    this.contentHtModel = res.data;
+                    this.limitData.list = res.data;
                 }
             )
             .catch(

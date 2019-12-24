@@ -101,10 +101,10 @@ new Vue({
             rolu: ''
         },
         modalAdd: {          //添加模态框
-            userName: '',
-            password: '',
-            phone: '',
-            rolu: ''
+            ncId:'',
+            title:'',
+            content:'',
+            type:2
         },
         /**
          * 关联合同模态框
@@ -309,11 +309,15 @@ new Vue({
          * 修改数据提交
          */
         updateSubmit: function () {
-            axios.post(this.apiurl + 'api/user/update', this.modalUpdate)
+            axios.post(this.apiurl + 'api/company/updateCulture', this.modalUpdate)
                 .then(
                     (res) => {
-                        toastr.success('修改成功！');
-                        this.listlimit();
+                        if (res.data) {
+                            toastr.success('修改成功！');
+                            this.listlimit();
+                        } else {
+                            toastr.error('修改失败！');
+                        }
                     }
                 )
                 .catch(
@@ -327,32 +331,29 @@ new Vue({
          * 添加数据提交
          */
         addSubmit: function () {
-            if (this.modalAdd.userName == '' || this.modalAdd.password == '' || this.modalAdd.phone == '' || this.modalAdd.rolu == '') {
-            	console.log(this.modalAdd.password);
-            	console.log(this.modalAdd.phone);
-            	toastr.warning('请填写完整的信息！');
-                return false;
-            }
-
+              if (this.modalAdd.title == '' || this.modalAdd.content == '') {
+                  toastr.warning('请填写完整的信息！');
+                  return false;
+              }
             var name = '';
-            axios.post(this.apiurl + 'api/user/insertUser', this.modalAdd)
+            axios.post(this.apiurl + 'api/company/insertCulture', this.modalAdd)
                 .then(
                     (res) => {
-                        if (res.data) {
-                            toastr.success('添加成功！');
-                            this.modalAdd = {          //添加模态框
-                                userName: '',
-                                password: '',
-                                phone: '',
-                                rolu: ''
-                            },
-                            //this.numsByPosition();
-                            this.listlimit();
-                        } else {
-                            toastr.danger('添加失败！');
+                            if (res.data) {
+                                  toastr.success('添加成功！');
+                                  this.numsByPosition();
+                                  this.listlimit();
+                                  this.modalAdd = {          //重置数据
+                                      ncId:'',
+                                      title:'',
+                                      content:'',
+                                      type:2
+                                  }
+                            } else {
+                                toastr.danger('添加失败！');
+                            }
                         }
-                    }
-                )
+                    )
                 .catch(
                     (error) => {
                         console.log(error);
@@ -363,9 +364,9 @@ new Vue({
          * 删除数据
          * @param {} id 
          */
-        deleteProject: function (id) {
+        deleteCulture: function (id) {
             if (confirm("是否确定删除？")) {
-                axios.get(this.apiurl + 'api/user/deleteUser',
+                axios.get(this.apiurl + 'api/company/deleteCulture',
                     {
                         params: {
                         	userId: id,
@@ -388,10 +389,11 @@ new Vue({
         },
         listlimit: function () {
         	
-        	axios.get(this.apiurl + 'api/user/getAllUser', {
-        		params: {
-        			search: this.beanSearch
-        		}
+        	axios.get(this.apiurl + 'api/company/getCulture', {
+                params: {
+                    search: this.beanSearch,
+                    type : 2
+                }
         	})
                     .then(
                         (res) => {
@@ -464,23 +466,24 @@ new Vue({
             .catch(
                 (error) => { console.log(error); }
             );
-        /**
-         * 获得分页详细列表
-         */
-        // axios.get(this.apiurl + 'api/user/getAllUser',
-	    //     {
-	    // 		params: {
-	    // 			search: this.beanSearch
-	    // 		}
-	    // 	})
-        //     .then(
-        //         (res) => {
-        //             this.limitData.list = res.data;
-        //         }
-        //     )
-        //     .catch(
-        //         (error) => { console.log(error); }
-        //     );
+            /**
+             * 获得分页详细列表
+             */
+            axios.get(this.apiurl + 'api/company/getCulture',
+                {
+                    params: {
+                        search: this.beanSearch,
+                        type : 2
+                    }
+                })
+                .then(
+                    (res) => {
+                this.limitData.list = res.data;
+        }
+        )
+        .catch(
+                (error) => { console.log(error); }
+        );
     },
     computed: {
         pages: function () {

@@ -17,12 +17,12 @@ public interface MoneyMapper {
 	 * @return
 	 */
 	@Select("<script>"
-			+ "select * from finance "	
+			+ "select * from finance "
 			+ "where 1=1 "
 			+"</script>")
 	@Results({
-		@Result(column = "orderId", property = "orderId", 
-				one=@One(select="com.express.web.mapper.order_mapper.DeliverGoodMapper.getById"))
+			@Result(column = "orderId", property = "orderId",
+					one=@One(select="com.express.web.mapper.order_mapper.DeliverGoodMapper.getById"))
 	})
 	List<Money> getMoneyList();
 
