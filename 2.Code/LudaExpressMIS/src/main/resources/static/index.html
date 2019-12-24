@@ -53,9 +53,132 @@
 
                 <!-- 快捷导航入口 -->
                 <div class="row">
+                    <div class="col-md-4">
+                        <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <img class="profile-user-img img-responsive img-circle" :src="user.img_src"
+                                    alt="User profile picture">
+                                <h3 class="profile-username text-center">{{user.username}}</h3>
+                                <p class="text-muted text-center">账号：{{user.userid}}</p>
+
+                                <ul class="list-group list-group-unbordered">
+                                    <li class="list-group-item">
+                                        <b>最近登录</b> <a class="pull-right">2019年12月24日</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>登录地址</b> <a class="pull-right">192.0.0.1</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>登录状态</b> <a class="pull-right color-success">正常</a>
+                                    </li>
+                                </ul>
+                                <a href="javascript:;" class="btn btn-primary btn-block" data-toggle="modal"
+                                    data-target="#modelUpdate"><b>个人资料管理</b></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-8">
+                        <div class="box box-primary">
+                            <div class="box-header">
+                                <i class="fa fa-th"></i>
+                                <h3 class="box-title">个人资料展示</h3>
+                                <div class="box-tools pull-right">
+                                    <button class="btn btn-box-tool" data-widget="collapse"><i
+                                            class="fa fa-minus"></i></button>
+                                    <button class="btn btn-box-tool" data-widget="remove"><i
+                                            class="fa fa-times"></i></button>
+                                </div>
+                            </div>
+                            <div class="box-body box-profile mb-2">
+                                <ul class="list-group list-group-unbordered">
+                                    <li class="list-group-item">
+                                        <b>用户名</b> <a class="pull-right">管理员</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>性别</b> <a class="pull-right">男</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>年龄</b> <a class="pull-right color-success">20</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+
+                    </div>
 
                 </div>
             </section>
+        </div>
+
+        <!-- 个人资料修改模态框 -->
+        <div class="modal fade" id="modelUpdate" tabindex="-1" role="dialog" aria-labelledby="modelUpdateTit"
+            aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="modelUpdateTit">修改个人资料 <i class="fa fa-edit"></i></h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group ">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">用户名</span>
+                                        <input type="text" class="form-control" v-model="modalUpdate.username"
+                                            placeholder="请填写该字段" required>
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">性别</span>
+                                        <input type="text" class="form-control" rows="10"
+                                            v-model="modalUpdate.sex" placeholder="请填写该字段" required></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                        </div>
+                        <div class="form-group ">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">年龄</span>
+                                        <input type="text" class="form-control" rows="10"
+                                            v-model="modalUpdate.age" placeholder="请填写该字段"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">上传头像</span>
+                                        <input type="file" name="file" id="updateFile" class="form-control">
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="button" class="btn btn-primary" data-dismiss="modal"
+                            @click="updateSubmit()">提交</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <!-- 回到顶部 -->
@@ -64,7 +187,7 @@
         <!-- 底部导航栏 -->
         <n-nav-footer></n-nav-footer>
 
-.
+        .
     </div>
 
     <!-- REQUIRED JS SCRIPTS -->

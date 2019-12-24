@@ -70,6 +70,18 @@ new Vue({
         },
 
         htTagle: false,
+        modalUpdate: {
+            id: '',
+            userid: '',
+            username: '',
+            sex: '',
+            phone: '',
+            img_src: 'images/img.jpg',
+            last_logintime: '',
+            rol: {
+                
+            }
+        }
     },
     methods: {
         

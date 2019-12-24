@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>省人防办项目管理系统-预验收</title>
+    <title>省人防办项目管理系统-订单管理</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
@@ -52,7 +52,6 @@
 
             <!-- 右侧内容界面-记录列表 -->
             <section class="content" v-if="contentTagle">
-
                 <div class="row">
                     <div class="col-xs-12">
                         <div class="box">
@@ -74,13 +73,13 @@
                                                                 class="fa fa-plus"></i></button></a>
 
                                                     <!--<a href="javaScript:void(0);" @click="excelExport()"-->
-                                                        <!--title="导出Excel表格"><button class="btn btn-default btn-sm"><i-->
-                                                                <!--class="fa fa-arrow-circle-down"></i></button></a>-->
+                                                    <!--title="导出Excel表格"><button class="btn btn-default btn-sm"><i-->
+                                                    <!--class="fa fa-arrow-circle-down"></i></button></a>-->
 
                                                     <!--<a href="javaScript:void(0);" title="选择过滤条件" data-toggle="modal"-->
-                                                        <!--data-target="#modelChange"><button-->
-                                                            <!--class="btn btn-default btn-sm ml-1"><i-->
-                                                                <!--class="fa fa-reorder"></i></button></a>-->
+                                                    <!--data-target="#modelChange"><button-->
+                                                    <!--class="btn btn-default btn-sm ml-1"><i-->
+                                                    <!--class="fa fa-reorder"></i></button></a>-->
                                                     <a href="javaScript:void(0);" @click="refresh()" title="刷新"><button
                                                             class="btn btn-default btn-sm"><i
                                                                 class="fa fa-refresh"></i></button></a>
@@ -223,7 +222,7 @@
                                                 <div class="row">
                                                     <div class="col-md-12 col-xs-2 p-0 text-oneline">
                                                         <a href="javascript:;" :title="item.userName"
-                                                           @click="contentChange(item)"><span>{{item.ordernum}}</span></a>
+                                                            @click="contentChange(item)"><span>{{item.ordernum}}</span></a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -258,7 +257,7 @@
                                                         data-target="#modelUpdate" @click="update(item)">
                                                         <i class="fa fa-edit" style="margin-right: 15px;"></i> </a> -->
                                                     <a href="javascript:;" title="发货" data-toggle="modal"
-                                                       data-target="#modelUpdate" @click="update(item)">
+                                                        data-target="#modelUpdate" @click="update(item)">
                                                         <i class="fa fa-edit" style="margin-right: 35px;"></i> </a>
                                                 </div>
                                             </div>
@@ -271,7 +270,7 @@
                                                     显示第<code>{{page_first}}</code>到第<code>{{limitData.list.length}}</code>条记录，
                                                     总共<code>{{limitData.list.length}}</code>条记录 每页显示
                                                     <input type="text" v-model="limitData.line" style="width: 30px;"
-                                                           @blur="beanPosition_change()"> 条记录
+                                                        @blur="beanPosition_change()"> 条记录
                                                 </span>
                                             </div>
                                         </div>
@@ -322,9 +321,8 @@
                                                     <div class="col-md-10">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">收件人地址</span>
-                                                            <input type="text"
-                                                                   v-model="modalUpdate.receiveaddr"
-                                                                   class="form-control" />
+                                                            <input type="text" v-model="modalUpdate.receiveaddr"
+                                                                class="form-control" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -336,9 +334,8 @@
                                                     <div class="col-md-10">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">收件人电话</span>
-                                                            <input type="text"
-                                                                   v-model="modalUpdate.receivetel"
-                                                                   class="form-control" />
+                                                            <input type="text" v-model="modalUpdate.receivetel"
+                                                                class="form-control" />
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -352,8 +349,7 @@
                                                     <div class="col-md-10">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">订单状态</span>
-                                                            <select class="form-control"
-                                                                v-model="modalUpdate.state">
+                                                            <select class="form-control" v-model="modalUpdate.state">
                                                                 <option selected="selected" value="0">预约</option>
                                                                 <option value="1">揽件</option>
                                                                 <option value="2">运输中</option>
@@ -366,7 +362,7 @@
                                                 </div>
                                             </div>
 
-                                            
+
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-secondary"
@@ -392,9 +388,11 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">网点<b class="color-danger">*</b></span>
+                                                            <span class="input-group-addon">网点<b
+                                                                    class="color-danger">*</b></span>
                                                             <input type="text" v-model="modalAdd.dotName"
-                                                                   class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.dotName)">
+                                                                class="form-control" placeholder="请填写该字段"
+                                                                @blur="inputText(modalAdd.dotName)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -405,9 +403,11 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">收件人电话<b class="color-danger">*</b></span>
+                                                            <span class="input-group-addon">收件人电话<b
+                                                                    class="color-danger">*</b></span>
                                                             <input type="text" v-model="modalAdd.receivetel"
-                                                                class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.receivetel)">
+                                                                class="form-control" placeholder="请填写该字段"
+                                                                @blur="inputText(modalAdd.receivetel)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -418,9 +418,11 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">收件人地址<b class="color-danger">*</b></span>
+                                                            <span class="input-group-addon">收件人地址<b
+                                                                    class="color-danger">*</b></span>
                                                             <input type="text" v-model="modalAdd.receiveaddr"
-                                                                   class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.receiveaddr)">
+                                                                class="form-control" placeholder="请填写该字段"
+                                                                @blur="inputText(modalAdd.receiveaddr)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -431,9 +433,11 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">发件人电话<b class="color-danger">*</b></span>
+                                                            <span class="input-group-addon">发件人电话<b
+                                                                    class="color-danger">*</b></span>
                                                             <input type="text" v-model="modalAdd.sendtel"
-                                                                   class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.sendtel)">
+                                                                class="form-control" placeholder="请填写该字段"
+                                                                @blur="inputText(modalAdd.sendtel)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -444,9 +448,11 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">发件人地址<b class="color-danger">*</b></span>
+                                                            <span class="input-group-addon">发件人地址<b
+                                                                    class="color-danger">*</b></span>
                                                             <input type="text" v-model="modalAdd.sendaddr"
-                                                                   class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.sendaddr)">
+                                                                class="form-control" placeholder="请填写该字段"
+                                                                @blur="inputText(modalAdd.sendaddr)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -458,9 +464,11 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">重量<b class="color-danger">*</b></span>
+                                                            <span class="input-group-addon">重量<b
+                                                                    class="color-danger">*</b></span>
                                                             <input type="text" v-model="modalAdd.weight"
-                                                                   class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.weight)">
+                                                                class="form-control" placeholder="请填写该字段"
+                                                                @blur="inputText(modalAdd.weight)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -473,9 +481,11 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">费用<b class="color-danger">*</b></span>
+                                                            <span class="input-group-addon">费用<b
+                                                                    class="color-danger">*</b></span>
                                                             <input type="text" v-model="modalAdd.money"
-                                                                   class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.money)">
+                                                                class="form-control" placeholder="请填写该字段"
+                                                                @blur="inputText(modalAdd.money)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -614,7 +624,9 @@
                                                                 @change="fileUpload('updateFile')" class="form-control">
                                                         </div>
                                                         <div>
-                                                            <p>须知：上传文件大小不超过20MB; 下载模板：<a :href="'api/v2/db/dowlond?fileurl=File/model/项目预验收模板.doc'" target="_blank" title="点击下载文件">项目预验收模板.doc</a></p>
+                                                            <p>须知：上传文件大小不超过20MB; 下载模板：<a
+                                                                    :href="'api/v2/db/dowlond?fileurl=File/model/项目预验收模板.doc'"
+                                                                    target="_blank" title="点击下载文件">项目预验收模板.doc</a></p>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -635,16 +647,60 @@
                         </div>
                     </div>
                 </div>
-
-
             </section>
 
             <!-- 右侧内容界面-记录列表 -->
             <section class="content" v-if="!contentTagle">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-flat bg-purple" @click="contentReturn()"> 返回列表 </button>
+                            </div>
+                        </div>
+                        <ul class="timeline">
 
-                <n-content-project v-on:return="contentReturn" :list="listHT" :project="projectContent"
-                    :htlist="contentHtModel" :modelht="moldeHt" v-on:projectht="projectHt" v-on:removeht="removeHt"
-                    v-on:refresh="refreshContent" v-on:projecthtsumbit="projectHtSumbit" :listdata="listData"></n-content-project>
+                            <!-- <li v-for="item in timeLine.list"> -->
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <img src="images/img.jpg"
+                                                    style="width: 40px; height: 40px; margin-left: 14px; margin-top: 20px; border-radius: 50%;" />
+                                            </div>
+                                            <div class="col-md-11 pl-0">
+                                                <div class="box box-solid" style="margin-top: 20px; ">
+                                                    <div class="box-header with-border">
+                                                        <i class="fa fa-text-width"></i>
+                                                        <h3 class="box-title">{{}}</h3>
+                                                        <span style="float: right;"><i class="fa fa-clock-o"></i>
+                                                            {{}}</span>
+                                                    </div>
+                                                    <div class="box-body">
+                                                        <blockquote>
+                                                            <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{}}
+                                                            </p>
+                                                            <small>路达公司</small>
+                                                        </blockquote>
+
+                                                        <!-- <a class="btn btn-success btn-xs" :href="i.url">查看详情</a> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </li>
+
+                            <li>
+                                <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
 
             </section>
         </div>

@@ -15,7 +15,7 @@ new Vue({
             username: '',
             sex: '',
             phone: '',
-            img_src: '',
+            img_src: 'images/img.jpg',
             last_logintime: '',
             rol: {
                 id: '',
