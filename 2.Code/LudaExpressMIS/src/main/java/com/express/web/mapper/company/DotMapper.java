@@ -59,4 +59,12 @@ public interface DotMapper {
 	 */
 	@Delete("DELETE from dots where dotId = #{dotId}")
 	boolean deleteDot(Long dotId);
+
+	/**
+	 * 根据网点名称查询出网点信息
+	 * @param dotId
+	 * @return
+	 */
+	@Select("select * from dots where dotId = #{dotId}")
+	Dot getDotById(@Param("dotId") Long dotId);
 }

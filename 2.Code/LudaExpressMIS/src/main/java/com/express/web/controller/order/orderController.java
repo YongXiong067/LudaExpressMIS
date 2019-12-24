@@ -12,6 +12,8 @@ import com.express.web.service.order.orderServie;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -45,14 +47,15 @@ public class orderController {
      * @return  只有管理员才能修改
      */
     @ApiOperation(value = "updateOrders", notes = "修改订单")
-    @GetMapping("/updateOrders")
-    public Boolean updateOrders(orders orders){
+    @PostMapping("/updateOrders")
+    public Boolean updateOrders(@RequestBody  orders orders){
         Boolean result = false;
         HttpSession session = request.getSession(true);
         int ruleId = (int)session.getAttribute("rolu");
+        String name = (String)session.getAttribute("userName");
         //用户角色 0系统管理员，1普通用户，2快递员
         if(ruleId==0){
-            if(orderServie.updaterOrder(orders)>0){
+            if(orderServie.updaterOrder(orders,name)>0){
                 result = true;
                 return result;
             } else {

@@ -90,12 +90,15 @@ new Vue({
         },
         beanSearch: '',         //搜索
         modalUpdate: {          //修改模态框
-            p_id: '',
-            p_name: '',
-            acceBefore_opinion: '',
-            acceBefore_time: '',
-            is_acceBefore: '0',
-            p_tagle: '订单管理',
+            dotName:"",
+            dotid:"",
+            sendtel:"",
+            sendaddr:"",
+            receivetel:"",
+            receiveaddr:"",//收件人地址
+            weight:"",
+            money:"",
+            state:""
 
         },
         modalAdd_project: {
@@ -516,7 +519,7 @@ new Vue({
          * 修改数据提交
          */
         updateSubmit: function () {
-            axios.post(this.apiurl + 'api/v2/project/acceptanceBefore/update', this.modalUpdate)
+            axios.post(this.apiurl + 'api/order/updateOrders', this.modalUpdate)
                 .then(
                     (res) => {
                         toastr.success('修改成功！');

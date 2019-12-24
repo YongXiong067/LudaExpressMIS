@@ -234,7 +234,7 @@
                                                 <span>￥{{item.money}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.dotid}}</span>
+                                                <span>{{item.dotName}}</span>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0 text-oneline">
                                                 <span>{{item.receiveaddr}}</span>
@@ -247,7 +247,7 @@
                                                 <span v-if="item.state == '1'">揽件</span>
                                                 <span v-if="item.state == '2'">运输中</span>
                                                 <span v-if="item.state == '3'">派送中</span>
-                                                <span v-if="item.state == '1'">已签收</span>
+                                                <span v-if="item.state == '4'">已签收</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
                                                 <span>{{item.currentuser}}</span>
@@ -257,7 +257,8 @@
                                                     <!-- <a href="javascript:;" title="发货" data-toggle="modal"
                                                         data-target="#modelUpdate" @click="update(item)">
                                                         <i class="fa fa-edit" style="margin-right: 15px;"></i> </a> -->
-                                                    <a href="javascript:;" title="发货" @click="updateOrder(item.orderid)">
+                                                    <a href="javascript:;" title="发货" data-toggle="modal"
+                                                       data-target="#modelUpdate" @click="update(item)">
                                                         <i class="fa fa-edit" style="margin-right: 35px;"></i> </a>
                                                 </div>
                                             </div>
@@ -293,10 +294,9 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">项目名称</span>
+                                                            <span class="input-group-addon">费用</span>
                                                             <input type="text" class="form-control"
-                                                                v-model="modalUpdate.p_name" placeholder="请填写该字段"
-                                                                disabled>
+                                                                v-model="modalUpdate.money" placeholder="请填写该字段">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -307,8 +307,8 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">验收初步意见</span>
-                                                            <input type="text" v-model="modalUpdate.contractor"
+                                                            <span class="input-group-addon">关联网点</span>
+                                                            <input type="text" v-model="modalUpdate.dotName"
                                                                 class="form-control" placeholder="请填写该字段" required>
 
                                                         </div>
@@ -316,40 +316,56 @@
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">收件人地址</span>
+                                                            <input type="text"
+                                                                   v-model="modalUpdate.receiveaddr"
+                                                                   class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                            <span class="input-group-addon">收件人电话</span>
+                                                            <input type="text"
+                                                                   v-model="modalUpdate.receivetel"
+                                                                   class="form-control" />
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
+
 
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">是否同意验收</span>
+                                                            <span class="input-group-addon">订单状态</span>
                                                             <select class="form-control"
-                                                                v-model="modalUpdate.is_acceBefore">
-                                                                <option selected="selected" value="0">不同意</option>
-                                                                <option value="1">同意</option>
+                                                                v-model="modalUpdate.state">
+                                                                <option selected="selected" value="0">预约</option>
+                                                                <option value="1">揽件</option>
+                                                                <option value="2">运输中</option>
+                                                                <option value="3">派送中</option>
+                                                                <option value="4">已签收</option>
                                                             </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">预验收时间</span>
-                                                            <input type="date"
-                                                                v-model="modalUpdate.acceBefore_time"
-                                                                class="form-control" />
-                                                            <span class="input-group-addon">
-                                                                <i class="fa fa-calendar"></i>
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
+
                                             
                                         </div>
                                         <div class="modal-footer">
@@ -377,8 +393,8 @@
                                                     <div class="col-md-10">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">网点<b class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.dotid"
-                                                                   class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.dotid)">
+                                                            <input type="text" v-model="modalAdd.dotName"
+                                                                   class="form-control" placeholder="请填写该字段" @blur="inputText(modalAdd.dotName)">
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>

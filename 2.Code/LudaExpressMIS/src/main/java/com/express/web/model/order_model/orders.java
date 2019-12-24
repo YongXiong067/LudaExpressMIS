@@ -37,6 +37,9 @@ public class orders {
     //处理步骤记录
     private String content;
 
+    //冗余字段 网点名称
+    private String dotName;
+
     public Long getOrderid() {
         return orderid;
     }
@@ -54,15 +57,27 @@ public class orders {
     }
 
     @Override
-	public String toString() {
-		return "orders [orderid=" + orderid + ", dotid=" + dotid + ", userid=" + userid + ", sendtel=" + sendtel
-				+ ", sendaddr=" + sendaddr + ", orderdate=" + orderdate + ", receivetel=" + receivetel
-				+ ", receiveaddr=" + receiveaddr + ", ordernum=" + ordernum + ", weight=" + weight + ", money=" + money
-				+ ", state=" + state + ", currentuser=" + currentuser + ", content=" + content + "]";
-	}
+    public String toString() {
+        return "orders{" +
+                "orderid=" + orderid +
+                ", userid=" + userid +
+                ", dotid=" + dotid +
+                ", sendtel='" + sendtel + '\'' +
+                ", sendaddr='" + sendaddr + '\'' +
+                ", orderdate='" + orderdate + '\'' +
+                ", receivetel='" + receivetel + '\'' +
+                ", receiveaddr='" + receiveaddr + '\'' +
+                ", ordernum='" + ordernum + '\'' +
+                ", weight='" + weight + '\'' +
+                ", money=" + money +
+                ", state='" + state + '\'' +
+                ", currentuser='" + currentuser + '\'' +
+                ", content='" + content + '\'' +
+                ", dotName='" + dotName + '\'' +
+                '}';
+    }
 
-
-	public Long getDotid() {
+    public Long getDotid() {
         return dotid;
     }
 
@@ -157,5 +172,13 @@ public class orders {
 
     public void setUserid(Long userid) {
         this.userid = userid;
+    }
+
+    public void setDotName(String dotName) {
+        this.dotName = dotName;
+    }
+
+    public String getDotName() {
+        return dotName;
     }
 }

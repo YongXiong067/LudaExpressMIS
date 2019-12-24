@@ -50,6 +50,6 @@ public interface orderServie {
      * 修改订单
      * @param orders
      */
-    int updaterOrder(orders orders);
+    int updaterOrder(orders orders,String name);
 
 }
