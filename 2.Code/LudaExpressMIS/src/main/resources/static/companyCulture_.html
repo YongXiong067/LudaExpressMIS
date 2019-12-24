@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>路达快递管理系统-企业文化</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="plugins/dist/css/AdminLTE.min.css">
+
+    <link rel="stylesheet" href="plugins/dist/css/skins/skin-blue.min.css">
+
+
+
+    <!-- 公共css样式 -->
+    <link rel="stylesheet" href="css/commer.css">
+
+    <!-- 弹出框插件 toastr.css -->
+    <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper" id="app" v-cloak>
+
+        <!-- 顶部导航栏 -->
+        <n-nav-top :user="user" :news="systemNews" v-on:cancellation="cancellation"></n-nav-top>
+
+        <!-- 修改密码模态框 -->
+        <n-nav-pwdmodel :user="user" :model="pwdModel" v-on:updatepwd="updatePwd"></n-nav-pwdmodel>
+
+        <!-- 左侧导航栏 -->
+        <n-nav-left :user="user" :page="pagePosition" :rol="userRol"></n-nav-left>
+
+        <!-- 右侧内容栏 -->
+        <div class="content-wrapper">
+            <!-- 内容栏标题导航 -->
+            <n-page-nav :page="pagePosition"></n-page-nav>
+
+            <!-- 右侧内容界面-记录列表 -->
+            <section class="content" v-if="contentTagle">
+
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <button class="btn btn-danger">路达之路</button>
+                            </div>
+                        </div>
+                        <ul class="timeline">
+
+                            <li v-for="item in timeLine.list">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-1">
+                                                <img src="images/img.jpg"
+                                                    style="width: 40px; height: 40px; margin-left: 14px; margin-top: 20px; border-radius: 50%;" />
+                                            </div>
+                                            <div class="col-md-11 pl-0">
+                                                <div class="box box-solid" style="margin-top: 20px; ">
+                                                    <div class="box-header with-border">
+                                                        <i class="fa fa-text-width"></i>
+                                                        <h3 class="box-title">{{item.title}}</h3>
+                                                        <span style="float: right;"><i class="fa fa-clock-o"></i>
+                                                            {{item.recordTimeStr}}</span>
+                                                    </div>
+                                                    <div class="box-body">
+                                                        <blockquote>
+                                                            <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{item.content}}
+                                                            </p>
+                                                            <small>路达公司</small>
+                                                        </blockquote>
+
+                                                        <!-- <a class="btn btn-success btn-xs" :href="i.url">查看详情</a> -->
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+
+                            </li>
+
+                            <li>
+                                <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 右侧内容界面-记录列表 -->
+            <section class="content" v-if="!contentTagle">
+
+                <n-content-project v-on:return="contentReturn" :list="listHT" :project="projectContent"
+                    :modelht="moldeHt" v-on:projectht="projectHt" v-on:removeht="removeHt" :listdata="listData">
+                </n-content-project>
+
+            </section>
+        </div>
+
+        <!-- 回到顶部 -->
+        <n-nav-gotop></n-nav-gotop>
+
+        <!-- 底部导航栏 -->
+        <n-nav-footer></n-nav-footer>
+
+    </div>
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 弹出框插件 toastr.min.js -->
+    <script src="plugins/toastr/toastr.min.js"></script>
+
+    <!-- 界面动态显示隐藏 -->
+    <script src="plugins/dist/js/app.min.js"></script>
+    <!-- Vue.js / ajax -->
+    <script src="plugins/vue/vue.min.js"></script>
+
+    <script src="plugins/axios/axios.min.js"></script>
+
+    <!-- 加载Vue公共模块 -->
+    <script src="js/vue/commer/vue_commer.js"></script>
+    <!-- 项目入库模块 -->
+    <script src="js/vue/home/companyCulture_.js"></script>
+
+    <script src="js/commer.js"></script>
+</body>
+
+</html>

@@ -1,5 +1,6 @@
 package com.express.web.service.company.impl;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +22,16 @@ public class NoticeCultureServiceImpl implements NoticeCultureService {
 	
 	@Override
 	public List<NoticeCulture> listByAll(String search,String type) {
-		return cultureMapper.listByAll(search,type);
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy年MM月dd日 HH时mm分ss秒");
+		List<NoticeCulture> list = cultureMapper.listByAll(search,type);
+		if(list != null) {
+			for (NoticeCulture noticeCulture : list) {
+				if(noticeCulture.getRecordTime() != null) {
+					noticeCulture.setRecordTimeStr(sdf.format(noticeCulture.getRecordTime()));
+				}
+			}
+		}
+		return list;
 	}
 
 	@Override

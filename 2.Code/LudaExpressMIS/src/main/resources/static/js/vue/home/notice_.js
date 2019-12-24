@@ -5,7 +5,7 @@ new Vue({
     data: {
 
         apiurl: '',
-        ProjectTagle: '企业文化管理',
+        ProjectTagle: '公告信息',
         /**
          * 账号资料
          */
@@ -46,8 +46,8 @@ new Vue({
          */
         pagePosition: {
             parent_id: 2,
-            id: 21,
-            title: '企业文化管理',
+            id: 22,
+            title: '公告信息',
             text: '',
             position: [
                 {
@@ -56,9 +56,9 @@ new Vue({
                     url: 'javaScript:void(0);'
                 },
                 {
-                    name: '企业文化管理',
+                    name: '公告信息',
                     img: '',
-                    url: 'CompanyCulture.html'
+                    url: 'notice_.html'
                 }
             ]
         },
@@ -87,17 +87,17 @@ new Vue({
         },
         beanSearch: '',         //搜索
         modalUpdate: {          //修改模态框
-            ncId:'',
-            title:'',
-            content:'',
-            type:1
+            ncId: '',
+            title: '',
+            content: '',
+            type: 1
 
         },
         modalAdd: {          //添加模态框
-        	 ncId:'',
-             title:'',
-             content:'',
-             type:1
+            ncId: '',
+            title: '',
+            content: '',
+            type: 1
         },
         modalFile: {          //文件上传模态框
             c_id: '',
@@ -106,31 +106,29 @@ new Vue({
             fileUrl: '',
         },
 
-        /**
-         * 关联合同模态框
-         */
         moldeHt: {
             p_id: '0',
             c_id: '0',
         },
 
-        /**
-         * 模态框下拉项目列表
-         */
         list1: [],
 
 
-        /**
-         * 项目详情页面数据
-         */
+      
         projectContent: {
 
         },
 
         /**
-         * 测试数据-合同列表
+         * 测试数据-
          */
         listPro: [],
+        timeLine: {
+            year: '2019',
+            month: '7',
+            list: []
+        },
+
     },
     methods: {
         /**  输入验证-start **/
@@ -157,37 +155,37 @@ new Vue({
          * 修改密码
          */
         updatePwd: function () {
-			 if (this.pwdModel.newpwd != this.pwdModel.newpwd_) {
-				 toastr.error('两次密码不相同！');
-			 } else if (this.pwdModel.newpwd == '' || this.pwdModel.newpwd_ == '' || this.pwdModel.oldpwd == '') {
-				 toastr.error('密码不能为空！');
-			 } else {
-				 console.log(this.pwdModel.newpwd);
-				 axios.get(this.apiurl + 'api/user/updatePwd',
-						 {
-					 params: {
-						 userId: this.user.userId,
-						 userName: this.user.userName,
-						 oldPwd: this.pwdModel.oldpwd,
-						 newpwd: this.pwdModel.newpwd
-					 }
-						 })
-						 .then(
-								 (res) => {
-									 if (res.data == 1) {
-										 toastr.success('修改成功！');
-									 } else if (res.data == -1) {
-										 toastr.error('密码验证失败！');
-									 } else {
-										 toastr.error('修改密码失败！');
-									 }
-								 }
-						 )
-						 .catch(
-								 (error) => { console.log(error); }
-						 );
-			 }
-		 },
+            if (this.pwdModel.newpwd != this.pwdModel.newpwd_) {
+                toastr.error('两次密码不相同！');
+            } else if (this.pwdModel.newpwd == '' || this.pwdModel.newpwd_ == '' || this.pwdModel.oldpwd == '') {
+                toastr.error('密码不能为空！');
+            } else {
+                console.log(this.pwdModel.newpwd);
+                axios.get(this.apiurl + 'api/user/updatePwd',
+                    {
+                        params: {
+                            userId: this.user.userId,
+                            userName: this.user.userName,
+                            oldPwd: this.pwdModel.oldpwd,
+                            newpwd: this.pwdModel.newpwd
+                        }
+                    })
+                    .then(
+                        (res) => {
+                            if (res.data == 1) {
+                                toastr.success('修改成功！');
+                            } else if (res.data == -1) {
+                                toastr.error('密码验证失败！');
+                            } else {
+                                toastr.error('修改密码失败！');
+                            }
+                        }
+                    )
+                    .catch(
+                        (error) => { console.log(error); }
+                    );
+            }
+        },
         /**
          * 刷新数据
          */
@@ -285,24 +283,7 @@ new Vue({
         /**
          * 刷新内容详情列表数据
          */
-        refreshContent: function () {
-            axios.get(this.apiurl + 'api/v2/project/getListByCId',
-                {
-                    params: {
-                        c_id: this.moldeHt.c_id,
-                    }
-                })
-                .then(
-                    (res) => {
-                        this.listPro = res.data;
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-        },
+        refreshContent: function () {},
 
         /**
          * 返回列表界面
@@ -324,98 +305,27 @@ new Vue({
         /**
          * 修改数据提交
          */
-        updateSubmit: function () {
-            axios.post(this.apiurl + 'api/company/updateCulture', this.modalUpdate)
-                .then(
-                    (res) => {
-                        if (res.data) {
-                            toastr.success('修改成功！');
-                            this.listlimit();
-                        } else {
-                            toastr.error('修改失败！');
-                        }
-
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                        toastr.error('修改失败！');
-                    }
-                );
-        },
+        updateSubmit: function () {},
         /**
          * 添加数据提交
          */
-        addSubmit: function () {
-            if (this.modalAdd.title == '' || this.modalAdd.content == '') {
-                toastr.warning('请填写完整的信息！');
-                return false;
-            }
-            axios.post(this.apiurl + 'api/company/insertCulture', this.modalAdd)
-                .then(
-                    (res) => {
-                        toastr.success('添加成功！');
-                        this.numsByPosition();
-                        this.listlimit();
-                        this.modalAdd = {          //重置数据
-                        		 ncId:'',
-                                 title:'',
-                                 content:'',
-                                 type:1
-                        }
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                        toastr.danger('添加失败！');
-                    }
-                );
-        },
+        addSubmit: function () {},
         /**
          * 删除数据
          * @param {} id 
          */
-        deleteCulture: function (id) {
-        	if (confirm("是否确定删除？")) {
-            axios.get(this.apiurl + 'api/company/deleteCulture',
-                {
-                    params: {
-                    	id: id,
-                    }
-                })
-                .then(
-                    (res) => {
-                        if(res.data){
-                            toastr.success('删除成功！');
-                            this.numsByPosition();
-                            this.listlimit();
-                        }else{
-                            toastr.error('删除失败！');
-                        }
-                        
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                        
-                    }
-                );
-        	}
-        },
+        deleteCulture: function (id) {},
         listlimit: function () {
             axios.get(this.apiurl + 'api/company/getCulture',
                 {
                     params: {
                         search: this.beanSearch,
-                        type : 1
+                        type: 2
                     }
                 })
                 .then(
                     (res) => {
-                        this.limitData.list = res.data;
+                        this.timeLine.list = res.data;
                     }
                 )
                 .catch(
@@ -423,7 +333,7 @@ new Vue({
                 );
         },
         numsByPosition: function () {
-        	
+
         }
 
     },
@@ -432,37 +342,37 @@ new Vue({
         //- api请求 -
         //-------------
         //HTTP GET 请求-获得当前登录用户信息
-    	axios.get(this.apiurl + 'api/user/getUser')
-		.then(
-				(res) => {
-					if (res.data.userId == 0) {
-						window.location.href = "login.html";
-					} else {
-						this.user.id = res.data.userId;
-						this.user.userid = res.data.userName;
-						this.user.username = res.data.userName;
-					}
-				}
-		)
-		.catch(
-				(error) => { console.log(error); }
-		);
-    	
-    	axios.get(this.apiurl + 'api/company/getCulture',
-                {
-                    params: {
-                        search: this.beanSearch,
-                        type : 1
+        axios.get(this.apiurl + 'api/user/getUser')
+            .then(
+                (res) => {
+                    if (res.data.userId == 0) {
+                        window.location.href = "login.html";
+                    } else {
+                        this.user.id = res.data.userId;
+                        this.user.userid = res.data.userName;
+                        this.user.username = res.data.userName;
                     }
-                })
-                .then(
-                    (res) => {
-                        this.limitData.list = res.data;
-                    }
-                )
-                .catch(
-                    (error) => { console.log(error); }
-                );
+                }
+            )
+            .catch(
+                (error) => { console.log(error); }
+            );
+
+        axios.get(this.apiurl + 'api/company/getCulture',
+            {
+                params: {
+                    search: this.beanSearch,
+                    type: 2
+                }
+            })
+            .then(
+                (res) => {
+                    this.timeLine.list = res.data;
+                }
+            )
+            .catch(
+                (error) => { console.log(error); }
+            );
     },
     computed: {
         pages: function () {
