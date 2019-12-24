@@ -1,9 +1,9 @@
 package com.express.web.service.message.impl;
 
-import com.express.web.mapper.SysUserMapper;
 import com.express.web.mapper.message.leavingMessageMapper;
-import com.express.web.model.SysUser;
+import com.express.web.mapper.sys.SysUserMapper;
 import com.express.web.model.message.leavingMessage;
+import com.express.web.model.sys.SysUser;
 import com.express.web.service.message.leavingMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

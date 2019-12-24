@@ -1,13 +1,13 @@
-package com.express.web.service.impl;
+package com.express.web.service.sys.impl;
 
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.express.web.mapper.SysUserMapper;
-import com.express.web.model.SysUser;
-import com.express.web.service.SysUserService;
+import com.express.web.mapper.sys.SysUserMapper;
+import com.express.web.model.sys.SysUser;
+import com.express.web.service.sys.SysUserService;
 /**
  * 系统用户业务层实现类
  * @author Administrator
@@ -61,6 +61,16 @@ public class SysUserServiceImpl implements SysUserService {
 	@Override
 	public boolean deleteById(long userId) {
 		return sysUserMapper.deleteById(userId);
+	}
+
+	@Override
+	public void userUpdateInfo(SysUser user) {
+		sysUserMapper.userUpdateInfo(user);
+	}
+
+	@Override
+	public void userUpdateImg(Long userId, String imgurl) {
+		sysUserMapper.userUpdateImg(userId, imgurl);
 	}
 
 }

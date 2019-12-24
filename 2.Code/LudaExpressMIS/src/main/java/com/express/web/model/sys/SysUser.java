@@ -1,4 +1,4 @@
-package com.express.web.model;
+package com.express.web.model.sys;
 /**
  * 系统用户实体类
  * @author Administrator
@@ -29,7 +29,37 @@ public class SysUser {
 	 * 	角色名称
 	 */
 	private String roluName;
+	/**
+	 * 用户头像
+	 */
+	private String imgurl;
+	/**
+	 * 用户地址
+	 */
+	private String address;
+	/**
+	 * 用户性别
+	 */
+	private String sex;
 	
+	public String getImgurl() {
+		return imgurl;
+	}
+	public void setImgurl(String imgurl) {
+		this.imgurl = imgurl;
+	}
+	public String getAddress() {
+		return address;
+	}
+	public void setAddress(String address) {
+		this.address = address;
+	}
+	public String getSex() {
+		return sex;
+	}
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
 	public String getRoluName() {
 		return roluName;
 	}
@@ -69,7 +99,8 @@ public class SysUser {
 	@Override
 	public String toString() {
 		return "SysUser [userId=" + userId + ", userName=" + userName + ", password=" + password + ", phone=" + phone
-				+ ", rolu=" + rolu + "]";
+				+ ", rolu=" + rolu + ", roluName=" + roluName + ", imgurl=" + imgurl + ", address=" + address + ", sex="
+				+ sex + "]";
 	}
 	
 }

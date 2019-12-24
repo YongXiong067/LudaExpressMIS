@@ -1,4 +1,4 @@
-package com.express.web.controller;
+package com.express.web.controller.sys;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;

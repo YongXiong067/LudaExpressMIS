@@ -1,4 +1,4 @@
-package com.express.web.mapper;
+package com.express.web.mapper.sys;
 
 import java.util.List;
 
@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
-import com.express.web.model.SysUser;
+import com.express.web.model.sys.SysUser;
 
 
 
@@ -94,4 +94,22 @@ public interface SysUserMapper {
 	@Update("update sys_user set userName = #{userName}, password = #{password}, phone = #{phone}, rolu = #{rolu}"
 			+ " where userId = #{userId}")
 	boolean update(SysUser user);
+	
+	/**
+	 * 用户修改个人信息
+	 * @param pro
+	 * @return
+	 */
+	@Update("update sys_user set userName = #{userName}, password = #{password}, phone = #{phone}, rolu = #{rolu}, "
+			+ "address = #{address}, sex = #{sex}"
+			+ " where userId = #{userId}")
+	void userUpdateInfo(SysUser user);
+	/**
+	 * 用户修改个人头像
+	 * @param pro
+	 * @return
+	 */
+	@Update("update sys_user set imgurl = #{imgurl}"
+			+ " where userId = #{userId}")
+	void userUpdateImg(Long userId,String imgurl);
 }

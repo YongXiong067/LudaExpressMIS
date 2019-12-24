@@ -50,8 +50,10 @@ public class DeliverController {
 		Long currentuser = null;
 		//获取存储在session中的用户角色id
 		HttpSession session = request.getSession(true);
-		if(type.equals("op")) {
-			currentuser = (Long)session.getAttribute("userId");
+		if((Integer)session.getAttribute("rolu") != 0) {
+			if(type.equals("op")) {
+				currentuser = (Long)session.getAttribute("userId");
+			}
 		}
 		return deliverService.getDeliverList(ordernum,state,currentuser);
 	}

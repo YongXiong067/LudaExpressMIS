@@ -1,8 +1,8 @@
-package com.express.web.service;
+package com.express.web.service.sys;
 
 import java.util.List;
 
-import com.express.web.model.SysUser;
+import com.express.web.model.sys.SysUser;
 /**
  * 系统用户业务层接口
  * @author Administrator
@@ -53,4 +53,17 @@ public interface SysUserService {
 	 * @return
 	 */
 	boolean deleteById(long userId);
+	/**
+	 * 修改个人信息
+	 * @param user
+	 * @return
+	 */
+	void userUpdateInfo(SysUser user);
+	
+	/**
+	 * 修改个人头像
+	 * @param user
+	 * @return
+	 */
+	void userUpdateImg(Long userId,String imgurl);
 }

@@ -144,7 +144,8 @@ new Vue({
 				{
 				params: {
 					ordernum: this.beanSearch,
-					state :1
+					state :1,
+					type:"op"
 				}
 			})
 			.then(
@@ -384,10 +385,11 @@ new Vue({
 		 listlimit: function () {
 			 axios.get(this.apiurl + 'api/deliver/getDeliver',
 						{
-						params: {
-							ordernum: this.beanSearch,
-							state :1
-						}
+						 params: {
+								ordernum: this.beanSearch,
+								state :1,
+								type:"op"
+							}
 					})
 					.then(
 							(res) => {
@@ -430,7 +432,8 @@ new Vue({
 				{
 				params: {
 					ordernum: this.beanSearch,
-					state :1
+					state :1,
+					type:"op"
 				}
 			})
 			.then(

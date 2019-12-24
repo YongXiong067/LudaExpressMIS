@@ -1,5 +1,8 @@
-package com.express.web.controller;
+package com.express.web.controller.sys;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -13,9 +16,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
-import com.express.web.model.SysUser;
-import com.express.web.service.SysUserService;
+import com.express.web.model.sys.SysUser;
+import com.express.web.service.sys.SysUserService;
 
 import io.swagger.annotations.Api;
 
@@ -202,4 +206,72 @@ public class SysUserController {
 		SysUser user = service.getLogin((long) session.getAttribute("userId"));
 		return user;
 	}
+	
+	/**
+	 * 用户修改自己的信息
+	 * @return
+	 */
+	@PostMapping("/uploadImg")
+	@ResponseBody
+	public int userUpdateInfo(@RequestParam("lefile") MultipartFile[] file) {
+		HttpSession session = request.getSession(true);
+		//Long userId = (long) session.getAttribute("userId");
+		Long userId = 1L;
+		//图片上传
+        if(!file[0].isEmpty()){
+            try {
+            	for (MultipartFile m:file) {
+                	//上传图片并返回路径
+                   String pathName =  uploadDesignChangeImg(m);
+                   String path = pathName.substring(pathName.indexOf("upload/"),pathName.length());
+                   service.userUpdateImg(userId, path);
+                   return 1;
+                }
+            }catch(Exception e) {
+            	return 0;
+            }
+        }
+		return -1;
+	}
+	
+	//将文件写入到本地并返回路径名
+    public String uploadDesignChangeImg(MultipartFile file){
+        //文件名
+        String fileName = file.getOriginalFilename();
+        System.out.println(file.getName());
+        //生成时间戳
+        long currentDate = System.currentTimeMillis();
+
+        int index = fileName.lastIndexOf(".");
+        //文件后缀
+        String suffix  = fileName.substring(index + 1);
+        //文件路径
+        String contentPath = getClass().getResource("/").getPath();
+		String path = contentPath.substring(1,contentPath.length()) +"static/upload/";
+        String filePath = path + currentDate+"."+suffix ;
+
+        FileOutputStream out = null;
+        try {
+            byte[] bytes = file.getBytes();
+            File newFile = new File(filePath);
+            if (!newFile.exists()) {
+                newFile.getParentFile().mkdirs();
+                //创建文件
+                newFile.createNewFile();
+            }
+            out = new FileOutputStream(newFile);
+            out.write(bytes);
+            out.flush();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                out.close();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return filePath;
+    }
 }

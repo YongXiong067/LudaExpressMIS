@@ -71,10 +71,18 @@
                                     </div>
                                 </div>
                                 <div class="col-xs-4">
-                                <!-- --><button type="button" id="test" class="btn btn-primary btn-block btn-flat">测试</button> 
+                                <!-- <button type="button" id="test" class="btn btn-primary btn-block btn-flat">测试</button> -->
                                     <button type="button" onclick="mySumbit();"
                                         class="btn btn-primary btn-block btn-flat">登录</button>
                                 </div><!-- /.col -->
+                                <!-- <div class="form-group">
+								    <label for="inputPassword3" class="col-sm-2 control-label">身份证正面照片:</label>
+								    <div class="col-sm-10">
+								    <input type="hidden" name="img"  id="photoUrl"/>
+								    <input type="file" name="logoFile" id="logoFile" οnchange="setImg(this);">
+								    <span><img id="photourlShow" src="" width="300" height="197"/></span>
+								    </div> -->
+								</div>
                             </div>
                         </form>
                     </div>
@@ -117,19 +125,42 @@
         function isEmpty(strings) {
             return strings.replace(/(^\s*)|(\s*$)/g, "").length == 0;
         }
-		$("#test").click(function(){
-			 $.ajax({
-	                url: apiurl + "/api/money/getMoneyColumn",
-	                type: "post",
-	                //data: { search: "测试", type: 2 },
-	                success: function (data) {
-	                	console.log(data);
-	                },
-	                error: function () {
-	                    isLogin = false;
-	                    toastr.error("用户名或密码错误！");
-	                }
-	            });
+		$("#logoFile").change(function(){
+			console.log(this);
+			var obj = this;
+			var f=$(obj).val();
+			alert(f);
+			console.log(obj);
+		    if(f == null || f ==undefined || f == ''){
+		        return false;
+		    }
+		    if(!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f))
+		    {
+		        alert("类型必须是图片(.png|jpg|bmp|gif|PNG|JPG|BMP|GIF)");
+		        $(obj).val('');
+		        return false;
+		    }
+		    var data = new FormData();
+		    console.log(data);
+		    $.each($(obj)[0].files,function(i,file){
+		        data.append('lefile', file);
+		    });
+		    console.log(data);
+		    $.ajax({
+		        type: "POST",
+		        url: "api/user/uploadImg",
+		        data: data,
+		        cache: false,
+		        contentType: false,    //不可缺
+		        processData: false,    //不可缺
+		        dataType:"json",
+		        success: function(ret) {
+		        	
+		        },
+		        error: function(XMLHttpRequest, textStatus, errorThrown) {
+		            alert("上传失败，请检查网络后重试");
+		        }
+		    });
 		});
         //登录
         function mySumbit() {
