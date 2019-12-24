@@ -239,7 +239,7 @@ Vue.component('n-nav-left', {
 								name: '预约寄件',
 								icon_cls: '',
 								left: 1,
-								url: 'acceptance.html',
+								url: 'appointment.html',
 							},
 							{
 								id: 33,
@@ -468,7 +468,7 @@ Vue.component('n-nav-left', {
 												name: '预约寄件',
 												icon_cls: '',
 												left: 1,
-												url: 'acceptance.html',
+												url: 'appointment.html',
 											}
 										]
 									}
