@@ -75,11 +75,9 @@
                                 <a href="javascript:;" class="btn btn-primary btn-block" data-toggle="modal"
                                     data-target="#modelUpdate"><b>个人资料管理</b></a>
                             </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-8">
-                        <div class="box box-primary">
+                        </div>
+                        <div class="box box-primary mt-2">
                             <div class="box-header">
                                 <i class="fa fa-th"></i>
                                 <h3 class="box-title">个人资料展示</h3>
@@ -104,7 +102,79 @@
                                 </ul>
                             </div>
                         </div>
+                    </div>
 
+                    <div class="col-md-8">
+                        <!-- <div class="box box-widget widget-user">
+                            <div class="widget-user-header bg-black"
+                                style="background: url('images/photo1.png') center center;">
+                                <h3 class="widget-user-username">Elizabeth Pierce</h3>
+                                <h5 class="widget-user-desc">Web Designer</h5>
+                            </div>
+                            <div class="widget-user-image">
+                                <img class="img-circle" :src="user.img_src" alt="User Avatar">
+                            </div>
+                            <div class="box-footer">
+                                <div class="row">
+                                    <div class="col-sm-4 border-right">
+                                        <div class="description-block">
+                                            <h5 class="description-header">3,200</h5>
+                                            <span class="description-text">SALES</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 border-right">
+                                        <div class="description-block">
+                                            <h5 class="description-header">13,000</h5>
+                                            <span class="description-text">FOLLOWERS</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="description-block">
+                                            <h5 class="description-header">35</h5>
+                                            <span class="description-text">PRODUCTS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
+                        <div class="box box-widget">
+                            <div class='box-header with-border'>
+                                <div class='user-block'>
+                                    <img class='img-circle' src='images/photo1.png' alt='user image'>
+                                    <span class='username'><a href="#">公司展示</a></span>
+                                    <span class='description'>展示内容</span>
+                                </div>
+                                <div class='box-tools'>
+                                    <button class='btn btn-box-tool' data-toggle='tooltip' title='Mark as read'><i
+                                            class='fa fa-circle-o'></i></button>
+                                    <button class='btn btn-box-tool' data-widget='collapse'><i
+                                            class='fa fa-minus'></i></button>
+                                    <button class='btn btn-box-tool' data-widget='remove'><i
+                                            class='fa fa-times'></i></button>
+                                </div>
+                            </div>
+                            <div class='box-body'>
+                                <img class="img-responsive pad" src="images/photo1.png" alt="Photo">
+                                <p></p>
+                                <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button>
+                                <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Like</button>
+                                <span class='pull-right text-muted'></span>
+                            </div>
+                            <div class='box-footer box-comments'>
+                                <div class='box-comment'>
+                                    <img class='img-circle img-sm' src='images/photo1.png' alt='user image'>
+                                    <div class='comment-text'>
+                                        <span class="username">
+                                            路达公司宣
+                                            <span class='text-muted pull-right'>2019-12-25</span>
+                                        </span>
+                                        顾客至上！
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
                     </div>
 
                 </div>
@@ -139,8 +209,8 @@
                                 <div class="col-md-10">
                                     <div class="input-group">
                                         <span class="input-group-addon">性别</span>
-                                        <input type="text" class="form-control" rows="10"
-                                            v-model="modalUpdate.sex" placeholder="请填写该字段" required></textarea>
+                                        <input type="text" class="form-control" rows="10" v-model="modalUpdate.sex"
+                                            placeholder="请填写该字段" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-1"></div>
@@ -152,8 +222,8 @@
                                 <div class="col-md-10">
                                     <div class="input-group">
                                         <span class="input-group-addon">年龄</span>
-                                        <input type="text" class="form-control" rows="10"
-                                            v-model="modalUpdate.age" placeholder="请填写该字段"></textarea>
+                                        <input type="text" class="form-control" rows="10" v-model="modalUpdate.age"
+                                            placeholder="请填写该字段"></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-1"></div>
@@ -165,7 +235,8 @@
                                 <div class="col-md-10">
                                     <div class="input-group">
                                         <span class="input-group-addon">上传头像</span>
-                                        <input type="file" name="file" id="logoFile" οnchange="setImg(this);" class="form-control">
+                                        <input type="file" name="file" id="logoFile" οnchange="setImg(this);"
+                                            class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-1"></div>
