@@ -80,6 +80,7 @@ new Vue({
                     this.user.id = res.data.userId;
                     this.user.userid = res.data.userName;
                     this.user.username = res.data.userName;
+                    this.user.img_src = res.data.imgurl;
                 }
             )
             .catch(

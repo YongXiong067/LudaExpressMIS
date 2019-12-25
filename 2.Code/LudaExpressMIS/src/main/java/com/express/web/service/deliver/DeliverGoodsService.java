@@ -7,7 +7,7 @@ import java.util.List;
  * @author Administrator
  *
  */
-import com.express.web.model.order_model.orders;
+import com.express.web.model.order_model.Orders;
 public interface DeliverGoodsService {
 	/**
 	 * 	根据状态获取所有的订单列表
@@ -16,7 +16,7 @@ public interface DeliverGoodsService {
 	 * @param state
 	 * @return
 	 */
-	List<orders> getDeliverList(String search,int state,Long currId);
+	List<Orders> getDeliverList(String search,int state,Long currId);
 	
 	/**
 	 * 	修改订单状态
@@ -31,7 +31,7 @@ public interface DeliverGoodsService {
 	 * @param orderId
 	 * @return
 	 */
-	orders getById(Long orderId);
+	Orders getById(Long orderId);
 	
 	/**
 	 * 根据订单id修改订单步骤内容

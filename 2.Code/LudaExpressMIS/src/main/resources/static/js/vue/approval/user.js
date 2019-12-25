@@ -394,47 +394,8 @@ new Vue({
                     .catch(
                         (error) => { console.log(error); }
                     );
-//            axios.post(this.apiurl + 'api/v2/project/getListByLimit',
-//                {
-//                    state: '1',
-//                    p_tagle: this.ProjectTagle,
-//                    page_no: this.limitData.page,
-//                    page_line: this.limitData.line,
-//                    position: this.beanChange.beanPosition,
-//                    warehousing_time: this.beanChange.beanYear,
-//                    search: this.beanSearch
-//                })
-//                .then(
-//                    (res) => {
-//
-//                        this.limitData.list = res.data;
-//                    }
-//                )
-//                .catch(
-//                    (error) => { console.log(error); }
-//                );
         },
         numsByPosition: function () {
-//            axios.get(this.apiurl + 'api/db/nums',
-//                {
-//                    params: {
-//                        state: '1',
-//                        p_tagle: this.ProjectTagle,
-//                        position: this.beanChange.beanPosition,
-//                        a_year: this.beanChange.beanYear,
-//                        w_year: '0',
-//                        search: this.beanSearch
-//                    }
-//                })
-//                .then(
-//                    (res) => {
-//                        this.limitData.nums = res.data;
-//                    }
-//                )
-//                .catch(
-//                    (error) => { console.log(error); }
-//                );
-//        }
 		}
     },
     mounted() {
@@ -452,7 +413,6 @@ new Vue({
                         this.user.userid = res.data.userName;
                         this.user.username = res.data.userName;
                         this.user.img_src = res.data.imgurl;
-                        console.log(res.data);
                     }
                 }
             )

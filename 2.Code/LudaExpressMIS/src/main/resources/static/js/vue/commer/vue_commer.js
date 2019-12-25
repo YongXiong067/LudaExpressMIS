@@ -472,7 +472,7 @@ Vue.component('n-nav-left', {
 											}
 										]
 									}
-								]
+								]	
 							}
 						} else {
 							this.rol = {

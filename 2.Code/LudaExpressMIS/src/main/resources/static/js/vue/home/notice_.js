@@ -348,9 +348,10 @@ new Vue({
                     if (res.data.userId == 0) {
                         window.location.href = "login.html";
                     } else {
-                        this.user.id = res.data.userId;
-                        this.user.userid = res.data.userName;
-                        this.user.username = res.data.userName;
+                    	 this.user.id = res.data.userId;
+                         this.user.userid = res.data.userName;
+                         this.user.username = res.data.userName;
+                         this.user.img_src = res.data.imgurl;
                     }
                 }
             )

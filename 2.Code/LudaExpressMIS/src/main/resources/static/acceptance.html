@@ -209,32 +209,31 @@
                                             <div class="col-md-2 col-xs-1">
                                                 <div class="row">
                                                     <div class="col-md-12 col-xs-2 p-0 text-oneline">
-                                                        <a href="javascript:;" :title="item.userName"
-                                                            @click="contentChange(item)"><span>{{item.ordernum}}</span></a>
+                                                        <span>{{item.orderNum}}</span></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.orderdate}}</span>
+                                                <span>{{item.orderDate}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
                                                 <span>￥{{item.money}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.dotid}}</span>
+                                                <span>{{item.dotName}}</span>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.receiveaddr}}</span>
+                                                <span>{{item.receiveAddr}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.receivetel}}</span>
+                                                <span>{{item.receiveTel}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
                                                 <span v-if="item.state == '1'">待发货</span>
                                                 <span v-else>其他</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.currentuser}}</span>
+                                                <span>{{item.userName}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-1 px-0">
                                                 <div class="tools">

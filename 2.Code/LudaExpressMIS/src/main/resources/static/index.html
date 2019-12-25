@@ -93,13 +93,13 @@
                             <div class="box-body box-profile mb-2">
                                 <ul class="list-group list-group-unbordered">
                                     <li class="list-group-item">
-                                        <b>用户名</b> <a class="pull-right">管理员</a>
+                                        <b>用户名</b> <a class="pull-right">{{user.userName}}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>性别</b> <a class="pull-right">男</a>
+                                        <b>性别</b> <a class="pull-right">{{user.sex}}</a>
                                     </li>
                                     <li class="list-group-item">
-                                        <b>年龄</b> <a class="pull-right color-success">20</a>
+                                        <b>地址</b> <a class="pull-right color-success">{{user.address}}</a>
                                     </li>
                                 </ul>
                             </div>
@@ -165,7 +165,7 @@
                                 <div class="col-md-10">
                                     <div class="input-group">
                                         <span class="input-group-addon">上传头像</span>
-                                        <input type="file" name="file" id="updateFile" class="form-control">
+                                        <input type="file" name="file" id="logoFile" οnchange="setImg(this);" class="form-control">
                                     </div>
                                 </div>
                                 <div class="col-md-1"></div>

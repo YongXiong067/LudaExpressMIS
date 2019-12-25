@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.express.web.model.order_model.orders;
+import com.express.web.model.order_model.Orders;
 import com.express.web.service.deliver.DeliverGoodsService;
 
 import io.swagger.annotations.Api;
@@ -45,7 +45,7 @@ public class DeliverController {
 	@ApiOperation(value = "getCulture", notes = "查询出所有待发货列表")
 	@GetMapping("/getDeliver")
 	@ResponseBody
-	public List<orders> getDeliverList(@ApiParam(value = "可根据订单号进行查询，采用模糊匹配，如若查全部，请传空字符串" ,required=true )
+	public List<Orders> getDeliverList(@ApiParam(value = "可根据订单号进行查询，采用模糊匹配，如若查全部，请传空字符串" ,required=true )
 	@RequestParam String ordernum,@RequestParam Integer state,@RequestParam String type){
 		Long currentuser = null;
 		//获取存储在session中的用户角色id
@@ -70,14 +70,6 @@ public class DeliverController {
 	public boolean deliverGoods(@ApiParam(value = "订单id" ,required=true )@RequestParam Long orderId, @RequestParam Integer state) {
 		boolean bool = false;
 		try {
-			String inintVule = null;
-			switch (state){
-				case 0: inintVule = "预约";break;
-				case 1: inintVule = "揽件";break;
-				case 2: inintVule = "运输中";break;
-				case 3: inintVule = "派送中";break;
-				case 4: inintVule = "已签收";break;
-			}
 			//时间格式化
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			Date date = new Date();
@@ -85,9 +77,8 @@ public class DeliverController {
 			//获取存储在session中的用户角色id
 			HttpSession session = request.getSession(true);
 			Long userId = (Long)session.getAttribute("userId");
-			String name = (String)session.getAttribute("userName");
 			//查询出该订单的详细信息
-			orders order = deliverService.getById(orderId);
+			Orders order = deliverService.getById(orderId);
 			String content = "";
 			//判断是否有该订单
 			if(order != null) {
@@ -96,9 +87,9 @@ public class DeliverController {
 					content = order.getContent();
 					//如果值为空，则是第一次存储，需要去掉前面的；号
 					if(content == "") {
-						content +=name+","+inintVule+","+nowDate+"";
+						content +=userId+","+state+","+nowDate+"";
 					}else {
-						content +=";"+name+","+inintVule+","+nowDate+"";
+						content +=";"+userId+","+state+","+nowDate+"";
 					}
 				}
 			}

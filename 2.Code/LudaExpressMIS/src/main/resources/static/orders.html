@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>省人防办项目管理系统-订单管理</title>
+    <title>路达快递管理系统-订单管理</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
@@ -71,25 +71,13 @@
                                                         data-target="#modelAdd"><button
                                                             class="btn btn-default btn-sm"><i
                                                                 class="fa fa-plus"></i></button></a>
-
-                                                    <!--<a href="javaScript:void(0);" @click="excelExport()"-->
-                                                    <!--title="导出Excel表格"><button class="btn btn-default btn-sm"><i-->
-                                                    <!--class="fa fa-arrow-circle-down"></i></button></a>-->
-
-                                                    <!--<a href="javaScript:void(0);" title="选择过滤条件" data-toggle="modal"-->
-                                                    <!--data-target="#modelChange"><button-->
-                                                    <!--class="btn btn-default btn-sm ml-1"><i-->
-                                                    <!--class="fa fa-reorder"></i></button></a>-->
                                                     <a href="javaScript:void(0);" @click="refresh()" title="刷新"><button
                                                             class="btn btn-default btn-sm"><i
                                                                 class="fa fa-refresh"></i></button></a>
                                                 </div>
                                             </div>
-
                                         </div>
-
                                     </div>
-
                                     <!-- 搜索 -->
                                     <div class="col-md-2 col-xs-4">
                                         <div class="box-tools pull-right">
@@ -190,7 +178,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-xs-2 p-0">
+                                            <div class="col-md-1 col-xs-2 p-0">
                                                 <span class="text">下单时间</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0">
@@ -199,7 +187,13 @@
                                             <div class="col-md-1 col-xs-2 p-0">
                                                 <span class="text">关联网点</span>
                                             </div>
-                                            <div class="col-md-2 p-0 pl-5">
+                                            <div class="col-md-1 p-0 pl-5">
+                                                <span class="text">发件人地址</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0">
+                                                <span class="text">发件人电话</span>
+                                            </div>
+                                            <div class="col-md-1 p-0 pl-5">
                                                 <span class="text">收件人地址</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0">
@@ -221,13 +215,13 @@
                                             <div class="col-md-2 col-xs-1">
                                                 <div class="row">
                                                     <div class="col-md-12 col-xs-2 p-0 text-oneline">
-                                                        <a href="javascript:;" :title="item.userName"
-                                                            @click="contentChange(item)"><span>{{item.ordernum}}</span></a>
+                                                        <a href="javascript:;" :title="item.ordernum"
+                                                            @click="contentChange(item)"><span>{{item.orderNum}}</span></a>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.orderdate}}</span>
+                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.orderDate}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
                                                 <span>￥{{item.money}}</span>
@@ -235,11 +229,17 @@
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
                                                 <span>{{item.dotName}}</span>
                                             </div>
-                                            <div class="col-md-2 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.receiveaddr}}</span>
+                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.sendAddr}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.receivetel}}</span>
+                                                <span>{{item.sendTel}}</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.receiveAddr}}</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.receiveTel}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
                                                 <span v-if="item.state == '0'">预约</span>
@@ -249,16 +249,16 @@
                                                 <span v-if="item.state == '4'">已签收</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.currentuser}}</span>
+                                                <span>{{item.userName}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-1 px-0">
                                                 <div class="tools">
                                                     <!-- <a href="javascript:;" title="发货" data-toggle="modal"
                                                         data-target="#modelUpdate" @click="update(item)">
                                                         <i class="fa fa-edit" style="margin-right: 15px;"></i> </a> -->
-                                                    <a href="javascript:;" title="发货" data-toggle="modal"
+                                                    <a href="javascript:;" title="修改订单信息" data-toggle="modal"
                                                         data-target="#modelUpdate" @click="update(item)">
-                                                        <i class="fa fa-edit" style="margin-right: 35px;"></i> </a>
+                                                        <i class="fa fa-edit" style="margin-right: 65px;"></i> </a>
                                                 </div>
                                             </div>
                                         </div>
@@ -294,7 +294,7 @@
                                                     <div class="col-md-10">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">费用</span>
-                                                            <input type="text" class="form-control"
+                                                            <input type="number" class="form-control"
                                                                 v-model="modalUpdate.money" placeholder="请填写该字段">
                                                         </div>
                                                     </div>
@@ -306,10 +306,14 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">关联网点</span>
-                                                            <input type="text" v-model="modalUpdate.dotName"
-                                                                class="form-control" placeholder="请填写该字段" required>
-
+                                                             <span class="input-group-addon">关联网点</span>
+                                                            <!-- <input type="text" v-model="modalUpdate.dotName"
+                                                                class="form-control" placeholder="请填写该字段" required> -->
+	                                                        	 <select class="form-control"  v-model="modalUpdate.dotId" >
+	                                                                <option v-for="(item, index) in dotOption.list" v-bind:value="item.dotId">
+	                                                                	{{item.dotName}}
+	                                                                </option>
+	                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -321,7 +325,7 @@
                                                     <div class="col-md-10">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">收件人地址</span>
-                                                            <input type="text" v-model="modalUpdate.receiveaddr"
+                                                            <input type="text" v-model="modalUpdate.receiveAddr"
                                                                 class="form-control" />
                                                         </div>
                                                     </div>
@@ -334,15 +338,31 @@
                                                     <div class="col-md-10">
                                                         <div class="input-group">
                                                             <span class="input-group-addon">收件人电话</span>
-                                                            <input type="text" v-model="modalUpdate.receivetel"
-                                                                class="form-control" />
+                                                            <input type="text" v-model="modalUpdate.receiveTel"
+                                                                class="form-control"/>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
                                                 </div>
                                             </div>
-
-
+                                            <div class="form-group">
+                                                <div class="row">
+                                                    <div class="col-md-1"></div>
+                                                    <div class="col-md-10">
+                                                        <div class="input-group">
+                                                           <span class="input-group-addon">当前操作人</span>
+                                                 <!-- <input type="text" v-model="modalUpdate.dotName"
+                                                     class="form-control" placeholder="请填写该字段" required> -->
+                                              	 <select class="form-control"  v-model="modalUpdate.currentUser" >
+                                                      <option v-for="(item, index) in userOption.list" v-bind:value="item.userId">
+                                                      {{item.userName}}&nbsp
+                                                      </option>
+                                                  </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-1"></div>
+                                                </div>
+                                            </div>
                                             <div class="form-group">
                                                 <div class="row">
                                                     <div class="col-md-1"></div>
@@ -388,11 +408,10 @@
                                                     <div class="col-md-1"></div>
                                                     <div class="col-md-10">
                                                         <div class="input-group">
-                                                            <span class="input-group-addon">网点<b
-                                                                    class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.dotName"
-                                                                class="form-control" placeholder="请填写该字段"
-                                                                @blur="inputText(modalAdd.dotName)">
+                                                            <span class="input-group-addon">所属网点</span>
+	                                                        	 <select class="form-control"  v-model="modalAdd.dotId" >
+	                                                                <option v-for="(item, index) in dotOption.list" v-bind:value="item.dotId">{{item.dotName}}</option>
+	                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -405,7 +424,7 @@
                                                         <div class="input-group">
                                                             <span class="input-group-addon">收件人电话<b
                                                                     class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.receivetel"
+                                                            <input type="text" v-model="modalAdd.receiveTel"
                                                                 class="form-control" placeholder="请填写该字段"
                                                                 @blur="inputText(modalAdd.receivetel)">
                                                         </div>
@@ -420,7 +439,7 @@
                                                         <div class="input-group">
                                                             <span class="input-group-addon">收件人地址<b
                                                                     class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.receiveaddr"
+                                                            <input type="text" v-model="modalAdd.receiveAddr"
                                                                 class="form-control" placeholder="请填写该字段"
                                                                 @blur="inputText(modalAdd.receiveaddr)">
                                                         </div>
@@ -435,7 +454,7 @@
                                                         <div class="input-group">
                                                             <span class="input-group-addon">发件人电话<b
                                                                     class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.sendtel"
+                                                            <input type="text" v-model="modalAdd.sendTel"
                                                                 class="form-control" placeholder="请填写该字段"
                                                                 @blur="inputText(modalAdd.sendtel)">
                                                         </div>
@@ -450,7 +469,7 @@
                                                         <div class="input-group">
                                                             <span class="input-group-addon">发件人地址<b
                                                                     class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.sendaddr"
+                                                            <input type="text" v-model="modalAdd.sendAddr"
                                                                 class="form-control" placeholder="请填写该字段"
                                                                 @blur="inputText(modalAdd.sendaddr)">
                                                         </div>
@@ -483,7 +502,7 @@
                                                         <div class="input-group">
                                                             <span class="input-group-addon">费用<b
                                                                     class="color-danger">*</b></span>
-                                                            <input type="text" v-model="modalAdd.money"
+                                                            <input type="number" v-model="modalAdd.money"
                                                                 class="form-control" placeholder="请填写该字段"
                                                                 @blur="inputText(modalAdd.money)">
                                                         </div>
@@ -501,149 +520,6 @@
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- 过滤模态框 -->
-                            <div class="modal fade" id="modelChange" tabindex="-1" role="dialog"
-                                aria-labelledby="modelChangeTit" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="modelChangeTit">过滤条件选择 <i
-                                                    class="fa fa-reorder"></i>
-                                            </h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <!-- <div class="form-group mt-1">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">承建商</span>
-                                                            <select class="form-control" @change="beanPosition_change()"
-                                                                v-model="beanChange.position">
-                                                                <option selected="selected" value="0">---承建商---
-                                                                </option>
-                                                                <option v-for="p in positionList" :value="p.key">
-                                                                    {{p.value}}
-                                                                </option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div> -->
-                                            <div class="form-group mt-1">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">是否同意验收</span>
-                                                            <select class="form-control" @change="beanPosition_change()"
-                                                                v-model="beanChange.is_acceBefore">
-                                                                <option selected="selected" value="">---是否同意验收---
-                                                                </option>
-                                                                <option value="1">同意</option>
-                                                                <option value="0">不同意</option>
-
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group mt-1">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">年份</span>
-                                                            <select class="form-control" @change="beanPosition_change()"
-                                                                v-model="beanChange.acceBefore_time">
-                                                                <option selected="selected" value="0">---选择年份---
-                                                                </option>
-                                                                <option value="2019">2019年</option>
-                                                                <option value="2018">2018年</option>
-                                                                <option value="2017">2017年</option>
-                                                                <option value="2016">2016年</option>
-                                                                <option value="2015">2015年</option>
-                                                            </select>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- 文件上传模态框 -->
-                            <div class="modal fade" id="modelFile" tabindex="-1" role="dialog"
-                                aria-labelledby="modelFileTit" aria-hidden="true">
-                                <div class="modal-dialog" role="document">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h4 class="modal-title" id="modelFileTit">文件上传 <i class="fa fa-file-o"></i>
-                                            </h4>
-                                        </div>
-                                        <div class="modal-body">
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">项目名称</span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalFile.p_name" placeholder="项目名" disabled>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">原文件路径</span>
-                                                            <input type="text" v-model="modalFile.bid_fileName"
-                                                                class="form-control" placeholder="暂无" disabled>
-
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon"><i
-                                                                    class="fa fa-file"></i></span>
-                                                            <input type="file" name="file" id="updateFile"
-                                                                @change="fileUpload('updateFile')" class="form-control">
-                                                        </div>
-                                                        <div>
-                                                            <p>须知：上传文件大小不超过20MB; 下载模板：<a
-                                                                    :href="'api/v2/db/dowlond?fileurl=File/model/项目预验收模板.doc'"
-                                                                    target="_blank" title="点击下载文件">项目预验收模板.doc</a></p>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary"
-                                                data-dismiss="modal">取消</button>
-                                            <button type="button" class="btn btn-primary" data-dismiss="modal"
-                                                @click="fileSubmit()">提交</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-
                         </div>
                     </div>
                 </div>
@@ -664,37 +540,33 @@
                             <li>
                                 <div class="row">
                                     <div class="col-md-12">
-                                        <div class="row">
+                                        <div class="row" v-for="(item, index) in orderDetail.list">
                                             <div class="col-md-1">
-                                                <img src="images/img.jpg"
+                                                <img v-bind:src="item.userImg"
                                                     style="width: 40px; height: 40px; margin-left: 14px; margin-top: 20px; border-radius: 50%;" />
                                             </div>
                                             <div class="col-md-11 pl-0">
                                                 <div class="box box-solid" style="margin-top: 20px; ">
                                                     <div class="box-header with-border">
                                                         <i class="fa fa-text-width"></i>
-                                                        <h3 class="box-title">{{}}</h3>
+                                                        <h3 class="box-title">{{item.state}}</h3>
                                                         <span style="float: right;"><i class="fa fa-clock-o"></i>
-                                                            {{}}</span>
+                                                            {{item.time}}</span>
                                                     </div>
                                                     <div class="box-body">
                                                         <blockquote>
-                                                            <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{}}
+                                                            <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            {{item.user}}({{item.roluName}})在&nbsp;&nbsp;{{item.time}}&nbsp;&nbsp;时间进行了：“{{item.state}}”&nbsp;&nbsp;&nbsp;&nbsp;操作
                                                             </p>
-                                                            <small>路达公司</small>
+                                                            <small><i class="fa fa-clock-o"></i>{{item.time}}</small>
                                                         </blockquote>
-
-                                                        <!-- <a class="btn btn-success btn-xs" :href="i.url">查看详情</a> -->
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
-
                             </li>
-
                             <li>
                                 <i class="fa fa-clock-o bg-gray"></i>
                             </li>

@@ -1,20 +1,27 @@
 package com.express.web.controller.order;
 
 
-import com.express.web.model.message.leavingMessage;
-import com.express.web.model.order_model.orders;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
-import com.express.web.service.order.orderServie;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.express.web.model.order_model.Orders;
+import com.express.web.service.order.orderServie;
+
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+import net.sf.json.JSONObject;
 
 /**
  * @Author: YIHUI HE
@@ -35,7 +42,7 @@ public class orderController {
 
     @ApiOperation(value = "getOrders", notes = "查找订单")
     @GetMapping("/getOrders")
-    public List<orders> getOrders(@ApiParam(value = "查询参数，可根据内容自动匹配" ,required=false )@RequestParam String search){
+    public List<Orders> getOrders(@ApiParam(value = "查询参数，可根据内容自动匹配" ,required=false )@RequestParam String search){
         return orderServie.listByAll(search);
     }
 
@@ -48,7 +55,7 @@ public class orderController {
      */
     @ApiOperation(value = "updateOrders", notes = "修改订单")
     @PostMapping("/updateOrders")
-    public Boolean updateOrders(@RequestBody  orders orders){
+    public Boolean updateOrders(@RequestBody  Orders orders){
         Boolean result = false;
         HttpSession session = request.getSession(true);
         int ruleId = (int)session.getAttribute("rolu");
@@ -76,14 +83,13 @@ public class orderController {
      */
     @ApiOperation(value = "addorders", notes = "添加订单")
     @PostMapping("/addorders")
-    public Boolean addorders(@RequestBody orders orders){
+    public Boolean addorders(@RequestBody Orders orders){
         Boolean result = false;
         HttpSession session = request.getSession(true);
         if(null!=session){
-            String name = (String)session.getAttribute("userName");
             Long userId = (Long) session.getAttribute("userId");
-            orders.setCurrentuser(name);
-            orders.setUserid(userId);
+            orders.setCurrentUser(userId+"");
+            orders.setUserId(userId);
         }
         int resultflag = orderServie.addOrder(orders);
         if(resultflag>0){
@@ -101,8 +107,19 @@ public class orderController {
      */
     @ApiOperation(value = "deleterOrders", notes = "删除订单")
     @GetMapping("/deleterOrders")
-    public Boolean deleterOrders(orders orders){
+    public Boolean deleterOrders(Orders orders){
         //TODO 不需要删除订单?
          return false;
     }
+    
+    /**
+	 * 获取到某个订单的流程信息
+	 * @return
+	 */
+    @ApiOperation(value = "getContent", notes = "获取到某个订单的流程信息")
+	@GetMapping("/getContent")
+	@ResponseBody
+	public List<JSONObject> getContent(@RequestParam Long orderId){
+		return orderServie.getContent(orderId);
+	}
 }

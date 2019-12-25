@@ -22,7 +22,28 @@ new Vue({
                 name: ''
             }
         },
-
+        //网点下拉框数据
+        dotOption:{
+        	dotId:'',
+        	parentId:'',
+        	dotName:'',
+        	list: []
+        },
+        //用户下拉框数据
+        userOption:{
+        	userId:'',
+        	userName:'',
+        	list: []
+        },
+        //详细列表信息
+        orderDetail:{
+        	user:'',
+        	userImg:'',
+        	roluName:'',
+        	state:'',
+        	time:'',
+        	list:[]
+        },
         /**
          * 账号权限资料
          */
@@ -78,8 +99,6 @@ new Vue({
             nums: '',      //总条数
             list: [],       //数据集合
         },
-        positionList: [],   //归属处室
-        overall_typeList: [],      //统筹类型
         beanChange: {       //过滤条件
             p_tagle: '订单管理',
             state: '1',
@@ -91,32 +110,23 @@ new Vue({
         beanSearch: '',         //搜索
         modalUpdate: {          //修改模态框
             dotName:"",
-            dotid:"",
-            sendtel:"",
-            sendaddr:"",
-            receivetel:"",
-            receiveaddr:"",//收件人地址
+            dotId:"",
+            sendTel:"",
+            sendAddr:"",
+            receiveTel:"",
+            receiveAddr:"",//收件人地址
             weight:"",
+            currentUser:'',
             money:"",
             state:""
 
         },
-        modalAdd_project: {
-            p_id: '',
-            p_name: '',
-            acceBefore_opinion: '',
-            acceBefore_time: '',
-            acceBefore_fileName: '',
-            acceBefore_fileUrl: '',
-            is_acceBefore: '0',
-            p_tagle: '订单管理'
-        },
         modalAdd: {          //添加模态框
             dotid:"",
-            sendtel:"",
-            sendaddr:"",
-            receivetel:"",
-            receiveaddr:"",//收件人地址
+            sendTel:"",
+            sendAddr:"",
+            receiveTel:"",
+            receiveAddr:"",//收件人地址
             weight:"",
             money:"",
         },
@@ -151,16 +161,6 @@ new Vue({
             paymentList: [],
             supplierList: []
         },
-        /**
-         * 项目详情页面数据
-         */
-        projectContent: {
-
-        },
-        contentHtModel: [],
-        /**
-         * 测试数据-合同列表
-         */
         listHT: [],
     },
     methods: {
@@ -304,52 +304,23 @@ new Vue({
             this.listlimit();
         },
 
-        /**
-         * 移除合同
-         * @param {项目id} pid 
-         * @param {合同id} cid 
-         */
-        removeHt: function (pid, cid) {
-            axios.get(this.apiurl + 'api/v2/contract/relationRemove',
-                {
-                    params: {
-                        p_id: pid,
-                        c_id: cid
-                    }
-                })
-                .then(
-                    (res) => {
-                        toastr.success('成功解除关联！');
-
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                        toastr.danger('解除关联失败！');
-                    }
-                );
-        },
 
         /**
          * 刷新内容详情列表数据
          */
         refreshContent: function () {
-            axios.get(this.apiurl + 'api/v2/contract/getListById',
-                {
-                    params: {
-                        p_id: this.moldeHt.p_id,
-                    }
-                })
+        	axios.get(this.apiurl + 'api/order/getOrders',   {
+                params: {
+                    search: this.beanSearch
+                }
+            })
                 .then(
                     (res) => {
-                        this.listHT = res.data;
+                        this.limitData.list = res.data;
                     }
                 )
                 .catch(
-                    (error) => {
-                        console.log(error);
-                    }
+                    (error) => { console.log(error); }
                 );
         },
 
@@ -361,119 +332,19 @@ new Vue({
         contentChange: function (obj) {
             this.projectContent = obj;
             this.contentTagle = false;
-            /**
-             * 获取呈批件列表
-             */
-            axios.get(this.apiurl + 'api/v2/submit_approval/getByPId',
-                {
-                    params: {
-                        p_id: obj.p_id,
-                    }
-                })
+            console.log(obj);
+            axios.get(this.apiurl + 'api/order/getContent',{
+                params: {
+                	orderId: obj.orderId
+                }
+            })
                 .then(
                     (res) => {
-                        this.listData.submitList = res.data;
+                        this.orderDetail.list = res.data;
                     }
                 )
                 .catch(
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-            /**
-             * 获取指标列表
-             */
-            axios.get(this.apiurl + 'api/v2/sign/getByPId',
-                {
-                    params: {
-                        p_id: obj.p_id,
-                    }
-                })
-                .then(
-                    (res) => {
-                        this.listData.signList = res.data;
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-            /**
-             * 获取合同列表
-             */
-            axios.get(this.apiurl + 'api/v2/contract/getListById',
-                {
-                    params: {
-                        p_id: obj.p_id,
-                    }
-                })
-                .then(
-                    (res) => {
-                        this.listData.htList = res.data;
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-            /**
-             * 获取督办列表
-             */
-            axios.get(this.apiurl + 'api/v2/supervise/getListById',
-                {
-                    params: {
-                        p_id: obj.p_id,
-                    }
-                })
-                .then(
-                    (res) => {
-                        this.listData.superviseList = res.data;
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-            /**
-             * 获取付款记录列表
-             */
-            axios.get(this.apiurl + 'api/v2/payment/getListById',
-                {
-                    params: {
-                        p_id: obj.p_id,
-                    }
-                })
-                .then(
-                    (res) => {
-                        this.listData.paymentList = res.data;
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-            /**
-             * 获取供应商列表
-             */
-            axios.get(this.apiurl + 'api/v2/supplierAccount/getListByPId',
-                {
-                    params: {
-                        p_id: obj.p_id,
-                    }
-                })
-                .then(
-                    (res) => {
-                        this.listData.supplierList = res.data;
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                    }
+                    (error) => { console.log(error); }
                 );
         },
         /**
@@ -490,35 +361,21 @@ new Vue({
         /* *******************项目详情所需方法-end********************** */
 
         /**
-         * 添加改变选择项目
-         */
-        modelAdd_change: function () {
-
-            for (let i = 0; i < this.list1.length; i++) {
-
-                if (this.modalAdd.p_id == this.list1[i].p_id) {
-                    this.modalAdd_project = this.list1[i];
-                }
-            }
-
-        },
-
-        /**
          * 修改模态框获得数据数据
          * @param {*} obj 
          */
         update: function (obj) {
             this.modalUpdate = obj;
-
-            //对时间格式进行转码
-            this.modalUpdate.acceBefore_time = obj.acceBefore_time.substr(0, 10);
-
         },
 
         /**
          * 修改数据提交
          */
         updateSubmit: function () {
+        	if(this.modalUpdate.receivetel.length != 11){
+        		toastr.warning("手机号长度为11位！");
+        		return;
+        	}
             axios.post(this.apiurl + 'api/order/updateOrders', this.modalUpdate)
                 .then(
                     (res) => {
@@ -533,58 +390,6 @@ new Vue({
                     }
                 );
         },
-
-        // /**
-        //  * 添加数据重置
-        //  */
-        // addRefresh: function () {
-        //     this.modalAdd = {
-        //         p_name: '',
-        //         declare_money: '',
-        //         position: '0',
-        //         warehousing_time: '',
-        //         warehousing_fileName: '',
-        //         warehousing_fileUrl: '',
-        //         p_tagle: 'IT0101'
-        //     }
-        // },
-
-        /**
-         * 文件上传
-         */
-        fileUpload: function (name) {
-            var filename = $('#' + name)[0].files[0].name;
-            var arr = filename.split(".");
-            if (arr[1] == 'doc' || arr[1] == 'docx' || arr[1] == 'xls' || arr[1] == 'xlsx') {
-                if ($('#' + name)[0].files[0].size.toFixed(1) < 20 * 1024 * 1024) {
-                    var formData = new FormData();
-                    var url = 'acceptance';
-                    formData.append('file', $('#' + name)[0].files[0]);
-                    formData.append('url', url);
-                    $.ajax({
-                        url: this.apiurl + 'api/v2/db/fileUpload',
-                        data: formData,
-                        type: "POST",
-                        dataType: "json",
-                        cache: false,			//上传文件无需缓存
-                        processData: false,		//用于对data参数进行序列化处理 这里必须false
-                        contentType: false,
-                        success: function (res) {
-                            toastr.success('成功上传到服务器！');
-                        },
-                        failure: function (res) {
-                            toastr.danger('上传到服务器失败！');
-                        }
-                    })
-                } else {
-                    toastr.warning('模板文件大小超过限制！');
-                }
-            } else {
-                toastr.warning('上传文件格式错误！');
-            }
-
-        },
-
         /**
          * 添加数据提交
          */
@@ -616,151 +421,6 @@ new Vue({
                         toastr.danger('添加失败！');
                     }
                 );
-        },
-
-        /**
-         * 文件上传数据更新
-         * @param {*} obj 
-         */
-        file: function (obj) {
-            this.modalFile = obj;
-
-        },
-
-        fileSubmit: function () {
-            var name = '';
-            //判断文件是否非空
-            if ($('#updateFile')[0].files[0] != null) {
-                name = $('#updateFile')[0].files[0].name;
-                this.modalFile.acceBefore_fileName = name;
-                this.modalFile.acceBefore_fileUrl = 'File/acceptance/' + name;
-                axios.post(this.apiurl + 'api/v2/project/acceptanceBefore/updateFile', this.modalFile)
-                    .then(
-                        (res) => {
-                            toastr.success('添加成功！');
-                            this.listlimit();
-                        }
-                    )
-                    .catch(
-                        (error) => {
-                            console.log(error);
-                            toastr.danger('添加失败！');
-                        }
-                    );
-            } else {
-                toastr.warning('选择文件再试试吧！');
-            }
-
-
-
-        },
-
-        /**
-         * 删除数据
-         * @param {} id 
-         */
-        deleteProject: function (id) {
-        	if (confirm("是否确定删除？")) {
-        		axios.get(this.apiurl + 'api/v2/project/delete',
-        				{
-        			params: {
-        				p_id: id,
-        			}
-        				})
-        				.then(
-        						(res) => {
-        							toastr.success('删除成功！');
-        							this.numsByPosition();
-        							this.listlimit();
-        						}
-        				)
-        				.catch(
-        						(error) => {
-        							console.log(error);
-        							toastr.danger('删除失败！');
-        						}
-        				);
-        	}
-        },
-
-        /**
-         * excel导出
-         */
-        excelExport: function () {
-            this.beanChange.page_no = this.limitData.page;
-            this.beanChange.page_line = this.limitData.line;
-            this.beanChange.search = this.beanSearch;
-            let e = {
-                fileName: '项目预验收列表.xlsx',
-                sheetName: '项目预验收',
-                key: ['ID', '项目名称', '承建商', '验收初步意见', '预验收时间', '验收申请报告', '是否同意验收'],
-                value: ['p_id', 'p_name', 'contractor', 'acceBefore_opinion', 'acceBefore_time', 'acceBefore_fileName', 'is_acceBefore'],
-                screen: this.beanChange
-            };
-            axios.post(this.apiurl + 'api/v2/db/excelExport', e)
-                .then(
-                    (res) => {
-                        if (res.data == true) {
-                            toastr.success('导出成功！');
-                            window.open("api/v2/db/dowlond?fileurl=File/excel/export/项目预验收列表.xlsx");
-                        } else {
-                            toastr.error('导出失败！');
-                        }
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                        toastr.error('导出失败！');
-                    }
-                );
-
-        },
-
-        /**
-         * 关联合同模态框获得数据
-         * @param {*} obj 
-         */
-        projectHt: function (obj) {
-            this.moldeHt.p_id = obj.p_id;
-
-        },
-        /**
-         * 关联合同模态框提交
-         */
-        projectHtSumbit: function () {
-            console.log(this.moldeHt);
-
-            axios.get(this.apiurl + 'api/v2/contract/relation',
-                {
-                    params: {
-                        p_id: this.moldeHt.p_id,
-                        c_id: this.moldeHt.c_id
-                    }
-                })
-                .then(
-                    (res) => {
-                        toastr.success('关联成功！');
-                        axios.get(this.apiurl + 'api/v2/contract/getListById',
-                            {
-                                params: {
-                                    p_id: this.moldeHt.p_id,
-                                }
-                            })
-                            .then(
-                                (res) => {
-                                    this.listHT = res.data;
-                                }
-                            )
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                        toastr.danger('关联失败!');
-                    }
-                );
-
         },
         //数据列表查询
         listlimit: function () {
@@ -807,19 +467,22 @@ new Vue({
         //- api请求 -
         //-------------
         //HTTP GET 请求-获得当前登录用户信息
-        // axios.get(this.apiurl + 'api/v2/user/getLogin')
-        //     .then(
-        //         (res) => {
-        //             if (res.data.id == 0) {
-        //                 window.location.href = "login.html";
-        //             } else {
-        //                 this.user = res.data;
-        //             }
-        //         }
-        //     )
-        //     .catch(
-        //         (error) => { console.log(error); }
-        //     );
+        axios.get(this.apiurl + 'api/user/getUser')
+		.then(
+				(res) => {
+					if (res.data.userId == 0) {
+						window.location.href = "login.html";
+					} else {
+						 this.user.id = res.data.userId;
+		                    this.user.userid = res.data.userName;
+		                    this.user.username = res.data.userName;
+		                    this.user.img_src = res.data.imgurl;
+					}
+				}
+		)
+		.catch(
+				(error) => { console.log(error); }
+		);
 
         //HTTP get 获得分页详细列表
         axios.get(this.apiurl + 'api/order/getOrders',   {
@@ -835,85 +498,34 @@ new Vue({
             .catch(
                 (error) => { console.log(error); }
             );
-
-        // /**
-        //  * 获得分页详细列表
-        //  */
-        // axios.get(this.apiurl + 'api/v2/project/getListByLimit', this.beanChange)
-        //     .then(
-        //         (res) => {
-        //             this.limitData.list = res.data;
-        //         }
-        //     )
-        //     .catch(
-        //         (error) => { console.log(error); }
-        //     );
-        /**
-         * 获得归属处室下拉框数据
-        //  */
-        // axios.get(this.apiurl + 'api/v2/db/getDropdown',
-        //     {
-        //         params: {
-        //             typecode: 'DICT02',
-        //         }
-        //     })
-        //     .then(
-        //         (res) => {
-        //             this.positionList = res.data;
-        //         }
-        //     )
-        //     .catch(
-        //         (error) => { console.log(error); }
-        //     );
-        /**
-         * 获得归属处室下拉框数据
-         */
-        // axios.get(this.apiurl + 'api/v2/db/getDropdown',
-        //     {
-        //         params: {
-        //             typecode: 'DICT03',
-        //         }
-        //     })
-        //     .then(
-        //         (res) => {
-        //             this.overall_typeList = res.data;
-        //         }
-        //     )
-        //     .catch(
-        //         (error) => { console.log(error); }
-        //     );
-        /**
-         * 获得模态框项目列表
-        //  */
-        // axios.get(this.apiurl + 'api/v2/project/getListByPaymentPro',
-        //     {
-        //         params: {
-        //             p_tagle: 'IT0105',
-        //             p_tagle_: 'IT0106',
-        //         }
-        //     })
-        //     .then(
-        //         (res) => {
-        //             this.list1 = res.data;
-        //         }
-        //     )
-        //     .catch(
-        //         (error) => { console.log(error); }
-        //     );
-        /**
-         * 获得分页合同详细列表
-        //  */
-        // axios.get(this.apiurl + 'api/v2/contract/getListByLimitAll'
-        // )
-        //     .then(
-        //         (res) => {
-        //             this.contentHtModel = res.data;
-        //         }
-        //     )
-        //     .catch(
-        //         (error) => { console.log(error); }
-        //     );
-
+        //获取网点下拉框数据
+        axios.get(this.apiurl + 'api/dot/getDotParentList',   {
+            params: {
+            	parentId: this.beanSearch
+            }
+        })
+            .then(
+                (res) => {
+                    this.dotOption.list = res.data;
+                }
+            )
+            .catch(
+                (error) => { console.log(error); }
+            );
+        //获取用户下拉框数据
+        axios.get(this.apiurl + 'api/user/getAllUser',   {
+            params: {
+            	search: ""
+            }
+        })
+            .then(
+                (res) => {
+                    this.userOption.list = res.data;
+                }
+            )
+            .catch(
+                (error) => { console.log(error); }
+            );
     },
     computed: {
         pages: function () {

@@ -1,6 +1,7 @@
 package com.express.web.service.order.impl;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,10 +9,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.express.web.mapper.company.DotMapper;
+import com.express.web.mapper.order_mapper.DeliverGoodMapper;
 import com.express.web.mapper.order_mapper.ordersMapper;
+import com.express.web.mapper.sys.SysUserMapper;
 import com.express.web.model.company.Dot;
-import com.express.web.model.order_model.orders;
+import com.express.web.model.order_model.Orders;
+import com.express.web.model.sys.SysUser;
 import com.express.web.service.order.orderServie;
+
+import net.sf.json.JSONObject;
 
 /**
  * @Author: YIHUI HE
@@ -25,16 +31,25 @@ public class orderServiceImp implements orderServie {
     private ordersMapper ordersMapper;
     @Autowired
     private DotMapper dotMapper;
-
-
+    @Autowired
+    private SysUserMapper userMapper;
+    @Autowired
+    private DeliverGoodMapper goodMapper;
+    
     @Override
-    public List<orders> listByAll(String search) {
-        List<orders> list =  ordersMapper.listByAll(search);
+    public List<Orders> listByAll(String search) {
+        List<Orders> list =  ordersMapper.listByAll(search);
         if(list.size()>0){
-            for (orders od :list) {
-                Dot dot =  dotMapper.getDotById(od.getDotid());
+            for (Orders od :list) {
+                Dot dot =  dotMapper.getDotById(od.getDotId());
                 if(null!=dot){
                     od.setDotName(dot.getDotName());
+                }
+                if(od.getCurrentUser() != null) {
+                	SysUser user = userMapper.getLogin(Long.parseLong(od.getCurrentUser()));
+                	if(user != null) {
+                		od.setUserName(user.getUserName());
+                	}
                 }
             }
         }
@@ -46,7 +61,7 @@ public class orderServiceImp implements orderServie {
      * @param orders
      * @return
      */
-    public orders selectOrder(orders orders) {
+    public Orders selectOrder(Orders orders) {
 
         return ordersMapper.selectOrder(orders);
     }
@@ -66,25 +81,19 @@ public class orderServiceImp implements orderServie {
      * 添加订单
      * @param orders
      */
-    public int addOrder(orders orders) {
+    public int addOrder(Orders orders) {
         //自动生成订单id 格式年月日是分秒时间戳
         Long orderNums =  new Date().getTime();
-        orders.setOrdernum(String.valueOf(orderNums));
+        orders.setOrderNum(String.valueOf(orderNums));
         //生成订单时间
         SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         String sd = sdf.format(new Date(orderNums));
-        orders.setOrderdate(sd);
+        orders.setOrderDate(sd);
         orders.setState(String.valueOf(0));
         //处理步骤记录 :格式为: 处理人姓名 + 订单状态 + 所产生步奏时间
-        String content = orders.getCurrentuser() +","+orders.getState()=="0"?"预约":"其他"+","+sd;
+        String content = orders.getCurrentUser() +","+orders.getState()+","+sd;
         orders.setContent(content);
-        Dot dor =dotMapper.getDot(orders.getDotName());
-        if(null!=dor){
-            orders.setDotid(dor.getDotId());
-            return ordersMapper.insert(orders);
-        }else{
-            return 0;
-        }
+        return ordersMapper.insert(orders);
     }
 
     /**
@@ -92,8 +101,8 @@ public class orderServiceImp implements orderServie {
      * @param orders
      * @return
      */
-    public int deleterOrder(orders orders) {
-        return ordersMapper.deleteById(orders.getOrderid());
+    public int deleterOrder(Orders orders) {
+        return ordersMapper.deleteById(orders.getOrderId());
     }
 
     /**
@@ -101,7 +110,7 @@ public class orderServiceImp implements orderServie {
      * @param orders
      * @return
      */
-    public int updaterOrder(orders orders ,String name) {
+    public int updaterOrder(Orders orders ,String name) {
         String inintVule = null;
         switch (Integer.valueOf(orders.getState())){
             case 0: inintVule = "预约";break;
@@ -129,14 +138,48 @@ public class orderServiceImp implements orderServie {
             }
         }
         orders.setContent(content);
-        //检查网点
-
-        Dot dor =dotMapper.getDot(orders.getDotName());
-        if(null!=dor){
-            orders.setDotid(dor.getDotId());
-            return ordersMapper.update(orders);
-        }else{
-            return 0;
-        }
+        return ordersMapper.update(orders);
     }
+
+	@Override
+	public List<JSONObject> getContent(Long orderId) {
+		//存放数据的地方
+		List<JSONObject> jsonList = new ArrayList<JSONObject>();
+		//根据传过来的订单id获取到订到的内容信息
+		Orders od = goodMapper.getById(orderId);
+		if(od != null && od.getContent() != null) {
+			String content = od.getContent();
+			//对内容进行切割
+			String[] contentArr = content.split(";");
+			for (int i = 0;i<contentArr.length; i++) {
+				JSONObject json = new JSONObject();
+				String[] conArr = contentArr[i].split(",");
+				//获取到用户信息
+				SysUser user = userMapper.getLogin(Long.parseLong(conArr[0]));
+				json.put("user",user.getUserName());
+				switch(user.getRolu()) {
+				case 0: user.setRoluName("管理员");break;
+				case 1: user.setRoluName("用户");break;
+				case 2: user.setRoluName("快递员");break;
+				default: user.setRoluName("未知");break;
+				}
+				json.put("roluName",user.getRoluName());
+				json.put("userImg",user.getImgurl());
+				String state = "";
+				//对状态进行转换
+				switch (Integer.valueOf(conArr[1])){
+		            case 0: state = "预约";break;
+		            case 1: state = "揽件";break;
+		            case 2: state = "运输中";break;
+		            case 3: state = "派送中";break;
+		            case 4: state = "已签收";break;
+		            default:state = "其他";break;
+				}
+				json.put("state",state);
+				json.put("time",conArr[2]);
+				jsonList.add(json);
+			}
+		}
+		return jsonList;
+	}
 }

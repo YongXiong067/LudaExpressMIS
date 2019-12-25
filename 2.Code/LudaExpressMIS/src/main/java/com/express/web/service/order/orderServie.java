@@ -1,9 +1,10 @@
 package com.express.web.service.order;
 
-import com.express.web.model.message.leavingMessage;
-import com.express.web.model.order_model.orders;
-
 import java.util.List;
+
+import com.express.web.model.order_model.Orders;
+
+import net.sf.json.JSONObject;
 
 /**
  * @Author: YIHUI HE
@@ -19,14 +20,14 @@ public interface orderServie {
      * @param search
      * @return
      */
-    List<orders> listByAll(String search);
+    List<Orders> listByAll(String search);
 
 
     /**
      * 查看订单
      * @param orders
      */
-    orders selectOrder(orders orders);
+    Orders selectOrder(Orders orders);
 
 
     /**
@@ -39,17 +40,23 @@ public interface orderServie {
      * 添加订单
      * @param orders
      */
-    int addOrder(orders orders);
+    int addOrder(Orders orders);
 
     /**
      * 删除订单
      * @param orders
      */
-    int deleterOrder(orders orders);
+    int deleterOrder(Orders orders);
     /**
      * 修改订单
      * @param orders
      */
-    int updaterOrder(orders orders,String name);
+    int updaterOrder(Orders orders,String name);
 
+    /**
+     * 获取到某个订单的流程信息
+     * @param orderid
+     * @return
+     */
+    List<JSONObject> getContent(Long orderid);
 }

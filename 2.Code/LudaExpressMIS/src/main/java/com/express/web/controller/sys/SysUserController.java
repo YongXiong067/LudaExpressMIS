@@ -174,7 +174,6 @@ public class SysUserController {
 	@GetMapping("/getAllUser")
 	@ResponseBody
 	public List<SysUser> getAllUser(@RequestParam String search){
-		System.out.println(search);
 		List<SysUser> userList = service.listByAll(search);
 		return userList;
 	}
@@ -203,7 +202,13 @@ public class SysUserController {
 	@ResponseBody
 	public SysUser getUser(){
 		HttpSession session = request.getSession(true);
-		SysUser user = service.getLogin((long) session.getAttribute("userId"));
+		SysUser user = null;
+		if((Long) session.getAttribute("userId")!= null) {
+			user = service.getLogin((long) session.getAttribute("userId"));
+		}else {
+			user = new SysUser();
+			user.setUserId(0);
+		}
 		return user;
 	}
 	
@@ -215,8 +220,7 @@ public class SysUserController {
 	@ResponseBody
 	public int userUpdateInfo(@RequestParam("lefile") MultipartFile[] file) {
 		HttpSession session = request.getSession(true);
-		//Long userId = (long) session.getAttribute("userId");
-		Long userId = 1L;
+		Long userId = (long) session.getAttribute("userId");
 		//图片上传
         if(!file[0].isEmpty()){
             try {

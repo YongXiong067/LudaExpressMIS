@@ -4,7 +4,7 @@
 <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>省人防办项目管理系统-项目督办</title>
+    <title>路达快递管理系统-留言管理</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap -->
@@ -72,16 +72,7 @@
                                                         data-target="#modelAdd"><button
                                                             class="btn btn-default btn-sm"><i
                                                                 class="fa fa-plus"></i></button></a>
-
-                                                    <a href="javaScript:void(0);" @click="excelExport()"
-                                                        title="导出Excel表格"><button class="btn btn-default btn-sm"><i
-                                                                class="fa fa-arrow-circle-down"></i></button></a>
-
-                                                    <a href="javaScript:void(0);" title="选择过滤条件" data-toggle="modal"
-                                                        data-target="#modelChange"><button
-                                                            class="btn btn-default btn-sm ml-1"><i
-                                                                class="fa fa-reorder"></i></button></a>
-                                                    <a href="javaScript:void(0);" @click="refresh()" title="刷新"><button
+                                                      <a href="javaScript:void(0);" @click="refresh()" title="刷新"><button
                                                             class="btn btn-default btn-sm"><i
                                                                 class="fa fa-refresh"></i></button></a>
                                                 </div>
@@ -235,31 +226,29 @@
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="row">
-                                                    <div class="col-md-10 col-xs-2 p-0 text-oneline">
+                                                    <div class="col-md-4 col-xs-2 p-0 text-oneline">
                                                         <span>{{item.content}}</span>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-3">
                                                 <div class="row">
-                                                    <div class="col-md-3">
+                                                    <div class="col-md-7">
                                                         <span>{{item.rsContert}}</span>
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-1">
-                                                    <div class="col-md-2 col-xs-2 p-0">
-                                                        <div class="tools">
-                                                            <a href="javaScript:;" title="修改" data-toggle="modal"
-                                                                data-target="#modelUpdate" @click="update(item)">
-                                                                <i class="fa fa-edit" style="margin-right: 5px;"></i>
-                                                            </a>
-                                                            <a href="javaScript:;" title="删除"
-                                                                @click="deleteProject(item.leavingId)"> <i
-                                                                    class="fa fa-trash-o"
-                                                                    style="margin-right: 5px;"></i> </a>
-                                                        </div>
-                                                </div>
+                                            <div class="col-md-1" style="padding-right: 68px;">
+	                                                    <div class="tools">
+	                            							<a href="javaScript:;" title="修改" data-toggle="modal"
+	                                                            data-target="#modelUpdate" @click="update(item)">
+	                                                            <i class="fa fa-edit" style="margin-right: 5px;"></i>
+	                                                        </a>
+	                                                        <a href="javaScript:;" title="删除"
+	                                                            @click="deleteProject(item.leavingId)"> <i
+	                                                                class="fa fa-trash-o"
+	                                                                style="margin-right: 5px;"></i> </a>
+	                                            </div>
                                             </div>
                                         </div>
                                     </li>

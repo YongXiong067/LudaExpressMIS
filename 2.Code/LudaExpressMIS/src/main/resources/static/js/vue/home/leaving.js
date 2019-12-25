@@ -804,19 +804,22 @@ new Vue({
         //- api请求 -
         //-------------
         // //HTTP GET 请求-获得当前登录用户信息
-        // axios.get(this.apiurl + 'api/user/getUser')
-        //     .then(
-        //         (res) => {
-        //             if (res.data.id == 0) {
-        //                 window.location.href = "login.html";
-        //             } else {
-        //                 this.user = res.data;
-        //             }
-        //         }
-        //     )
-        //     .catch(
-        //         (error) => { console.log(error); }
-        //     );
+         axios.get(this.apiurl + 'api/user/getUser')
+             .then(
+                 (res) => {
+                     if (res.data.id == 0) {
+                         window.location.href = "login.html";
+                     } else {
+                    	 this.user.id = res.data.userId;
+                         this.user.userid = res.data.userName;
+                         this.user.username = res.data.userName;
+                         this.user.img_src = res.data.imgurl;
+                     }
+                 }
+             )
+             .catch(
+                 (error) => { console.log(error); }
+             );
 
         //HTTP GET 请求-获得列表数据总条数
         // axios.get(this.apiurl + 'api/v2/db/numBySupervise',

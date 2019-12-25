@@ -84,7 +84,6 @@ new Vue({
         }
     },
     methods: {
-        
         /**
          * 注销登录
          */
@@ -153,7 +152,7 @@ new Vue({
                         this.user.id = res.data.userId;
                         this.user.userid = res.data.userName;
                         this.user.username = res.data.userName;
-                        
+                        this.user.img_src = res.data.imgurl;
                     }
                 }
             )
@@ -165,4 +164,39 @@ new Vue({
 
     },
 
+});
+//上传头像
+$("#logoFile").change(function(){
+	console.log(this);
+	var obj = this;
+	var f=$(obj).val();
+    if(f == null || f ==undefined || f == ''){
+        return false;
+    }
+    if(!/\.(?:png|jpg|bmp|gif|PNG|JPG|BMP|GIF)$/.test(f))
+    {
+        alert("类型必须是图片(.png|jpg|bmp|gif|PNG|JPG|BMP|GIF)");
+        $(obj).val('');
+        return false;
+    }
+    var data = new FormData();
+    $.each($(obj)[0].files,function(i,file){
+        data.append('lefile', file);
+    });
+    console.log(data);
+    $.ajax({
+        type: "POST",
+        url: "api/user/uploadImg",
+        data: data,
+        cache: false,
+        contentType: false,    //不可缺
+        processData: false,    //不可缺
+        dataType:"json",
+        success: function(ret) {
+        	
+        },
+        error: function(XMLHttpRequest, textStatus, errorThrown) {
+            alert("上传失败，请检查网络后重试");
+        }
+    });
 });

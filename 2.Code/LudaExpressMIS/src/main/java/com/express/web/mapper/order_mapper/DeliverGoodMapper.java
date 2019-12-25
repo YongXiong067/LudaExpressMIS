@@ -11,7 +11,7 @@ import org.apache.ibatis.annotations.Update;
 
 import com.express.web.model.money.ColumnarMoney;
 import com.express.web.model.money.MoneyTable;
-import com.express.web.model.order_model.orders;
+import com.express.web.model.order_model.Orders;
 
 
 
@@ -35,28 +35,28 @@ public interface DeliverGoodMapper {
 	@Select("<script>"
 			+ "select "+ param +" from orders "	
 			+ "where 1=1 and state = #{state} "
-			+"<if test= 'ordernum != null'> and ordernum like concat('%',#{ordernum},'%') </if>"
-			+"<if test= 'currentuser != null'> and currentuser = #{currentuser} </if>"
+			+"<if test= 'orderNum != null'> and orderNum like concat('%',#{orderNum},'%') </if>"
+			+"<if test= 'currentUser != null'> and currentUser = #{currentUser} </if>"
 			+"</script>")
 	@Results(id="DeliverGoodsMap",
 	value={
-		@Result(id=true,property="orderid",column="orderId"),
-		@Result(property="dotid",column="dotId"),
-		@Result(property="userid",column="userId"),
-		@Result(property="sendtel",column="sendTel"),
-		@Result(property="sendaddr",column="sendAddr"),
-		@Result(property="orderdate",column="orderDate"),
-		@Result(property="receivetel",column="receiveTel"),
-		@Result(property="receiveaddr",column="receiveAddr"),
-		@Result(property="ordernum",column="orderNum"),
+		@Result(id=true,property="orderId",column="orderId"),
+		@Result(property="dotId",column="dotId"),
+		@Result(property="userId",column="userId"),
+		@Result(property="sendTel",column="sendTel"),
+		@Result(property="sendAddr",column="sendAddr"),
+		@Result(property="orderDate",column="orderDate"),
+		@Result(property="receiveTel",column="receiveTel"),
+		@Result(property="receiveAddr",column="receiveAddr"),
+		@Result(property="orderNum",column="orderNum"),
 		@Result(property="weight",column="weight"),
 		@Result(property="money",column="money"),
 		@Result(property="state",column="state"),
-		@Result(property="currentuser",column="currentUser"),
+		@Result(property="currentUser",column="currentUser"),
 		@Result(property="content",column="content")
 		}
 	)
-	List<orders> getDeliverList(@Param("ordernum") String ordernum,int state,Long currentuser);
+	List<Orders> getDeliverList(String orderNum,int state,Long currentUser);
 	
 	/**
 	 * 根据月份年份查出金额数据,折线图，按月
@@ -81,9 +81,9 @@ public interface DeliverGoodMapper {
 	 * @param month
 	 * @return
 	 */
-	@Select("select DATE_FORMAT(orderdate,\"%Y\") as dateMonth,SUM(money) as money "
-			+ " from orders where state = 2 and DATE_FORMAT(orderdate,\"%Y\") = '${year}'"
-			+ " GROUP BY DATE_FORMAT(orderdate,\"%Y\")")
+	@Select("select DATE_FORMAT(orderDate,\"%Y\") as dateMonth,SUM(money) as money "
+			+ " from orders where state = 2 and DATE_FORMAT(orderDate,\"%Y\") = '${year}'"
+			+ " GROUP BY DATE_FORMAT(orderDate,\"%Y\")")
 	@Results({
 			@Result(property="dateMonth",column="dateMonth"),
 			@Result(property="money",column="money")
@@ -95,22 +95,22 @@ public interface DeliverGoodMapper {
 	 * @return
 	 */
 	@Select("select * from orders where orderId = #{orderId}")
-	orders getById(@Param("orderId") Long orderId);
+	Orders getById(@Param("orderId") Long orderId);
 	/**
 	 * 	修改状态
 	 * @return
 	 */
 	@Update("update orders set state = #{state} "
-			+ " where orderid = #{orderid}")
-	boolean update(Long orderid,int state);
+			+ " where orderId = #{orderId}")
+	boolean update(Long orderId,int state);
 	
 	/**
 	 * 	修改订单的步骤内容信息
 	 * @return
 	 */
 	@Update("update orders set content = #{content} "
-			+ " where orderid = #{orderid}")
-	boolean updateContent(Long orderid,String content);
+			+ " where orderId = #{orderId}")
+	boolean updateContent(Long orderId,String content);
 	/**
 	 * 查询财务管理表格界面的数据
 	 * @return
