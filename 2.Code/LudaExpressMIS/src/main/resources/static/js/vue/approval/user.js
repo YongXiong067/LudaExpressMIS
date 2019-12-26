@@ -87,24 +87,17 @@ new Vue({
         	userName: '',
             password: '',
             phone: '',
+            sex:'',
+            address:'',
             rolu: ''
         },
         modalAdd: {          //添加模态框
             userName: '',
             password: '',
             phone: '',
+            sex:'',
+            address:'',
             rolu: ''
-        },
-        /**
-         * 关联合同模态框
-         */
-        moldeHt: {
-            id: '',
-            htid: '0'
-        },
-        moldePro: {
-            sub_id: '0',
-            p_id: '0'
         },
         /**
          * 项目详情列表数据
@@ -296,6 +289,8 @@ new Vue({
             this.modalUpdate.password = obj.password;
             this.modalUpdate.phone = obj.phone;
             this.modalUpdate.rolu = obj.rolu;
+            this.modalUpdate.sex = obj.sex;
+            this.modalUpdate.address = obj.address;
         },
 
         /**
@@ -321,8 +316,6 @@ new Vue({
          */
         addSubmit: function () {
             if (this.modalAdd.userName == '' || this.modalAdd.password == '' || this.modalAdd.phone == '' || this.modalAdd.rolu == '') {
-            	console.log(this.modalAdd.password);
-            	console.log(this.modalAdd.phone);
             	toastr.warning('请填写完整的信息！');
                 return false;
             }
@@ -337,7 +330,9 @@ new Vue({
                                 userName: '',
                                 password: '',
                                 phone: '',
-                                rolu: ''
+                                rolu: '',
+                                sex:'',
+                                address:''
                             },
                             //this.numsByPosition();
                             this.listlimit();
@@ -403,22 +398,25 @@ new Vue({
         //- api请求 -
         //-------------
         //HTTP GET 请求-获得当前登录用户信息
-        axios.get(this.apiurl + 'api/user/getUser')
-            .then(
-                (res) => {
-                    if (res.data.userId == 0) {
-                        window.location.href = "login.html";
-                    } else {
-                        this.user.id = res.data.userId;
-                        this.user.userid = res.data.userName;
-                        this.user.username = res.data.userName;
-                        this.user.img_src = res.data.imgurl;
-                    }
+    	axios.get(this.apiurl + 'api/user/getUser')
+        .then(
+            (res) => {
+                if (res.data.userId == 0) {
+                    window.location.href = "login.html";
+                } else {
+                    this.user.id = res.data.userId;
+                    this.user.userid = res.data.userName;
+                    this.user.username = res.data.userName;
+                    this.user.img_src = res.data.imgurl;
+                    this.user.address = res.data.address;
+                    this.user.sex = res.data.sex;
+                    this.user.last_logintime = res.data.loginTime;
                 }
-            )
-            .catch(
-                (error) => { console.log(error); }
-            );
+            }
+        )
+        .catch(
+            (error) => { console.log(error); }
+        );
         /**
          * 获得分页详细列表
          */

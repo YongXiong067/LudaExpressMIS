@@ -4,7 +4,7 @@ new Vue({
     el: '#app',
     data: {
         apiurl: '',
-        ProjectTagle: '项目督办',
+        ProjectTagle: '留言管理',
         /**
          * 账号资料
          */
@@ -49,16 +49,16 @@ new Vue({
         pagePosition: {
             parent_id: 2,
             id: 23,
-            title: '项目督办',
+            title: '公司',
             text: '',
             position: [
                 {
-                    name: '建设',
+                    name: '公司',
                     img: 'fa fa-windows',
                     url: 'javaScript:void(0);'
                 },
                 {
-                    name: '项目督办',
+                    name: '留言管理',
                     img: '',
                     url: 'buildSupervise.html'
                 }
@@ -495,10 +495,6 @@ new Vue({
          */
         update: function (obj) {
             this.modalUpdate = obj;
-
-            //对时间格式进行转码
-            this.modalUpdate.sup_time = obj.sup_time.substr(0, 10);
-
         },
 
         /**
@@ -523,57 +519,6 @@ new Vue({
                     }
                 );
         },
-
-        // /**
-        //  * 添加数据重置
-        //  */
-        // addRefresh: function () {
-        //     this.modalAdd = {
-        //         p_name: '',
-        //         declare_money: '',
-        //         position: '0',
-        //         warehousing_time: '',
-        //         warehousing_fileName: '',
-        //         warehousing_fileUrl: '',
-        //         p_tagle: 'IT0101'
-        //     }
-        // },
-
-        /**
-         * 文件上传
-         */
-        fileUpload: function (name) {
-            var filename = $('#' + name)[0].files[0].name;
-            var arr = filename.split(".");
-            if (arr[1] == 'doc' || arr[1] == 'docx' || arr[1] == 'xls' || arr[1] == 'xlsx') {
-                if ($('#' + name)[0].files[0].size.toFixed(1) < 20 * 1024 * 1024) {
-                    var formData = new FormData();
-                    var url = 'approval';
-                    formData.append('file', $('#' + name)[0].files[0]);
-                    formData.append('url', url);
-                    $.ajax({
-                        url: this.apiurl + 'api/v2/db/fileUpload',
-                        data: formData,
-                        type: "POST",
-                        dataType: "json",
-                        cache: false,			//上传文件无需缓存
-                        processData: false,		//用于对data参数进行序列化处理 这里必须false
-                        contentType: false,
-                        success: function (res) {
-                            toastr.success('成功上传到服务器！');
-                        },
-                        failure: function (res) {
-                            toastr.error('上传到服务器失败！');
-                        }
-                    })
-                } else {
-                    toastr.warning('模板文件大小超过限制！');
-                }
-            } else {
-                toastr.warning('上传文件格式错误！');
-            }
-        },
-
         /**
          * 添加数据提交
          */
@@ -804,22 +749,25 @@ new Vue({
         //- api请求 -
         //-------------
         // //HTTP GET 请求-获得当前登录用户信息
-         axios.get(this.apiurl + 'api/user/getUser')
-             .then(
-                 (res) => {
-                     if (res.data.id == 0) {
-                         window.location.href = "login.html";
-                     } else {
-                    	 this.user.id = res.data.userId;
-                         this.user.userid = res.data.userName;
-                         this.user.username = res.data.userName;
-                         this.user.img_src = res.data.imgurl;
-                     }
-                 }
-             )
-             .catch(
-                 (error) => { console.log(error); }
-             );
+    	axios.get(this.apiurl + 'api/user/getUser')
+        .then(
+            (res) => {
+                if (res.data.userId == 0) {
+                    window.location.href = "login.html";
+                } else {
+                    this.user.id = res.data.userId;
+                    this.user.userid = res.data.userName;
+                    this.user.username = res.data.userName;
+                    this.user.img_src = res.data.imgurl;
+                    this.user.address = res.data.address;
+                    this.user.sex = res.data.sex;
+                    this.user.last_logintime = res.data.loginTime;
+                }
+            }
+        )
+        .catch(
+            (error) => { console.log(error); }
+        );
 
         //HTTP GET 请求-获得列表数据总条数
         // axios.get(this.apiurl + 'api/v2/db/numBySupervise',

@@ -3,6 +3,8 @@ package com.express.web.controller.sys;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -57,6 +59,11 @@ public class SysUserController {
 			session.setAttribute("userId", sysUser.getUserId());
 			session.setAttribute("userName", sysUser.getUserName());
 			session.setAttribute("rolu", sysUser.getRolu());
+	        //生成时间,登录时创建新的时间
+			Long orderNums =  new Date().getTime();
+	        SimpleDateFormat sdf=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	        String sd = sdf.format(new Date(orderNums));
+			service.userUpdateTime(sysUser.getUserId(), sd);
 			return 11;
 		}
 		return -1;
@@ -88,6 +95,7 @@ public class SysUserController {
 				return -1;
 			}else {
 				user.setRolu(1);
+				user.setImgurl("images/img.jpg");
 				service.insertUser(user);
 				return 11;
 			}

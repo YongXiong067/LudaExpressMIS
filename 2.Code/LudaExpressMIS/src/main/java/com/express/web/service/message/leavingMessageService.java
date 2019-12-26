@@ -15,7 +15,7 @@ public interface leavingMessageService {
      * @param search
      * @return
      */
-    List<leavingMessage> listByAll(String search);
+    List<leavingMessage> listByAll(String search,Long userId);
     /**
      * 添加留言信息
      * @param culture
