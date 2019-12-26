@@ -26,8 +26,8 @@ public class leavingMessageServiceImpl implements leavingMessageService {
     private SysUserMapper sysUserMapper;
 
     @Override
-    public List<leavingMessage> listByAll(String search) {
-        List<leavingMessage> resultList = leavingMessageMapper.listByAll(search);
+    public List<leavingMessage> listByAll(String search,Long userId) {
+        List<leavingMessage> resultList = leavingMessageMapper.listByAll(search,userId);
         if(resultList.size()>0){
             for (leavingMessage ms:resultList) {
                 SysUser sysUser =  sysUserMapper.getLogin(ms.getUserId());

@@ -6,8 +6,6 @@ import org.apache.ibatis.annotations.Delete;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.Update;
 
@@ -38,15 +36,6 @@ public interface SysUserMapper {
 			+ "where 1=1 "
 			+"<if test= 'search != null'> and userName like concat('%',#{search},'%') or phone like concat('%',#{search},'%')</if>"
 			+"</script>")
-	@Results(id="SysUserMap",
-	value={
-		@Result(id=true,property="userId",column="userId"),
-		@Result(property="userName",column="userName"),
-		@Result(property="password",column="password"),
-		@Result(property="phone",column="phone"),
-		@Result(property="rolu",column="rolu")
-		}
-	)
 	List<SysUser> listByAll(@Param("search") String search);
 	
 	/**
@@ -75,7 +64,7 @@ public interface SysUserMapper {
 	 * 插入记录
 	 * @param logModel
 	 */
-	@Insert("insert into sys_user(userName, password, phone, rolu) value(#{userName}, #{password}, #{phone}, #{rolu})")
+	@Insert("insert into sys_user(userName, password, phone, rolu, sex, address) value(#{userName}, #{password}, #{phone}, #{rolu}, #{sex}, #{address})")
 	void insertUser(SysUser userModel);
 	
 	/**
@@ -112,4 +101,13 @@ public interface SysUserMapper {
 	@Update("update sys_user set imgurl = #{imgurl}"
 			+ " where userId = #{userId}")
 	void userUpdateImg(Long userId,String imgurl);
+	
+	/**
+	 * 用户修改个人头像
+	 * @param pro
+	 * @return
+	 */
+	@Update("update sys_user set loginTime = #{loginTime}"
+			+ " where userId = #{userId}")
+	int userUpdateTime(Long userId,String loginTime);
 }

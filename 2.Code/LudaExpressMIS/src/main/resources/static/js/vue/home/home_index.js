@@ -12,7 +12,9 @@ new Vue({
             id: '',
             userid: '',
             username: '',
+            address:'',
             sex: '',
+            loginTime:'',
             phone: '',
             img_src: 'images/img.jpg',
             last_logintime: '',
@@ -104,6 +106,37 @@ new Vue({
                 );
         },
         /**
+         * 修改模态框获得数据数据
+         * @param {*} obj 
+         */
+        update: function (obj) {
+            this.modalUpdate.userId = obj.userId;
+            this.modalUpdate.username = obj.username;
+            this.modalUpdate.password = obj.password;
+            this.modalUpdate.phone = obj.phone;
+            this.modalUpdate.rolu = obj.rolu;
+            this.modalUpdate.sex = obj.sex;
+            this.modalUpdate.address = obj.address;
+        },
+        /**
+         * 修改数据提交
+         */
+        updateSubmit: function () {
+            axios.post(this.apiurl + 'api/user/update', this.modalUpdate)
+                .then(
+                    (res) => {
+                        toastr.success('修改成功！');
+                        this.listlimit();
+                    }
+                )
+                .catch(
+                    (error) => {
+                        console.log(error);
+                        toastr.danger('修改失败！');
+                    }
+                );
+        },
+        /**
          * 修改密码
          */
         updatePwd: function() {
@@ -153,6 +186,10 @@ new Vue({
                         this.user.userid = res.data.userName;
                         this.user.username = res.data.userName;
                         this.user.img_src = res.data.imgurl;
+                        this.user.address = res.data.address;
+                        this.user.sex = res.data.sex;
+                        this.user.phone = res.data.phone;
+                        this.user.last_logintime = res.data.loginTime;
                     }
                 }
             )

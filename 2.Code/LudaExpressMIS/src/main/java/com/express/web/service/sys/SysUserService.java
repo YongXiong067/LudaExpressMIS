@@ -66,4 +66,12 @@ public interface SysUserService {
 	 * @return
 	 */
 	void userUpdateImg(Long userId,String imgurl);
+	
+
+	/**
+	 * 用户修改个人头像
+	 * @param pro
+	 * @return
+	 */
+	int userUpdateTime(Long userId,String loginTime);
 }

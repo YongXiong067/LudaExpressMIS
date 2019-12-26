@@ -301,22 +301,25 @@ new Vue({
         // - api请求 -
         // -------------
         // HTTP GET 请求-获得当前登录用户信息
-        axios.get(this.apiurl + 'api/user/getUser')
-            .then(
-                (res) => {
-                    if (res.data.userId == 0) {
-                        window.location.href = "login.html";
-                    } else {
-                        this.user.id = res.data.userId;
-                        this.user.userid = res.data.userName;
-                        this.user.username = res.data.userName;
-                        this.user.img_src = res.data.imgurl;
-                    }
+    	axios.get(this.apiurl + 'api/user/getUser')
+        .then(
+            (res) => {
+                if (res.data.userId == 0) {
+                    window.location.href = "login.html";
+                } else {
+                    this.user.id = res.data.userId;
+                    this.user.userid = res.data.userName;
+                    this.user.username = res.data.userName;
+                    this.user.img_src = res.data.imgurl;
+                    this.user.address = res.data.address;
+                    this.user.sex = res.data.sex;
+                    this.user.last_logintime = res.data.loginTime;
                 }
-            )
-            .catch(
-                (error) => { console.log(error); }
-            );
+            }
+        )
+        .catch(
+            (error) => { console.log(error); }
+        );
         /**
 		 * 获得详细列表
 		 */

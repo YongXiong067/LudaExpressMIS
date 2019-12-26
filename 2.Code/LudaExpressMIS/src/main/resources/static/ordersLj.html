@@ -210,38 +210,38 @@
                                                 <div class="row">
                                                     <div class="col-md-12 col-xs-2 p-0 text-oneline">
                                                         <a href="javascript:;" :title="item.userName"
-                                                            @click="contentChange(item)"><span>{{item.ordernum}}</span></a>
+                                                            @click="contentChange(item)"><span>{{item.orderNum}}</span></a>
                                                     </div>
                                                 </div>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.orderdate}}</span>
+                                                <span>{{item.orderDate}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
                                                 <span>￥{{item.money}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.dotid}}</span>
+                                                <span>{{item.dotName}}</span>
                                             </div>
                                             <div class="col-md-2 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.receiveaddr}}</span>
+                                                <span>{{item.receiveAddr}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.receivetel}}</span>
+                                                <span>{{item.receiveTel}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span v-if="item.state == '1'">待发货</span>
+                                                <span v-if="item.state == '0'">待取货</span>
                                                 <span v-else>其他</span>
                                             </div>
                                             <div class="col-md-1 p-0 pl-5 text-oneline">
-                                                <span>{{item.currentuser}}</span>
+                                                <span>{{item.userName}}</span>
                                             </div>
                                             <div class="col-md-1 p-0 pl-5">
                                                 <div class="tools">
                                                     <!-- <a href="javascript:;" title="发货" data-toggle="modal"
                                                         data-target="#modelUpdate" @click="update(item)">
                                                         <i class="fa fa-edit" style="margin-right: 15px;"></i> </a> -->
-                                                    <a href="javascript:;" title="揽件" @click="updateOrder(item.orderid)">
+                                                    <a href="javascript:;" title="揽件" @click="updateOrder(item.orderId)">
                                                         <i class="fa fa-edit" style="margin-right: 55px;"></i> </a>
                                                 </div>
                                             </div>
@@ -281,11 +281,52 @@
 
             <!-- 右侧内容界面-记录列表 -->
             <section class="content" v-if="!contentTagle">
+				<div class="row">
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <button class="btn btn-flat bg-purple" @click="contentReturn()"> 返回列表 </button>
+                            </div>
+                        </div>
+                        <ul class="timeline">
 
-                <n-content-project v-on:return="contentReturn" :list="listHT" :project="projectContent"
-                    :modelht="moldeHt" v-on:projectht="projectHt" v-on:removeht="removeHt" :listdata="listData">
-                </n-content-project>
-
+                            <!-- <li v-for="item in timeLine.list"> -->
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row" v-for="(item, index) in orderDetail.list">
+                                            <div class="col-md-1">
+                                                <img v-bind:src="item.userImg"
+                                                    style="width: 40px; height: 40px; margin-left: 14px; margin-top: 20px; border-radius: 50%;" />
+                                            </div>
+                                            <div class="col-md-11 pl-0">
+                                                <div class="box box-solid" style="margin-top: 20px; ">
+                                                    <div class="box-header with-border">
+                                                        <i class="fa fa-text-width"></i>
+                                                        <h3 class="box-title">{{item.state}}</h3>
+                                                        <span style="float: right;"><i class="fa fa-clock-o"></i>
+                                                            {{item.time}}</span>
+                                                    </div>
+                                                    <div class="box-body">
+                                                        <blockquote>
+                                                            <p> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                                            {{item.user}}({{item.roluName}})在&nbsp;&nbsp;{{item.time}}&nbsp;&nbsp;时间进行了：“{{item.state}}”&nbsp;&nbsp;&nbsp;&nbsp;操作
+                                                            </p>
+                                                            <small><i class="fa fa-clock-o"></i>{{item.time}}</small>
+                                                        </blockquote>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                            <li>
+                                <i class="fa fa-clock-o bg-gray"></i>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
             </section>
         </div>
 

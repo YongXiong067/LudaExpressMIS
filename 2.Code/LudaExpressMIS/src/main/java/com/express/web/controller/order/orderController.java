@@ -43,7 +43,13 @@ public class orderController {
     @ApiOperation(value = "getOrders", notes = "查找订单")
     @GetMapping("/getOrders")
     public List<Orders> getOrders(@ApiParam(value = "查询参数，可根据内容自动匹配" ,required=false )@RequestParam String search){
-        return orderServie.listByAll(search);
+    	HttpSession session = request.getSession(true);
+    	Long userId = (Long)session.getAttribute("userId");
+        int ruleId = (int)session.getAttribute("rolu");
+        if(ruleId == 0) {
+        	userId = null;
+        }
+    	return orderServie.listByAll(search,userId);
     }
 
 
@@ -59,10 +65,10 @@ public class orderController {
         Boolean result = false;
         HttpSession session = request.getSession(true);
         int ruleId = (int)session.getAttribute("rolu");
-        String name = (String)session.getAttribute("userName");
+        Long userId = (Long)session.getAttribute("userId");
         //用户角色 0系统管理员，1普通用户，2快递员
         if(ruleId==0){
-            if(orderServie.updaterOrder(orders,name)>0){
+            if(orderServie.updaterOrder(orders,userId)>0){
                 result = true;
                 return result;
             } else {

@@ -285,24 +285,7 @@ new Vue({
         /**
          * 刷新内容详情列表数据
          */
-        refreshContent: function () {
-            axios.get(this.apiurl + 'api/v2/project/getListByCId',
-                {
-                    params: {
-                        c_id: this.moldeHt.c_id,
-                    }
-                })
-                .then(
-                    (res) => {
-                        this.listPro = res.data;
-                    }
-                )
-                .catch(
-                    (error) => {
-                        console.log(error);
-                    }
-                );
-        },
+        refreshContent: function () {},
 
         /**
          * 返回列表界面
@@ -433,21 +416,24 @@ new Vue({
         //-------------
         //HTTP GET 请求-获得当前登录用户信息
     	axios.get(this.apiurl + 'api/user/getUser')
-		.then(
-				(res) => {
-					if (res.data.userId == 0) {
-						window.location.href = "login.html";
-					} else {
-						this.user.id = res.data.userId;
-						this.user.userid = res.data.userName;
-						this.user.username = res.data.userName;
-						this.user.img_src = res.data.imgurl;
-					}
-				}
-		)
-		.catch(
-				(error) => { console.log(error); }
-		);
+        .then(
+            (res) => {
+                if (res.data.userId == 0) {
+                    window.location.href = "login.html";
+                } else {
+                    this.user.id = res.data.userId;
+                    this.user.userid = res.data.userName;
+                    this.user.username = res.data.userName;
+                    this.user.img_src = res.data.imgurl;
+                    this.user.address = res.data.address;
+                    this.user.sex = res.data.sex;
+                    this.user.last_logintime = res.data.loginTime;
+                }
+            }
+        )
+        .catch(
+            (error) => { console.log(error); }
+        );
     	
     	axios.get(this.apiurl + 'api/company/getCulture',
                 {
