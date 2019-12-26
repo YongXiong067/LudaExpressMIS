@@ -120,11 +120,11 @@ new Vue({
             p_tagle: '订单管理'
         },
         modalAdd: {          //添加模态框
-            dotid:"",
-            sendtel:"",
-            sendaddr:"",
-            receivetel:"",
-            receiveaddr:"",//收件人地址
+            dotId:"",
+            sendTel:"",
+            sendAddr:"",
+            receiveTel:"",
+            receiveAddr:"",//收件人地址
             weight:"",
             money:"",
         },

@@ -125,18 +125,7 @@ public class orderServiceImp implements orderServie {
                 if(content == "") {
                     content +=userId+","+orders.getState()+","+nowDate+"";
                 }else {
-                	String[] contArr = content.split(";");
-                	for(int i = 0;i<contArr.length;i++) {
-                		content = "";
-                		if(contArr[i].split(",")[1].equals(orders.getState())) {
-                			System.out.println(111);
-                			contArr[i] = userId+","+orders.getState()+","+nowDate+"";
-                		}
-                		System.out.println(contArr[i]);
-                		content += contArr[i]+";";
-                	}
-                	content = content.substring(0, content.length()-1);
-                	System.out.println(content);
+                	content += ";"+userId+","+orders.getState()+","+nowDate+"";
                 }
             }
         }

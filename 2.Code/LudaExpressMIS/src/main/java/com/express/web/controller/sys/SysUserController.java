@@ -119,6 +119,7 @@ public class SysUserController {
 				if(user.getRolu() == -1) {
 					user.setRolu(1);
 				}
+				user.setImgurl("images/img.jpg");
 				service.insertUser(user);
 				return 11;
 			}

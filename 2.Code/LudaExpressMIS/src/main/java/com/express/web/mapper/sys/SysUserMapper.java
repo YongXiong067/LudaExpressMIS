@@ -89,7 +89,7 @@ public interface SysUserMapper {
 	 * @param pro
 	 * @return
 	 */
-	@Update("update sys_user set userName = #{userName}, password = #{password}, phone = #{phone}, rolu = #{rolu}, "
+	@Update("update sys_user set phone = #{phone}, rolu = #{rolu}, "
 			+ "address = #{address}, sex = #{sex}"
 			+ " where userId = #{userId}")
 	void userUpdateInfo(SysUser user);

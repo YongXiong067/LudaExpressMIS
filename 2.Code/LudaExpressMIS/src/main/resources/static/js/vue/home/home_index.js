@@ -10,14 +10,15 @@ new Vue({
          */
         user: {
             id: '',
-            userid: '',
-            username: '',
+            userId: '',
+            userName: '',
             address:'',
             sex: '',
             loginTime:'',
             phone: '',
             img_src: 'images/img.jpg',
             last_logintime: '',
+            rolu:'',
             rol: {
                 
             }
@@ -74,12 +75,13 @@ new Vue({
         htTagle: false,
         modalUpdate: {
             id: '',
-            userid: '',
-            username: '',
+            userId: '',
+            userName: '',
             sex: '',
             phone: '',
             img_src: 'images/img.jpg',
             last_logintime: '',
+            rolu:'',
             rol: {
                 
             }
@@ -110,8 +112,9 @@ new Vue({
          * @param {*} obj 
          */
         update: function (obj) {
+        	console.log(obj);
             this.modalUpdate.userId = obj.userId;
-            this.modalUpdate.username = obj.username;
+            this.modalUpdate.userName = obj.username;
             this.modalUpdate.password = obj.password;
             this.modalUpdate.phone = obj.phone;
             this.modalUpdate.rolu = obj.rolu;
@@ -126,13 +129,11 @@ new Vue({
                 .then(
                     (res) => {
                         toastr.success('修改成功！');
-                        this.listlimit();
                     }
                 )
                 .catch(
                     (error) => {
-                        console.log(error);
-                        toastr.danger('修改失败！');
+                    	console.log(error);
                     }
                 );
         },
@@ -182,11 +183,11 @@ new Vue({
                     if (res.data.userId == 0) {
                         window.location.href = "login.html";
                     } else {
-                        this.user.id = res.data.userId;
-                        this.user.userid = res.data.userName;
-                        this.user.username = res.data.userName;
+                        this.user.userId = res.data.userId;
+                        this.user.userName = res.data.userName;
                         this.user.img_src = res.data.imgurl;
                         this.user.address = res.data.address;
+                        this.user.rolu = res.data.rolu;
                         this.user.sex = res.data.sex;
                         this.user.phone = res.data.phone;
                         this.user.last_logintime = res.data.loginTime;

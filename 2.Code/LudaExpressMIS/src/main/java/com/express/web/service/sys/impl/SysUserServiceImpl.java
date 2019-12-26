@@ -40,7 +40,7 @@ public class SysUserServiceImpl implements SysUserService {
 
 	@Override
 	public void update(SysUser user) {
-		sysUserMapper.update(user);
+		sysUserMapper.userUpdateInfo(user);
 	}
 
 	@Override

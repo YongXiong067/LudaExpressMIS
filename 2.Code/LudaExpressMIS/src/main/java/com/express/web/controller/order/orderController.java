@@ -45,6 +45,7 @@ public class orderController {
     public List<Orders> getOrders(@ApiParam(value = "查询参数，可根据内容自动匹配" ,required=false )@RequestParam String search){
     	HttpSession session = request.getSession(true);
     	Long userId = (Long)session.getAttribute("userId");
+    	System.out.println(userId);
         int ruleId = (int)session.getAttribute("rolu");
         if(ruleId == 0) {
         	userId = null;
