@@ -36,8 +36,6 @@ public class MoneyServiceImpl implements MoneyService {
 	@Override
 	public List<ColumnarMoney> getMoneyColumn() {
 		List<ColumnarMoney> list = new ArrayList<ColumnarMoney>();
-		Calendar calendar = Calendar.getInstance();
-		int year = Integer.parseInt(String.valueOf(calendar.get(calendar.YEAR)));
 		String month = "";
 		for(int i = 1;i< 13;i++) {
 			if(i < 10) {
@@ -45,7 +43,7 @@ public class MoneyServiceImpl implements MoneyService {
 			}else {
 				month = i+"";
 			}
-			ColumnarMoney col  = deliverMapper.getColumnar(year+"", month);
+			ColumnarMoney col  = deliverMapper.getColumnar("2019", month);
 			if(col == null) {
 				col = new ColumnarMoney();
 				col.setDateMonth(month);

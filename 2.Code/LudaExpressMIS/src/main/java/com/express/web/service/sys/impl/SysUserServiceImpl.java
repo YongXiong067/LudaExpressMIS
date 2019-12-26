@@ -73,9 +73,4 @@ public class SysUserServiceImpl implements SysUserService {
 		sysUserMapper.userUpdateImg(userId, imgurl);
 	}
 
-	@Override
-	public int userUpdateTime(Long userId, String loginTime) {
-		return sysUserMapper.userUpdateTime(userId, loginTime);
-	}
-
 }

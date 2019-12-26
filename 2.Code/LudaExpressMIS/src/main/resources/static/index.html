@@ -59,18 +59,21 @@
                                 <img class="profile-user-img img-responsive img-circle" :src="user.img_src"
                                     alt="User profile picture">
                                 <h3 class="profile-username text-center">{{user.username}}</h3>
-                                <p class="text-muted text-center">账号： {{user.username}}</p>
+                                <p class="text-muted text-center">账号：{{user.userid}}</p>
 
                                 <ul class="list-group list-group-unbordered">
                                     <li class="list-group-item">
-                                        <b>最近登录</b> <a class="pull-right">{{user.last_logintime}}</a>
+                                        <b>最近登录</b> <a class="pull-right">2019年12月24日</a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>登录地址</b> <a class="pull-right">192.0.0.1</a>
                                     </li>
                                     <li class="list-group-item">
                                         <b>登录状态</b> <a class="pull-right color-success">正常</a>
                                     </li>
                                 </ul>
                                 <a href="javascript:;" class="btn btn-primary btn-block" data-toggle="modal"
-                                    data-target="#modelUpdate"  @click="update(user)"><b>个人资料管理</b></a>
+                                    data-target="#modelUpdate"><b>个人资料管理</b></a>
                             </div>
 
                         </div>
@@ -88,7 +91,7 @@
                             <div class="box-body box-profile mb-2">
                                 <ul class="list-group list-group-unbordered">
                                     <li class="list-group-item">
-                                        <b>用户名</b> <a class="pull-right">{{user.username}}</a>
+                                        <b>用户名</b> <a class="pull-right">{{user.userName}}</a>
                                     </li>
                                     <li class="list-group-item">
                                         <b>性别</b> <a class="pull-right">{{user.sex}}</a>
@@ -102,6 +105,39 @@
                     </div>
 
                     <div class="col-md-8">
+                        <!-- <div class="box box-widget widget-user">
+                            <div class="widget-user-header bg-black"
+                                style="background: url('images/photo1.png') center center;">
+                                <h3 class="widget-user-username">Elizabeth Pierce</h3>
+                                <h5 class="widget-user-desc">Web Designer</h5>
+                            </div>
+                            <div class="widget-user-image">
+                                <img class="img-circle" :src="user.img_src" alt="User Avatar">
+                            </div>
+                            <div class="box-footer">
+                                <div class="row">
+                                    <div class="col-sm-4 border-right">
+                                        <div class="description-block">
+                                            <h5 class="description-header">3,200</h5>
+                                            <span class="description-text">SALES</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4 border-right">
+                                        <div class="description-block">
+                                            <h5 class="description-header">13,000</h5>
+                                            <span class="description-text">FOLLOWERS</span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="description-block">
+                                            <h5 class="description-header">35</h5>
+                                            <span class="description-text">PRODUCTS</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> -->
+
                         <div class="box box-widget">
                             <div class='box-header with-border'>
                                 <div class='user-block'>
@@ -119,7 +155,7 @@
                                 </div>
                             </div>
                             <div class='box-body'>
-                                <img class="img-responsive pad" src="images/photo1.png" style="height:500px;width:100%" alt="Photo">
+                                <img class="img-responsive pad" src="images/photo1.png" alt="Photo">
                                 <p></p>
                                 <button class='btn btn-default btn-xs'><i class='fa fa-share'></i> Share</button>
                                 <button class='btn btn-default btn-xs'><i class='fa fa-thumbs-o-up'></i> Like</button>
@@ -131,7 +167,7 @@
                                     <div class='comment-text'>
                                         <span class="username">
                                             路达公司宣
-                                            <span class='text-muted pull-right'>{{user.last_logintime}}</span>
+                                            <span class='text-muted pull-right'>2019-12-25</span>
                                         </span>
                                         顾客至上！
                                     </div>
@@ -172,44 +208,27 @@
                                 <div class="col-md-1"></div>
                                 <div class="col-md-10">
                                     <div class="input-group">
-                                        <span class="input-group-addon">手机号</span>
-                                        <input type="text" class="form-control"
-                                            v-model="modalUpdate.phone" placeholder="请填写该字段"
-                                            required>
+                                        <span class="input-group-addon">性别</span>
+                                        <input type="text" class="form-control" rows="10" v-model="modalUpdate.sex"
+                                            placeholder="请填写该字段" required></textarea>
                                     </div>
                                 </div>
                                 <div class="col-md-1"></div>
                             </div>
                         </div>
                         <div class="form-group ">
-		                    <div class="row">
-		                        <div class="col-md-1"></div>
-		                        <div class="col-md-10">
-		                            <div class="input-group">
-		                                <span class="input-group-addon">地址</span>
-		                                <input type="text" class="form-control"
-		                                    v-model="modalUpdate.address" placeholder="请填写该字段"
-		                                    required>
-		                            </div>
-		                        </div>
-		                        <div class="col-md-1"></div>
-		                    </div>
-		                </div>
-		                <div class="form-group">
-		                    <div class="row">
-		                        <div class="col-md-1"></div>
-		                        <div class="col-md-10">
-		                            <div class="input-group">
-		                                <span class="input-group-addon">性别</span>
-		                                <select class="form-control" v-model="modalUpdate.sex">
-		                                    <option value="男">男</option>
-		                                    <option value="女">女</option>
-		                                </select>
-		                            </div>
-		                        </div>
-		                        <div class="col-md-1"></div>
-		                    </div>
-		                </div>
+                            <div class="row">
+                                <div class="col-md-1"></div>
+                                <div class="col-md-10">
+                                    <div class="input-group">
+                                        <span class="input-group-addon">年龄</span>
+                                        <input type="text" class="form-control" rows="10" v-model="modalUpdate.age"
+                                            placeholder="请填写该字段"></textarea>
+                                    </div>
+                                </div>
+                                <div class="col-md-1"></div>
+                            </div>
+                        </div>
                         <div class="form-group">
                             <div class="row">
                                 <div class="col-md-1"></div>

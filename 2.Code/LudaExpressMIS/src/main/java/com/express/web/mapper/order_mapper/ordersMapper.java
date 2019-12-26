@@ -45,7 +45,6 @@ public interface ordersMapper {
     @Select("<script>"
             + "select "+ param +" from orders "
             + "where 1=1 "
-            +"<if test= 'userId != null'> and userId = #{userId} </if>"
             +"<if test= 'search != null'> and ( orderNum like concat('%',#{search},'%')) </if>"
             +"</script>")
     @Results(id="ordersList",
@@ -66,7 +65,7 @@ public interface ordersMapper {
                     @Result(property="content",column="content")
             }
     )
-    List<Orders> listByAll(String search,Long userId);
+    List<Orders> listByAll(String search);
 
     /**
      * 插入记录
@@ -81,7 +80,7 @@ public interface ordersMapper {
      * 修改信息
      * @return
      */
-    @Update("update orders set dotId = #{dotId},sendTel =#{sendTel},sendAddr=#{sendAddr},orderdate =#{orderDate}," +
+    @Update("update orders set dotId = #{dotid},sendTel =#{sendtel},sendAddr=#{sendaddr},orderdate =#{orderdate}," +
             "receiveTel = #{receiveTel},receiveAddr =#{receiveAddr},orderNum = #{orderNum}," +
             "weight=#{weight} ,money =#{money},state =#{state} ,currentUser =#{currentUser},content = #{content}" +
             "where orderId = #{orderId}")

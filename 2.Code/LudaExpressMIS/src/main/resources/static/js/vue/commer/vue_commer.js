@@ -213,7 +213,7 @@ Vue.component('n-nav-left', {
 								name: '网点管理',
 								icon_cls: '',
 								left: 1,
-								url: 'dot.html',
+								url: 'userAccount.html',
 							}
 						]
 					},
@@ -255,7 +255,7 @@ Vue.component('n-nav-left', {
 								name: '仓储发货管理',
 								icon_cls: '',
 								left: 1,
-								url: 'deliverGoods.html',
+								url: 'acceptance.html',
 							}
 						]
 					},
@@ -357,7 +357,7 @@ Vue.component('n-nav-left', {
 												name: '网点管理',
 												icon_cls: '',
 												left: 1,
-												url: 'dot.html',
+												url: 'userAccount.html',
 											}
 										]
 									},
@@ -383,7 +383,7 @@ Vue.component('n-nav-left', {
 												name: '仓储发货管理',
 												icon_cls: '',
 												left: 1,
-												url: 'deliverGoods.html',
+												url: 'acceptance.html',
 											}
 										]
 									},

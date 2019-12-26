@@ -64,11 +64,11 @@ public interface DeliverGoodMapper {
 	 * @param month
 	 * @return
 	 */
-	@Select("select DATE_FORMAT(orderDate,\"%m\") as dateMonth,SUM(money) as money "
-			+ " from orders where state = 4 "
-			+ "and DATE_FORMAT(orderDate,\"%Y\") = #{year} "
-			+ "and DATE_FORMAT(orderDate,\"%m\") = #{month} "
-			+ "GROUP BY DATE_FORMAT(orderDate,\"%m\")")
+	@Select("select DATE_FORMAT(orderdate,\"%m\") as dateMonth,SUM(money) as money "
+			+ " from orders where state = 2 "
+			+ "and DATE_FORMAT(orderdate,\"%Y\") = #{year} "
+			+ "and DATE_FORMAT(orderdate,\"%m\") = #{month} "
+			+ "GROUP BY DATE_FORMAT(orderdate,\"%m\")")
 	@Results({
 			@Result(property="dateMonth",column="dateMonth"),
 			@Result(property="money",column="money")
@@ -82,7 +82,7 @@ public interface DeliverGoodMapper {
 	 * @return
 	 */
 	@Select("select DATE_FORMAT(orderDate,\"%Y\") as dateMonth,SUM(money) as money "
-			+ " from orders where state = 4 and DATE_FORMAT(orderDate,\"%Y\") = '${year}'"
+			+ " from orders where state = 2 and DATE_FORMAT(orderDate,\"%Y\") = '${year}'"
 			+ " GROUP BY DATE_FORMAT(orderDate,\"%Y\")")
 	@Results({
 			@Result(property="dateMonth",column="dateMonth"),

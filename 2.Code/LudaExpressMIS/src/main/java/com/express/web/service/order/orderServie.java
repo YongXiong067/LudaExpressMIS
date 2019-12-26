@@ -20,7 +20,7 @@ public interface orderServie {
      * @param search
      * @return
      */
-    List<Orders> listByAll(String search,Long userId);
+    List<Orders> listByAll(String search);
 
 
     /**
@@ -51,7 +51,7 @@ public interface orderServie {
      * 修改订单
      * @param orders
      */
-    int updaterOrder(Orders orders,Long userId);
+    int updaterOrder(Orders orders,String name);
 
     /**
      * 获取到某个订单的流程信息

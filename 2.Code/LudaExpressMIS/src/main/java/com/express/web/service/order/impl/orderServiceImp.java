@@ -37,8 +37,8 @@ public class orderServiceImp implements orderServie {
     private DeliverGoodMapper goodMapper;
     
     @Override
-    public List<Orders> listByAll(String search,Long userId) {
-        List<Orders> list =  ordersMapper.listByAll(search,userId);
+    public List<Orders> listByAll(String search) {
+        List<Orders> list =  ordersMapper.listByAll(search);
         if(list.size()>0){
             for (Orders od :list) {
                 Dot dot =  dotMapper.getDotById(od.getDotId());
@@ -110,7 +110,15 @@ public class orderServiceImp implements orderServie {
      * @param orders
      * @return
      */
-    public int updaterOrder(Orders orders ,Long userId) {
+    public int updaterOrder(Orders orders ,String name) {
+        String inintVule = null;
+        switch (Integer.valueOf(orders.getState())){
+            case 0: inintVule = "预约";break;
+            case 1: inintVule = "揽件";break;
+            case 2: inintVule = "运输中";break;
+            case 3: inintVule = "派送中";break;
+            case 4: inintVule = "已签收";break;
+        }
         //时间格式化
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date date = new Date();
@@ -123,20 +131,9 @@ public class orderServiceImp implements orderServie {
                 content = orders.getContent();
                 //如果值为空，则是第一次存储，需要去掉前面的；号
                 if(content == "") {
-                    content +=userId+","+orders.getState()+","+nowDate+"";
+                    content +=name+","+inintVule+","+nowDate+"";
                 }else {
-                	String[] contArr = content.split(";");
-                	for(int i = 0;i<contArr.length;i++) {
-                		content = "";
-                		if(contArr[i].split(",")[1].equals(orders.getState())) {
-                			System.out.println(111);
-                			contArr[i] = userId+","+orders.getState()+","+nowDate+"";
-                		}
-                		System.out.println(contArr[i]);
-                		content += contArr[i]+";";
-                	}
-                	content = content.substring(0, content.length()-1);
-                	System.out.println(content);
+                    content +=";"+name+","+inintVule+","+nowDate+"";
                 }
             }
         }

@@ -172,7 +172,7 @@
                                     <li>
                                         <div class="row p-0 m-0 text-center">
 
-                                            <div class="col-md-4 col-xs-6 p-0">
+                                            <div class="col-md-5 col-xs-6 p-0">
                                                 <div class="row">
                                                     <div class="col-md-1 ">
                                                         <span class="text">ID</span>
@@ -182,26 +182,20 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-xs-2 p-0">
+                                            <div class="col-md-3 col-xs-2 p-0">
                                                 <span class="text">电话</span>
                                             </div>
-                                            <div class="col-md-1 col-xs-2 p-0">
-                                                <span class="text">性别</span>
-                                            </div>
-                                             <div class="col-md-3 col-xs-2 p-0">
-                                                <span class="text">地址</span>
-                                            </div>
-                                             <div class="col-md-1 col-xs-2 p-0">
+                                            <div class="col-md-3 col-xs-2 p-0">
                                                 <span class="text">账号类别</span>
                                             </div>
-                                            <div class="col-md-1 p-0">
+                                            <div class="col-md-1 p-0 pl-5">
                                                 <span class="text float-right">操作</span>
                                             </div>
                                         </div>
                                     </li>
                                     <li v-for="(item, index) in limitData.list">
                                         <div class="row m-0 text-center">
-                                            <div class="col-md-4 col-xs-1">
+                                            <div class="col-md-5 col-xs-1">
                                                 <div class="row">
                                                     <div class="col-md-1 col-xs-1 p-0">
                                                         <span>{{item.userId}}</span>
@@ -212,16 +206,10 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                            <div class="col-md-2 col-xs-2 p-0 text-oneline">
+                                            <div class="col-md-3 col-xs-2 p-0 text-oneline">
                                                 <span>{{item.phone}}</span>
                                             </div>
-                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.sex}}</span>
-                                            </div>
                                             <div class="col-md-3 col-xs-2 p-0 text-oneline">
-                                                <span>{{item.address}}</span>
-                                            </div>
-                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
                                                 <span>{{item.roluName}}</span>
                                             </div>
                                             <div class="col-md-1 col-xs-1 px-0">
@@ -283,37 +271,6 @@
                                                             <input type="text" class="form-control"
                                                                 v-model="modalUpdate.phone" placeholder="请填写该字段"
                                                                 required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">地址</span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalUpdate.address" placeholder="请填写该字段"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">性别</span>
-                                                            <select class="form-control" v-model="modalUpdate.sex">
-                                                                <option selected="selected" value="-1">---选择性别---
-                                                                </option>
-                                                                <option value="男">男</option>
-                                                                <option value="女">女</option>
-                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>
@@ -395,37 +352,6 @@
                                                             <input type="text" class="form-control"
                                                                 v-model="modalAdd.phone" placeholder="请填写该字段" 
                                                                 @blur="inputText(modalAdd.phone)">
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group ">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">地址</span>
-                                                            <input type="text" class="form-control"
-                                                                v-model="modalAdd.address" placeholder="请填写该字段"
-                                                                required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-1"></div>
-                                                </div>
-                                            </div>
-                                            <div class="form-group">
-                                                <div class="row">
-                                                    <div class="col-md-1"></div>
-                                                    <div class="col-md-10">
-                                                        <div class="input-group">
-                                                            <span class="input-group-addon">性别</span>
-                                                            <select class="form-control" v-model="modalAdd.sex">
-                                                                <option selected="selected" value="-1">---选择性别---
-                                                                </option>
-                                                                <option value="男">男</option>
-                                                                <option value="女">女</option>
-                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="col-md-1"></div>

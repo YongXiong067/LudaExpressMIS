@@ -41,17 +41,7 @@ public class SysUser {
 	 * 用户性别
 	 */
 	private String sex;
-	/**
-	 * 最后登录时间
-	 */
-	private String loginTime;
 	
-	public String getLoginTime() {
-		return loginTime;
-	}
-	public void setLoginTime(String loginTime) {
-		this.loginTime = loginTime;
-	}
 	public String getImgurl() {
 		return imgurl;
 	}

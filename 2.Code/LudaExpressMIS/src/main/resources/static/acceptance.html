@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>路达快递管理系统-发货</title>
+    <!-- Tell the browser to be responsive to screen width -->
+    <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="plugins/bootstrap/css/bootstrap.min.css">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="plugins/font-awesome/css/font-awesome.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="plugins/dist/css/AdminLTE.min.css">
+
+    <link rel="stylesheet" href="plugins/dist/css/skins/skin-blue.min.css">
+
+    
+
+    <!-- 公共css样式 -->
+    <link rel="stylesheet" href="css/commer.css">
+
+    <!-- 弹出框插件 toastr.css -->
+    <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+        <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+    <div class="wrapper" id="app" v-cloak>
+
+        <!-- 顶部导航栏 -->
+        <n-nav-top :user="user" :news="systemNews" v-on:cancellation="cancellation"></n-nav-top>
+
+        <!-- 修改密码模态框 -->
+        <n-nav-pwdmodel :user="user" :model="pwdModel" v-on:updatepwd="updatePwd"></n-nav-pwdmodel>
+
+        <!-- 左侧导航栏 -->
+        <n-nav-left :user="user" :page="pagePosition" :rol="userRol"></n-nav-left>
+
+        <!-- 右侧内容栏 -->
+        <div class="content-wrapper">
+            <!-- 内容栏标题导航 -->
+            <n-page-nav :page="pagePosition"></n-page-nav>
+
+            <!-- 右侧内容界面-记录列表 -->
+            <section class="content" v-if="contentTagle">
+
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="box">
+                            <div class="box-header">
+                                <div class="row">
+                                    <div class="col-md-1 col-xs-3 pr-0" style="padding-top: 6px;">
+                                        <h4 class="box-title">记录列表</h4>
+                                    </div>
+                                    <!-- 添加 刷新 导入 导出-->
+                                    <div class="col-md-3 col-xs-5 pr-0">
+                                        <div class="row">
+                                            <div class="col-md-2 col-xs-0 p-0">
+                                            </div>
+                                            <div class="col-md-10 col-xs-12 p-0">
+                                                <div class="btn-group">
+
+                                                    <!-- <a href="javaScript:void(0);" title="添加" data-toggle="modal"
+                                                        data-target="#modelAdd"><button
+                                                            class="btn btn-default btn-sm"><i
+                                                            class="fa fa-plus"></i></button></a> -->
+                                                    <a href="javaScript:void(0);" @click="refresh()" title="刷新"><button
+                                                            class="btn btn-default btn-sm"><i
+                                                                class="fa fa-refresh"></i></button></a>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
+
+                                    <!-- 搜索 -->
+                                    <div class="col-md-2 col-xs-4">
+                                        <div class="box-tools pull-right">
+                                            <div class="input-group">
+                                                <input type="text" v-model="beanSearch"
+                                                    class="form-control input-sm pull-right" placeholder="Search">
+                                                <div class="input-group-btn">
+                                                    <button class="btn btn-sm btn-default"
+                                                        @click="beanPosition_change()"><i
+                                                            class="fa fa-search"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- 列表分页 -->
+                                    <div class="col-md-6 col-xs-12 p-0">
+                                        <div class="row p-0">
+                                            <div class="col-md-10 col-xs-10 p-0">
+                                                <div class="box-tools pull-right">
+                                                    <ul class="pagination pagination-sm no-margin ">
+                                                        <li><span>{{limitData.page}} / {{pages}}</span>
+                                                        </li>
+                                                        <li><a href="javaScript:void(0);"
+                                                                @click="limit_page('first')">首页</a></li>
+                                                        <li><a href="javaScript:void(0);"
+                                                                @click="limit_page('pre')">&laquo;</a></li>
+                                                        <li v-if="(limitData.page - 4) > 0 && limitData.page >= pages">
+                                                            <a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page - 4)">{{limitData.page - 4}}</a>
+                                                        </li>
+                                                        <li
+                                                            v-if="(limitData.page - 3) > 0 && limitData.page >= pages - 1">
+                                                            <a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page - 3)">{{limitData.page - 3}}</a>
+                                                        </li>
+                                                        <li v-if="limitData.page-2 > 0"><a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page - 2)">{{limitData.page - 2}}</a>
+                                                        </li>
+                                                        <li v-if="limitData.page-1 > 0"><a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page - 1)">{{limitData.page - 1}}</a>
+                                                        </li>
+                                                        <li class="active"><a
+                                                                href="javaScript:void(0);">{{limitData.page}}</a></li>
+                                                        <li v-if="(limitData.page + 1) <= pages "> <a
+                                                                href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page + 1)">{{limitData.page + 1}}</a>
+                                                        </li>
+                                                        <li v-if="(limitData.page + 2) <= pages "><a
+                                                                href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page + 2)">{{limitData.page + 2}}</a>
+                                                        </li>
+                                                        <li v-if="(limitData.page + 3) <= pages && limitData.page <= 2">
+                                                            <a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page+3)">{{limitData.page + 3}}</a>
+                                                        </li>
+                                                        <li v-if="(limitData.page + 4) <= pages && limitData.page <= 1">
+                                                            <a href="javaScript:void(0);"
+                                                                @click="limit_page(limitData.page+4)">{{limitData.page + 4}}</a>
+                                                        </li>
+                                                        <li><a href="javaScript:void(0);"
+                                                                @click="limit_page('next')">&raquo;</a></li>
+                                                        <li><a href="javaScript:void(0);"
+                                                                @click="limit_page('last')">末页</a></li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 p-0">
+                                                <div class="row">
+                                                    <div class="col-md-5 col-xs-5 pr-0 ">
+                                                        <input type="text" v-model="limitData.page_go"
+                                                            class="form-control input-sm" style="width: 100%;"
+                                                            placeholder="Go">
+                                                    </div>
+                                                    <div class="col-md-4 col-xs-4 p-0 m-0">
+                                                        <div class="input-group-btn">
+                                                            <button class="btn btn-sm btn-default"
+                                                                @click="limit_page(limitData.page_go)"><i
+                                                                    class="fa fa-sign-in"></i></button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="box-body table-responsive no-padding">
+                                <ul class="todo-list">
+                                    <li>
+                                        <div class="row p-0 m-0 text-center">
+                                            <div class="col-md-2 col-xs-6 p-0">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-xs-2 p-0">
+                                                        <span class="text">订单编号</span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 p-0">
+                                                <span class="text">下单时间</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0">
+                                                <span class="text">费用</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0">
+                                                <span class="text">关联网点</span>
+                                            </div>
+                                            <div class="col-md-2 p-0 pl-5">
+                                                <span class="text">收件人地址</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0">
+                                                <span class="text">收件人电话</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0">
+                                                <span class="text">订单状态</span>
+                                            </div>
+                                            <div class="col-md-1 p-0 pl-5">
+                                                <span class="text">当前处理人</span>
+                                            </div>
+                                            <div class="col-md-1 p-0 pl-5">
+                                                <span class="text">操作</span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li v-for="(item, index) in limitData.list">
+                                        <div class="row m-0 text-center">
+                                            <div class="col-md-2 col-xs-1">
+                                                <div class="row">
+                                                    <div class="col-md-12 col-xs-2 p-0 text-oneline">
+                                                        <span>{{item.orderNum}}</span></a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.orderDate}}</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
+                                                <span>￥{{item.money}}</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.dotName}}</span>
+                                            </div>
+                                            <div class="col-md-2 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.receiveAddr}}</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.receiveTel}}</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
+                                                <span v-if="item.state == '1'">待发货</span>
+                                                <span v-else>其他</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-2 p-0 text-oneline">
+                                                <span>{{item.userName}}</span>
+                                            </div>
+                                            <div class="col-md-1 col-xs-1 px-0">
+                                                <div class="tools">
+                                                    <!-- <a href="javascript:;" title="发货" data-toggle="modal"
+                                                        data-target="#modelUpdate" @click="update(item)">
+                                                        <i class="fa fa-edit" style="margin-right: 15px;"></i> </a> -->
+                                                    <a href="javascript:;" title="发货" @click="updateOrder(item.orderid)">
+                                                        <i class="fa fa-edit" style="margin-right: 55px;"></i> </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </li>
+                                    <li>
+                                        <div class="row m-0">
+                                            <div class="col-md-12 p-0 m-0 text-center">
+                                                <span>
+                                                    显示第<code>{{page_first}}</code>到第<code>{{limitData.list.length}}</code>条记录，
+                                                    总共<code>{{limitData.list.length}}</code>条记录 每页显示
+                                                    <input type="text" v-model="limitData.line" style="width: 30px;"
+                                                        @blur="beanPosition_change()"> 条记录
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- 过滤模态框 -->
+                            <div class="modal fade" id="modelChange" tabindex="-1" role="dialog"
+                                aria-labelledby="modelChangeTit" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h4 class="modal-title" id="modelChangeTit">过滤条件选择 <i
+                                                    class="fa fa-reorder"></i>
+                                            </h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 右侧内容界面-记录列表 -->
+            <section class="content" v-if="!contentTagle">
+
+                <n-content-project v-on:return="contentReturn" :list="listHT" :project="projectContent"
+                    :modelht="moldeHt" v-on:projectht="projectHt" v-on:removeht="removeHt" :listdata="listData">
+                </n-content-project>
+
+            </section>
+        </div>
+
+        <!-- 回到顶部 -->
+        <n-nav-gotop></n-nav-gotop>
+
+        <!-- 底部导航栏 -->
+        <n-nav-footer></n-nav-footer>
+
+    </div>
+
+    <!-- REQUIRED JS SCRIPTS -->
+
+    <!-- jQuery -->
+    <script src="plugins/jquery/jquery.min.js"></script>
+    <!-- Bootstrap -->
+    <script src="plugins/bootstrap/js/bootstrap.min.js"></script>
+    <!-- 弹出框插件 toastr.min.js -->
+    <script src="plugins/toastr/toastr.min.js"></script>
+
+    <!-- 界面动态显示隐藏 -->
+    <script src="plugins/dist/js/app.min.js"></script>
+    <!-- Vue.js / ajax -->
+    <script src="plugins/vue/vue.min.js"></script>
+
+    <script src="plugins/axios/axios.min.js"></script>
+
+    <!-- 加载Vue公共模块 -->
+    <script src="js/vue/commer/vue_commer.js"></script>
+    <!-- user模块 -->
+    <script src="js/vue/home/acceptance.js"></script>
+
+    <script src="js/commer.js"></script>
+</body>
+
+</html>

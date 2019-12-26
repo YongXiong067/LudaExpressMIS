@@ -35,13 +35,7 @@ public class leavingMessageController {
     @ApiOperation(value = "getMessage", notes = "查询留言表")
     @GetMapping("/getMessage")
     public List<leavingMessage> getMessage(@ApiParam(value = "查询参数，可根据内容自动匹配" ,required=false )@RequestParam String search){
-		HttpSession session = request.getSession(true);
-	    Long userId = (Long)session.getAttribute("userId");
-	    int rule = (int)session.getAttribute("rolu");
-	    if(rule == 0) {
-	    	userId = null;
-	    }
-    	return leavingMessageService.listByAll(search,userId);
+        return leavingMessageService.listByAll(search);
     }
 
 

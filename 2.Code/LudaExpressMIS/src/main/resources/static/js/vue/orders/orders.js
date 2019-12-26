@@ -72,7 +72,7 @@ new Vue({
             text: '',
             position: [
                 {
-                    name: '快递',
+                    name: '订单管理',
                     img: 'fa fa-windows',
                     url: 'javaScript:void(0);'
                 },
@@ -122,7 +122,7 @@ new Vue({
 
         },
         modalAdd: {          //添加模态框
-            dotId:"",
+            dotid:"",
             sendTel:"",
             sendAddr:"",
             receiveTel:"",
@@ -332,6 +332,7 @@ new Vue({
         contentChange: function (obj) {
             this.projectContent = obj;
             this.contentTagle = false;
+            console.log(obj);
             axios.get(this.apiurl + 'api/order/getContent',{
                 params: {
                 	orderId: obj.orderId
@@ -371,7 +372,7 @@ new Vue({
          * 修改数据提交
          */
         updateSubmit: function () {
-        	if(this.modalUpdate.receiveTel.length != 11){
+        	if(this.modalUpdate.receivetel.length != 11){
         		toastr.warning("手机号长度为11位！");
         		return;
         	}
